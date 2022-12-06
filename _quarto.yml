@@ -8,6 +8,7 @@ website:
   site-url: https://cabbagemees.nl
   open-graph: true
   google-analytics: G-9GMDP6RW3B
+  description: A website about programming and machine learning (and soon Biology?)
   navbar:
     logo: images/logo.png
     right:
@@ -20,3 +21,4 @@ format:
   html:
     theme: pulse
     css: styles.css
+    code-line-numbers: true
