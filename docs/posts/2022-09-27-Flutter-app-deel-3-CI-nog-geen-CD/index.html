@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.2.269">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Mees Molenaar">
+<meta name="dcterms.date" content="2022-09-27">
+
+<title>CabbageMees - Een Flutter App - Deel 3 - CI Nog Geen CD</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../images/logo.png" rel="icon" type="image/png">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-9GMDP6RW3B"></script>
+
+<script type="text/javascript">
+
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-9GMDP6RW3B', { 'anonymize_ip': true});
+</script>
+
+
+<link rel="stylesheet" href="../../styles.css">
+<meta property="og:title" content="CabbageMees - Een Flutter App - Deel 3 - CI Nog Geen CD">
+<meta property="og:description" content="Het opzetten van Continuous Integration pipelines met Github Actions">
+<meta property="og:image" content="https://cabbagemees.nl/posts\2022-09-27-Flutter-app-deel-3-CI-nog-geen-CD\images\DALL·E 2022-08-26 17.15.54 - A factory with a pipeline going from left to right and pouring eggs out of it, digital art, in shades of blue.png">
+<meta property="og:site-name" content="CabbageMees">
+<meta property="og:image:height" content="1024">
+<meta property="og:image:width" content="1024">
+<meta name="twitter:title" content="CabbageMees - Een Flutter App - Deel 3 - CI Nog Geen CD">
+<meta name="twitter:description" content="Het opzetten van Continuous Integration pipelines met Github Actions">
+<meta name="twitter:image" content="https://cabbagemees.nl/posts\2022-09-27-Flutter-app-deel-3-CI-nog-geen-CD\images\DALL·E 2022-08-26 17.15.54 - A factory with a pipeline going from left to right and pouring eggs out of it, digital art, in shades of blue.png">
+<meta name="twitter:image-height" content="1024">
+<meta name="twitter:image-width" content="1024">
+<meta name="twitter:card" content="summary_large_image">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a href="../../index.html" class="navbar-brand navbar-brand-logo">
+    <img src="../../images/logo.png" alt="" class="navbar-logo">
+    </a>
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">CabbageMees</span>
+    </a>
+  </div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html">
+ <span class="menu-text">Over Mij</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/Mees-Molenaar"><i class="bi bi-github" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://twitter.com/CabbageMees"><i class="bi bi-twitter" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+</ul>
+              <div id="quarto-search" class="" title="Search"></div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">Een Flutter App - Deel 3 - CI Nog Geen CD</h1>
+            <p class="subtitle lead">Het opzetten van Continuous Integration pipelines met Github Actions</p>
+                                <div class="quarto-categories">
+                <div class="quarto-category">Flutter</div>
+                <div class="quarto-category">Android</div>
+                <div class="quarto-category">DevOps</div>
+                <div class="quarto-category">CI</div>
+                <div class="quarto-category">Github Actions</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>Mees Molenaar </p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">September 27, 2022</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#intro" id="toc-intro" class="nav-link active" data-scroll-target="#intro">Intro</a></li>
+  <li><a href="#github-actions" id="toc-github-actions" class="nav-link" data-scroll-target="#github-actions">Github Actions</a></li>
+  <li><a href="#unit-en-widget-tests" id="toc-unit-en-widget-tests" class="nav-link" data-scroll-target="#unit-en-widget-tests">Unit en Widget Tests</a></li>
+  <li><a href="#web-integration-tests" id="toc-web-integration-tests" class="nav-link" data-scroll-target="#web-integration-tests">Web Integration Tests</a></li>
+  <li><a href="#iphone-integration-tests" id="toc-iphone-integration-tests" class="nav-link" data-scroll-target="#iphone-integration-tests">IPhone Integration Tests</a></li>
+  <li><a href="#android-integration-tests" id="toc-android-integration-tests" class="nav-link" data-scroll-target="#android-integration-tests">Android Integration Tests</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+<section id="intro" class="level1">
+<h1>Intro</h1>
+<p>Hallootjes,</p>
+<p>welkom bij de volgende stap in het proces om een Flutter app te maken. In de vorige post heb ik de app-structuur bepaald, maar voordat wij daaraan beginnen gaan we eerst een Continuous Integration (CI) pipeline opzetten. Deze pipeline zorgt ervoor dat wanneer er nieuwe code wordt gepushed er automatisch wordt gecontroleerd of de bestaande code en app nog naar behoren werken. Dit doe je door tests te schrijven die vervolgens worden uitgevoerd door je pipeline.</p>
+<p>In Flutter heb je drie soorten tests: integration, widget en unit tests. Laten we eerst kijken naar de integration tests. Dit zijn tests om de gehele app te testen. Deze test repliceert het gedrag van een gebruiker en is wat mij betreft daarom ook de belangrijkste soort test. Deze tests moeten altijd werken om te garanderen dat je app hetzelfde functioneert. Ten tweede, widget test: dit zijn tests (zoals de naam al doet vermoeden) om widgets, onderdelen van de User Interface (UI) te testen. En als laatste unit tests. Deze tests zijn handig om de werkzaamheid van losse functies of classes te testen. En deze tests zouden zo simpel moeten zijn dat ze zelfs op de pc van je oma kunnen draaien (ben de bron van deze quote kwijt). Maar waarom testen wij eigenlijk?</p>
+<p>Er zijn een legio voordelen aan het automatisch testen van code, zoals het besparen van kosten (omdat je (minder) manueel hoeft te testen), sneller developen en deployen en een hogere code qualiteit. Lees voor nog meer voordelen en adviezen over automatisch testen eens The DevOps Handbook. Maar de belangrijkste van alles is het korter maken van de feedback loop. Als developer is er namelijk niets frustrerender dan dat je code hebt gemaakt waarna je maanden later hoort dat er iets niet werkte. Het zou veel beter zijn om direct te weten dat er iets niet meer werkt zodat je na jou aanpassing/toevoeging het probleem direct kan oplossen en daar dan ook van te leren. In tegenstelling tot lang wachten want dan weet je niet eens meer waarom je dat stukje code hebt geschreven laat staan hoe je het kunt oplossen.</p>
+</section>
+<section id="github-actions" class="level1">
+<h1>Github Actions</h1>
+<p>Voor deze CI pipelines ga ik Github Actions gebruiken. Het voordeel hiervan is dat de code, het project board en de pipelines allemaal in één omgeving staan (namelijk Github). Daarnaast zijn Github Actions voor Publieke repositories gratis (voor Private repositories heb je een aantal gratis minuten per maand en daarna betaal je voor de minuten die je extra gebruikt)! Github Actions heeft zogeheten Runners (een virtuele machine die je pipeline uitvoert) met verschillende Operation Systems (OS). Omdat je geen Android of IPhone emulator op een Linux machine kunt draaien, gebruiken we daarvoor macOS runners (let op! in private repos kunnen de kosten van deze runners snel oplopen! <a href="https://docs.github.com/en/billing/managing-billing-for-github-actions/about-billing-for-github-actions">Ze zijn namelijk 10x zo duur</a>). Deze emulators zijn nodig om de integratie tests uit te voeren. Maar laten we eerst de eenvoudige tests bespreken: de unit en widget tests.</p>
+</section>
+<section id="unit-en-widget-tests" class="level1">
+<h1>Unit en Widget Tests</h1>
+<p>Voor de Unit en Widget tests heb je weinig nodig. Eigenlijk alleen een computer met Flutter geïnstalleerd en dan kan je gemakkelijk de volgende command uitvoeren:</p>
+<blockquote class="blockquote">
+<p>flutter test</p>
+</blockquote>
+<p>Deze stappen uit voeren met een Github Action zijn ook gemakkelijk! Als eerste moet je Flutter installeren. Op de Github Marketplace heeft een gebruiker een Action gedeeld waarmee je de gewenste Flutter versie kan installeren. Vervolgens installeer je de packages en dan test je (voorbeeld hieronder). Deze YAML bestander sla je op onder de folders .github/workflows en deze workflow zal af gaan iedere keer dat er code naar main wordt gepushed.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode numberSource yaml number-lines code-with-copy"><code class="sourceCode yaml"><span id="cb1-1"><a href="#cb1-1"></a><span class="fu">name</span><span class="kw">:</span><span class="at"> Flutter Unit And Widget Tests</span></span>
+<span id="cb1-2"><a href="#cb1-2"></a></span>
+<span id="cb1-3"><a href="#cb1-3"></a><span class="co"># Perform action when code is pushed to the main branch</span></span>
+<span id="cb1-4"><a href="#cb1-4"></a><span class="fu">on</span><span class="kw">:</span></span>
+<span id="cb1-5"><a href="#cb1-5"></a><span class="at">  </span><span class="fu">push</span><span class="kw">:</span></span>
+<span id="cb1-6"><a href="#cb1-6"></a><span class="at">    </span><span class="fu">branches</span><span class="kw">:</span><span class="at"> </span><span class="kw">[</span><span class="at">main</span><span class="kw">]</span></span>
+<span id="cb1-7"><a href="#cb1-7"></a></span>
+<span id="cb1-8"><a href="#cb1-8"></a><span class="fu">jobs</span><span class="kw">:</span></span>
+<span id="cb1-9"><a href="#cb1-9"></a><span class="at">  </span><span class="fu">tests</span><span class="kw">:</span></span>
+<span id="cb1-10"><a href="#cb1-10"></a><span class="at">    </span><span class="fu">runs-on</span><span class="kw">:</span><span class="at"> ubuntu-latest</span></span>
+<span id="cb1-11"><a href="#cb1-11"></a></span>
+<span id="cb1-12"><a href="#cb1-12"></a><span class="at">    </span><span class="fu">steps</span><span class="kw">:</span></span>
+<span id="cb1-13"><a href="#cb1-13"></a><span class="co">      # First checkout the new code</span></span>
+<span id="cb1-14"><a href="#cb1-14"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Checkout the code</span></span>
+<span id="cb1-15"><a href="#cb1-15"></a><span class="at">        </span><span class="fu">uses</span><span class="kw">:</span><span class="at"> actions/checkout@v3</span></span>
+<span id="cb1-16"><a href="#cb1-16"></a></span>
+<span id="cb1-17"><a href="#cb1-17"></a><span class="co">      # Use a handy action from the Github marketplace to install flutter</span></span>
+<span id="cb1-18"><a href="#cb1-18"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Install and set Flutter version</span></span>
+<span id="cb1-19"><a href="#cb1-19"></a><span class="at">        </span><span class="fu">uses</span><span class="kw">:</span><span class="at"> subosito/flutter-action@v2</span></span>
+<span id="cb1-20"><a href="#cb1-20"></a><span class="at">        </span><span class="fu">with</span><span class="kw">:</span></span>
+<span id="cb1-21"><a href="#cb1-21"></a><span class="at">          </span><span class="fu">flutter-version</span><span class="kw">:</span><span class="at"> </span><span class="st">"3.0.5"</span></span>
+<span id="cb1-22"><a href="#cb1-22"></a><span class="at">          </span><span class="fu">channel</span><span class="kw">:</span><span class="at"> </span><span class="st">"stable"</span></span>
+<span id="cb1-23"><a href="#cb1-23"></a></span>
+<span id="cb1-24"><a href="#cb1-24"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Show Flutter version</span></span>
+<span id="cb1-25"><a href="#cb1-25"></a><span class="at">        </span><span class="fu">run</span><span class="kw">:</span><span class="at"> flutter --version</span></span>
+<span id="cb1-26"><a href="#cb1-26"></a></span>
+<span id="cb1-27"><a href="#cb1-27"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Get Flutter packages</span></span>
+<span id="cb1-28"><a href="#cb1-28"></a><span class="at">        </span><span class="fu">run</span><span class="kw">:</span><span class="at"> flutter pub get</span></span>
+<span id="cb1-29"><a href="#cb1-29"></a></span>
+<span id="cb1-30"><a href="#cb1-30"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Analyze the code</span></span>
+<span id="cb1-31"><a href="#cb1-31"></a><span class="at">        </span><span class="fu">run</span><span class="kw">:</span><span class="at"> flutter analyze</span></span>
+<span id="cb1-32"><a href="#cb1-32"></a></span>
+<span id="cb1-33"><a href="#cb1-33"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Run unit tests with coverage</span></span>
+<span id="cb1-34"><a href="#cb1-34"></a><span class="at">        </span><span class="fu">run</span><span class="kw">:</span><span class="at"> flutter test --coverage</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Voorbeeld is gebaseerd op: <a href="https://damienaicheh.github.io/flutter/github/actions/2021/05/06/flutter-tests-github-actions-codecov-en.html">Run Flutter tests using GitHub Actions and Codecov</a></p>
+</section>
+<section id="web-integration-tests" class="level1">
+<h1>Web Integration Tests</h1>
+<p>De volgende makkelijk op te zetten tests zijn web integratie testen. Deze draaien namelijk met een Chrome Driver die je ook op Linux machines kunt installeren. Hieronder is een voorbeeld voor een Github Workflow dat web integration tests uitvoert. Maar voordat je deze kunt uitvoeren, heb je een klein Dart bestandje nodig die de integrationDriver start (zie hieronder) (<a href="https://docs.flutter.dev/cookbook/testing/integration/introduction#5b-web">klik hier voor extra informatie</a>). Vervolgens kan je met de command:</p>
+<blockquote class="blockquote">
+<p>flutter drive</p>
+</blockquote>
+<p>de web integration test starten. Het nadeel is wel dat je het bestand dat je wilt testen moet specificeren. Dat resulteert in één groot integration test bestand. Zelf vind ik het fijner om tests te verdelen in verschillende bestanden, maar daar is helaas voor deze web integration tests nog geen oplossing voor.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode numberSource yaml number-lines code-with-copy"><code class="sourceCode yaml"><span id="cb2-1"><a href="#cb2-1"></a><span class="fu">name</span><span class="kw">:</span><span class="at"> Flutter Web Integration Tests</span></span>
+<span id="cb2-2"><a href="#cb2-2"></a></span>
+<span id="cb2-3"><a href="#cb2-3"></a><span class="co"># Perform action when code is pushed to the main branch</span></span>
+<span id="cb2-4"><a href="#cb2-4"></a><span class="fu">on</span><span class="kw">:</span></span>
+<span id="cb2-5"><a href="#cb2-5"></a><span class="at">  </span><span class="fu">push</span><span class="kw">:</span></span>
+<span id="cb2-6"><a href="#cb2-6"></a><span class="at">    </span><span class="fu">branches</span><span class="kw">:</span><span class="at"> </span><span class="kw">[</span><span class="at">main</span><span class="kw">]</span></span>
+<span id="cb2-7"><a href="#cb2-7"></a></span>
+<span id="cb2-8"><a href="#cb2-8"></a><span class="fu">jobs</span><span class="kw">:</span></span>
+<span id="cb2-9"><a href="#cb2-9"></a><span class="at">  </span><span class="fu">tests</span><span class="kw">:</span></span>
+<span id="cb2-10"><a href="#cb2-10"></a><span class="at">    </span><span class="fu">runs-on</span><span class="kw">:</span><span class="at"> ubuntu-latest</span></span>
+<span id="cb2-11"><a href="#cb2-11"></a></span>
+<span id="cb2-12"><a href="#cb2-12"></a><span class="at">    </span><span class="fu">steps</span><span class="kw">:</span></span>
+<span id="cb2-13"><a href="#cb2-13"></a><span class="co">      # First checkout the new code</span></span>
+<span id="cb2-14"><a href="#cb2-14"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Checkout the code</span></span>
+<span id="cb2-15"><a href="#cb2-15"></a><span class="at">        </span><span class="fu">uses</span><span class="kw">:</span><span class="at"> actions/checkout@v3</span></span>
+<span id="cb2-16"><a href="#cb2-16"></a></span>
+<span id="cb2-17"><a href="#cb2-17"></a><span class="co">      # Use a handy action from the Github marketplace to install flutter</span></span>
+<span id="cb2-18"><a href="#cb2-18"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Install and set Flutter version</span></span>
+<span id="cb2-19"><a href="#cb2-19"></a><span class="at">        </span><span class="fu">uses</span><span class="kw">:</span><span class="at"> subosito/flutter-action@v2</span></span>
+<span id="cb2-20"><a href="#cb2-20"></a><span class="at">        </span><span class="fu">with</span><span class="kw">:</span></span>
+<span id="cb2-21"><a href="#cb2-21"></a><span class="at">          </span><span class="fu">flutter-version</span><span class="kw">:</span><span class="at"> </span><span class="st">"3.0.5"</span></span>
+<span id="cb2-22"><a href="#cb2-22"></a><span class="at">          </span><span class="fu">channel</span><span class="kw">:</span><span class="at"> </span><span class="st">"stable"</span></span>
+<span id="cb2-23"><a href="#cb2-23"></a></span>
+<span id="cb2-24"><a href="#cb2-24"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Show Flutter version</span></span>
+<span id="cb2-25"><a href="#cb2-25"></a><span class="at">        </span><span class="fu">run</span><span class="kw">:</span><span class="at"> flutter --version</span></span>
+<span id="cb2-26"><a href="#cb2-26"></a></span>
+<span id="cb2-27"><a href="#cb2-27"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Get Flutter packages</span></span>
+<span id="cb2-28"><a href="#cb2-28"></a><span class="at">        </span><span class="fu">run</span><span class="kw">:</span><span class="at"> flutter pub get</span></span>
+<span id="cb2-29"><a href="#cb2-29"></a></span>
+<span id="cb2-30"><a href="#cb2-30"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Start Chromedriver</span></span>
+<span id="cb2-31"><a href="#cb2-31"></a><span class="at">        </span><span class="fu">run</span><span class="kw">:</span><span class="at"> chromedriver --port=4444 &amp;</span></span>
+<span id="cb2-32"><a href="#cb2-32"></a></span>
+<span id="cb2-33"><a href="#cb2-33"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Run Web instrumentation test</span></span>
+<span id="cb2-34"><a href="#cb2-34"></a><span class="at">        </span><span class="fu">run</span><span class="kw">:</span><span class="at"> flutter drive --driver=test_driver/integration_test.dart --target=integration_test/app_test.dart -d web-server</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Voorbeeld is gebaseerd op: <a href="https://flutterfly.io/post/gha-automated-tests/">Run Flutter Integration Tests in GitHub Actions</a></p>
+</section>
+<section id="iphone-integration-tests" class="level1">
+<h1>IPhone Integration Tests</h1>
+<p>Nu zijn we aangekomen bij de complexere integration tests (en ook bij de duurdere wanneer je een Private repo hebt). Deze tests worden namelijk uitgevoerd op een macOS runner. Ook zit er een klein stukje code in de Github Action dat ervoor zorgt dat je de juiste UDID krijgt van de IPhone Emulator. Met deze UDID kan je dan succesvol de integration testen uitvoeren (zie voorbeeld Action hieronder). In het geval van deze integration tests kun je de folder waar de tests zich bevinden aangeven i.p.v. een bestand zoals met de web integration tests. Hierdoor kan je de tests wel verdelen in verschillende bestanden.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode numberSource yaml number-lines code-with-copy"><code class="sourceCode yaml"><span id="cb3-1"><a href="#cb3-1"></a><span class="fu">name</span><span class="kw">:</span><span class="at"> flutter iphone instrumentation test</span></span>
+<span id="cb3-2"><a href="#cb3-2"></a></span>
+<span id="cb3-3"><a href="#cb3-3"></a><span class="co"># Perform action when code is pushed to the main branch</span></span>
+<span id="cb3-4"><a href="#cb3-4"></a><span class="fu">on</span><span class="kw">:</span></span>
+<span id="cb3-5"><a href="#cb3-5"></a><span class="at">  </span><span class="fu">push</span><span class="kw">:</span></span>
+<span id="cb3-6"><a href="#cb3-6"></a><span class="at">    </span><span class="fu">branches</span><span class="kw">:</span><span class="at"> </span><span class="kw">[</span><span class="at">main</span><span class="kw">]</span></span>
+<span id="cb3-7"><a href="#cb3-7"></a></span>
+<span id="cb3-8"><a href="#cb3-8"></a><span class="fu">jobs</span><span class="kw">:</span></span>
+<span id="cb3-9"><a href="#cb3-9"></a><span class="at">  </span><span class="fu">iphone_instrumentation_test</span><span class="kw">:</span></span>
+<span id="cb3-10"><a href="#cb3-10"></a><span class="co">    # </span><span class="al">NOTE</span><span class="co">: Running on macOS</span></span>
+<span id="cb3-11"><a href="#cb3-11"></a><span class="at">    </span><span class="fu">runs-on</span><span class="kw">:</span><span class="at"> macOS-latest</span></span>
+<span id="cb3-12"><a href="#cb3-12"></a></span>
+<span id="cb3-13"><a href="#cb3-13"></a><span class="co">    # The device name is saved in an environment variable</span></span>
+<span id="cb3-14"><a href="#cb3-14"></a><span class="co">    # we use this environment variable to search for the device UDID</span></span>
+<span id="cb3-15"><a href="#cb3-15"></a><span class="at">    </span><span class="fu">env</span><span class="kw">:</span></span>
+<span id="cb3-16"><a href="#cb3-16"></a><span class="at">      </span><span class="fu">device</span><span class="kw">:</span><span class="at"> </span><span class="st">'iPhone 13 Simulator \(15.2\)'</span></span>
+<span id="cb3-17"><a href="#cb3-17"></a></span>
+<span id="cb3-18"><a href="#cb3-18"></a><span class="at">    </span><span class="fu">steps</span><span class="kw">:</span></span>
+<span id="cb3-19"><a href="#cb3-19"></a><span class="co">      # We list the simulators for debugging purposes</span></span>
+<span id="cb3-20"><a href="#cb3-20"></a><span class="co">      # when the device in the environment variable is not in this list</span></span>
+<span id="cb3-21"><a href="#cb3-21"></a><span class="co">      # we have to change it to one that is in the list</span></span>
+<span id="cb3-22"><a href="#cb3-22"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> List all simulators</span></span>
+<span id="cb3-23"><a href="#cb3-23"></a><span class="at">        </span><span class="fu">run</span><span class="kw">:</span><span class="at"> xcrun xctrace list devices</span></span>
+<span id="cb3-24"><a href="#cb3-24"></a></span>
+<span id="cb3-25"><a href="#cb3-25"></a><span class="co">      # First checkout the new code</span></span>
+<span id="cb3-26"><a href="#cb3-26"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Checkout the code</span></span>
+<span id="cb3-27"><a href="#cb3-27"></a><span class="at">        </span><span class="fu">uses</span><span class="kw">:</span><span class="at"> actions/checkout@v3</span></span>
+<span id="cb3-28"><a href="#cb3-28"></a></span>
+<span id="cb3-29"><a href="#cb3-29"></a><span class="co">      # Use a handy action from the Github marketplace to install flutter</span></span>
+<span id="cb3-30"><a href="#cb3-30"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Install and set Flutter version</span></span>
+<span id="cb3-31"><a href="#cb3-31"></a><span class="at">        </span><span class="fu">uses</span><span class="kw">:</span><span class="at"> subosito/flutter-action@v2</span></span>
+<span id="cb3-32"><a href="#cb3-32"></a><span class="at">        </span><span class="fu">with</span><span class="kw">:</span></span>
+<span id="cb3-33"><a href="#cb3-33"></a><span class="at">          </span><span class="fu">flutter-version</span><span class="kw">:</span><span class="at"> </span><span class="st">"3.0.5"</span></span>
+<span id="cb3-34"><a href="#cb3-34"></a><span class="at">          </span><span class="fu">channel</span><span class="kw">:</span><span class="at"> </span><span class="st">"stable"</span></span>
+<span id="cb3-35"><a href="#cb3-35"></a></span>
+<span id="cb3-36"><a href="#cb3-36"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Show Flutter version</span></span>
+<span id="cb3-37"><a href="#cb3-37"></a><span class="at">        </span><span class="fu">run</span><span class="kw">:</span><span class="at"> flutter --version</span></span>
+<span id="cb3-38"><a href="#cb3-38"></a></span>
+<span id="cb3-39"><a href="#cb3-39"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Get Flutter packages</span></span>
+<span id="cb3-40"><a href="#cb3-40"></a><span class="at">        </span><span class="fu">run</span><span class="kw">:</span><span class="at"> flutter pub get</span></span>
+<span id="cb3-41"><a href="#cb3-41"></a></span>
+<span id="cb3-42"><a href="#cb3-42"></a><span class="co">      # We first get the UDID of the device with an awk command</span></span>
+<span id="cb3-43"><a href="#cb3-43"></a><span class="co">      # Then we boot that device and use that device for the integration test with the -d flag</span></span>
+<span id="cb3-44"><a href="#cb3-44"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Get UDID device, Start Simulator and Connect flutter</span></span>
+<span id="cb3-45"><a href="#cb3-45"></a><span class="fu">        run</span><span class="kw">: </span><span class="ch">|</span></span>
+<span id="cb3-46"><a href="#cb3-46"></a>          UDID=$(xcrun xctrace list devices | awk -F " " '/${{ env.device }}/ &amp;&amp; length($5) &gt; 1 {print $5}' | tr -d '()')</span>
+<span id="cb3-47"><a href="#cb3-47"></a>          echo $UDID</span>
+<span id="cb3-48"><a href="#cb3-48"></a>          xcrun simctl boot "${UDID:?No Simulator with this name found}"</span>
+<span id="cb3-49"><a href="#cb3-49"></a>          flutter test integration_test -d $UDID</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Voorbeeld is gebaseerd op: <a href="https://medium.com/flutter-community/run-flutter-driver-tests-on-github-actions-13c639c7e4ab">Run Flutter Driver tests on GitHub Actions</a></p>
+</section>
+<section id="android-integration-tests" class="level1">
+<h1>Android Integration Tests</h1>
+<p>Ook de Android integration tests kan je enkel draaien op een macOS runner. Omdat Android <a href="https://gradle.org/">Gradle</a> gebruikt om je app te builden (zo heet dat) heb je Java versie 11 of hoger nodig. Wanneer je die actie hebt uitgevoerd installeer je wederom Flutter. Als laatste gebruiken we een <a href="https://github.com/ReactiveCircus/android-emulator-runner">actie van ReactiveCircus</a> om een Android Emulator te starten. Aan deze actie moeten de minimum api-leven en het uit te voeren script worden mee gegeven.In dit geval is het script een losse command.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode numberSource yaml number-lines code-with-copy"><code class="sourceCode yaml"><span id="cb4-1"><a href="#cb4-1"></a><span class="fu">name</span><span class="kw">:</span><span class="at"> flutter android integration test</span></span>
+<span id="cb4-2"><a href="#cb4-2"></a></span>
+<span id="cb4-3"><a href="#cb4-3"></a><span class="co"># Perform action when code is pushed to the main branch</span></span>
+<span id="cb4-4"><a href="#cb4-4"></a><span class="fu">on</span><span class="kw">:</span></span>
+<span id="cb4-5"><a href="#cb4-5"></a><span class="at">  </span><span class="fu">push</span><span class="kw">:</span></span>
+<span id="cb4-6"><a href="#cb4-6"></a><span class="at">    </span><span class="fu">branches</span><span class="kw">:</span><span class="at"> </span><span class="kw">[</span><span class="at">main</span><span class="kw">]</span></span>
+<span id="cb4-7"><a href="#cb4-7"></a></span>
+<span id="cb4-8"><a href="#cb4-8"></a><span class="fu">jobs</span><span class="kw">:</span></span>
+<span id="cb4-9"><a href="#cb4-9"></a><span class="at">  </span><span class="fu">android_integration_test</span><span class="kw">:</span></span>
+<span id="cb4-10"><a href="#cb4-10"></a><span class="at">    </span><span class="fu">runs-on</span><span class="kw">:</span><span class="at"> macOS-latest</span></span>
+<span id="cb4-11"><a href="#cb4-11"></a></span>
+<span id="cb4-12"><a href="#cb4-12"></a><span class="at">    </span><span class="fu">steps</span><span class="kw">:</span></span>
+<span id="cb4-13"><a href="#cb4-13"></a><span class="co">      # First checkout the new code</span></span>
+<span id="cb4-14"><a href="#cb4-14"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Checkout the code</span></span>
+<span id="cb4-15"><a href="#cb4-15"></a><span class="at">        </span><span class="fu">uses</span><span class="kw">:</span><span class="at"> actions/checkout@v3</span></span>
+<span id="cb4-16"><a href="#cb4-16"></a></span>
+<span id="cb4-17"><a href="#cb4-17"></a><span class="co">      # We need atleast Java 11 or Higher to build your app with this version of Gradle</span></span>
+<span id="cb4-18"><a href="#cb4-18"></a><span class="co">      # So we use this Marketplace Action to install it</span></span>
+<span id="cb4-19"><a href="#cb4-19"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Setup Java JDK</span></span>
+<span id="cb4-20"><a href="#cb4-20"></a><span class="at">        </span><span class="fu">uses</span><span class="kw">:</span><span class="at"> actions/setup-java@v3.5.0</span></span>
+<span id="cb4-21"><a href="#cb4-21"></a><span class="at">        </span><span class="fu">with</span><span class="kw">:</span></span>
+<span id="cb4-22"><a href="#cb4-22"></a><span class="at">          </span><span class="fu">distribution</span><span class="kw">:</span><span class="at"> </span><span class="st">"zulu"</span></span>
+<span id="cb4-23"><a href="#cb4-23"></a><span class="at">          </span><span class="fu">java-version</span><span class="kw">:</span><span class="at"> </span><span class="st">"11.x"</span></span>
+<span id="cb4-24"><a href="#cb4-24"></a></span>
+<span id="cb4-25"><a href="#cb4-25"></a><span class="co">      # Use a handy action from the Github marketplace to install flutter</span></span>
+<span id="cb4-26"><a href="#cb4-26"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Install and set Flutter version</span></span>
+<span id="cb4-27"><a href="#cb4-27"></a><span class="at">        </span><span class="fu">uses</span><span class="kw">:</span><span class="at"> subosito/flutter-action@v2</span></span>
+<span id="cb4-28"><a href="#cb4-28"></a><span class="at">        </span><span class="fu">with</span><span class="kw">:</span></span>
+<span id="cb4-29"><a href="#cb4-29"></a><span class="at">          </span><span class="fu">flutter-version</span><span class="kw">:</span><span class="at"> </span><span class="st">"3.0.5"</span></span>
+<span id="cb4-30"><a href="#cb4-30"></a><span class="at">          </span><span class="fu">channel</span><span class="kw">:</span><span class="at"> </span><span class="st">"stable"</span></span>
+<span id="cb4-31"><a href="#cb4-31"></a></span>
+<span id="cb4-32"><a href="#cb4-32"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Show Flutter version</span></span>
+<span id="cb4-33"><a href="#cb4-33"></a><span class="at">        </span><span class="fu">run</span><span class="kw">:</span><span class="at"> flutter --version</span></span>
+<span id="cb4-34"><a href="#cb4-34"></a></span>
+<span id="cb4-35"><a href="#cb4-35"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Get Flutter packages</span></span>
+<span id="cb4-36"><a href="#cb4-36"></a><span class="at">        </span><span class="fu">run</span><span class="kw">:</span><span class="at"> flutter pub get</span></span>
+<span id="cb4-37"><a href="#cb4-37"></a></span>
+<span id="cb4-38"><a href="#cb4-38"></a><span class="co">      # Use a Github Action from the Marketplace to start an Android Emulator with api-level 23</span></span>
+<span id="cb4-39"><a href="#cb4-39"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Start Emulator And Start Tests</span></span>
+<span id="cb4-40"><a href="#cb4-40"></a><span class="at">        </span><span class="fu">uses</span><span class="kw">:</span><span class="at"> reactivecircus/android-emulator-runner@v2</span></span>
+<span id="cb4-41"><a href="#cb4-41"></a><span class="at">        </span><span class="fu">with</span><span class="kw">:</span></span>
+<span id="cb4-42"><a href="#cb4-42"></a><span class="at">          </span><span class="fu">api-level</span><span class="kw">:</span><span class="at"> </span><span class="dv">23</span></span>
+<span id="cb4-43"><a href="#cb4-43"></a><span class="at">          </span><span class="fu">script</span><span class="kw">:</span><span class="at"> flutter test integration_test</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Nu de verschillende pipelines zijn opgezet push ik dit naar Github en zullen deze de tests draaien wanneer ik nieuwe code naar Github push. Daarvoor zijn natuurlijk nog wel de afzonderlijke unit, widget en integratie tests nodig! Dus deze zullen snel volgen.</p>
+<p>Dit was het voor nu, tot de volgende keer en geniet van de herfst :).</p>
+<p>Mees</p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

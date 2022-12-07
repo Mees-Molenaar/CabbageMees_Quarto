@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.2.269">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Mees Molenaar">
+<meta name="dcterms.date" content="2022-06-27">
+
+<title>CabbageMees - Een Flutter App - Deel 1 - Voorbereiding</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../images/logo.png" rel="icon" type="image/png">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-9GMDP6RW3B"></script>
+
+<script type="text/javascript">
+
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-9GMDP6RW3B', { 'anonymize_ip': true});
+</script>
+
+
+<link rel="stylesheet" href="../../styles.css">
+<meta property="og:title" content="CabbageMees - Een Flutter App - Deel 1 - Voorbereiding">
+<meta property="og:description" content="Een Android applicatie maken met Flutter">
+<meta property="og:image" content="https://cabbagemees.nl/posts\2022-06-27-Flutter-app-deel-1-voorbereiding\images\DALL·E 2022-08-26 17.15.12 - Two miniature carpenters building a mobile phone application, cartoon.png">
+<meta property="og:site-name" content="CabbageMees">
+<meta property="og:image:height" content="1024">
+<meta property="og:image:width" content="1024">
+<meta name="twitter:title" content="CabbageMees - Een Flutter App - Deel 1 - Voorbereiding">
+<meta name="twitter:description" content="Een Android applicatie maken met Flutter">
+<meta name="twitter:image" content="https://cabbagemees.nl/posts\2022-06-27-Flutter-app-deel-1-voorbereiding\images\DALL·E 2022-08-26 17.15.12 - Two miniature carpenters building a mobile phone application, cartoon.png">
+<meta name="twitter:image-height" content="1024">
+<meta name="twitter:image-width" content="1024">
+<meta name="twitter:card" content="summary_large_image">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a href="../../index.html" class="navbar-brand navbar-brand-logo">
+    <img src="../../images/logo.png" alt="" class="navbar-logo">
+    </a>
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">CabbageMees</span>
+    </a>
+  </div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html">
+ <span class="menu-text">Over Mij</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/Mees-Molenaar"><i class="bi bi-github" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://twitter.com/CabbageMees"><i class="bi bi-twitter" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+</ul>
+              <div id="quarto-search" class="" title="Search"></div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">Een Flutter App - Deel 1 - Voorbereiding</h1>
+            <p class="subtitle lead">Een Android applicatie maken met Flutter</p>
+                                <div class="quarto-categories">
+                <div class="quarto-category">Flutter</div>
+                <div class="quarto-category">Android</div>
+                <div class="quarto-category">DevOps</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>Mees Molenaar </p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">June 27, 2022</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#de-mvp" id="toc-de-mvp" class="nav-link active" data-scroll-target="#de-mvp">De MVP</a></li>
+  <li><a href="#de-devops-principes-in-dit-project" id="toc-de-devops-principes-in-dit-project" class="nav-link" data-scroll-target="#de-devops-principes-in-dit-project">De DevOps principes in dit project</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+<p>In deze post neem ik jullie mee met de voorbereidingen van het maken van een Android app. Nu zie ik de vraagtekens in je hersenspinsels verschijnen, want je hebt gelijk: een Android app kan van alles zijn. Daarom is de eerste stap bij het maken van een stuk software, zoals een app, belangrijk om te bepalen wat de gebruiker (of klant) wilt. Specifieker nog: welk probleem wil de gebruiker verholpen zien worden?</p>
+<p>In een team op de werkvloer wordt deze vraag vaak in kaart gebracht door de product owner. Als product owner werk je naar een bepaald doel (bijvoorbeeld 10% meer omzet) van het bedrijf en dit doe je door je software te maken naar de wensen van je (potentiële) gebruikers. Vervolgens zet je deze wensen om in software features (of user stories) en splits je deze op in kleine taken. Daarna buigt het development team zich erover om de technische kant vorm te geven en weer te verdelen in taken. Deze taken worden op een sprint (vaak een periode van 1 - 4 weken) gezet om af te ronden. Door dit proces blijf je altijd werken aan taken die er toe doen voor de klant.</p>
+<p><code>Aanvulling: Tegenwoordig is er wel eens kritiek op bovenstaande aanpak en zou het beter kunnen zijn om het development team zelf de wensen van klanten in kaart te laten brengen. Hierdoor kan het development team rechtstreeks de klant helpen in plaats van te communiceren met een tussenpersoon.</code></p>
+<p>Het makkelijke aan een eigen project is dat je zelf de klant bent. In dit geval heb ik een probleem en deze wil ik oplossen. Daardoor is het relatief eenvoudig om het probleem vast te stellen, namelijk: er is geen makkelijk te gebruiken Android app om een lijst van taken aan te maken en van deze lijst iedere ochtend 1 willekeurige taak als notificatie binnen te krijgen. (misschien bestaat zo een app wél al, maar ik wil ook graag leren hoe je aan app maakt! :)). Nu dit probleem duidelijk is kan de product owner (wederom ikzelf, ik heb nog niemand aan kunnen nemen door de krapte op de arbeidsmarkt) aan de user stories beginnen.</p>
+<p>Wanneer je begint aan het maken van de user stories is het belangrijk om niet te gedetailleerd te zijn. Het is vaak handiger om een ruwe prototype te maken (ook wel een minimal viable product (MVP) genoemd). Hiermee kan je snel vaststellen of je de capaciteiten in het team hebt om het product te maken. Maar misschien nog belangrijker, je kunt snel feedback vragen aan de gebruiker zodat je kan testen of de user stories daadwerkelijk het probleem van de gebruiker oplossen. Of dat er misschien onduidelijkheden waren waardoor de user stories niet 100% aansloten maar dat je nu nog op tijd bent om de software aan te passen. Voor mij is dat ook het doel, om met een MVP bovenstaand probleem op te lossen.</p>
+<section id="de-mvp" class="level2">
+<h2 class="anchored" data-anchor-id="de-mvp">De MVP</h2>
+<p>Wanneer je begint aan het maken van de user stories is het belangrijk om niet te gedetailleerd te zijn. Het is vaak handiger om een ruwe prototype te maken (ook wel een minimal viable product (MVP) genoemd). Hiermee kan je snel vaststellen of je de capaciteiten in het team hebt om het product te maken. Maar misschien nog belangrijker, je kunt snel feedback vragen aan de gebruiker zodat je kan testen of de user stories daadwerkelijk het probleem van de gebruiker oplossen. Of dat er misschien onduidelijkheden waren waardoor de user stories niet 100% aansloten maar dat je nu nog op tijd bent om de software aan te passen. Voor mij is dat ook het doel, om met een MVP bovenstaand probleem op te lossen.</p>
+<table class="table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>MVP</th>
+<th>Volgende Versie</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Lijst met hardcoded practices</td>
+<td>Lijst dynamisch kunnen aanpassen en opslaan in een database</td>
+</tr>
+<tr class="even">
+<td>1 willekeurige practice van bovenstaande lijst pakken</td>
+<td>Tijd van de notificatie en hoeveel notificaties aanpasbaar maken</td>
+</tr>
+<tr class="odd">
+<td>Bovenstaande practice als notificatie geven</td>
+<td>Willekeur als optie kunnen aanvinken</td>
+</tr>
+<tr class="even">
+<td>Niet 2x dezelfde notificatie achter elkaar</td>
+<td>Practice voor de dag weergeven wanneer je de app opent</td>
+</tr>
+<tr class="odd">
+<td>Alles met unit en functionele tests</td>
+<td></td>
+</tr>
+<tr class="even">
+<td>CI/CD pipeline</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>Versie controle (Git)</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>Deze vereisten worden dan door het technische team in taken verdeeld om dit technisch op te lossen. Het is dan fijn wanneer de taken zo klein mogelijk zijn, zodat je iedere dag werkende (en geteste) code kan toevoegen aan je project en je niet hoeft te werken in branches. Belangrijk hierbij is dat de taken zichtbaar zijn, zodat je (bijvoorbeeld) de volgende vragen kunt beantwoorden: Waar wordt aan gewerkt? Loopt er een taak vast? Dit zorgt er mede voor dat je de obstakels kunt oplossen of verbeteren, waardoor je in het vervolg soortgelijke taken sneller kan afronden en daarmee ook sneller de gebruiker (die vaak ongeduldig zijn) kan helpen!</p>
+</section>
+<section id="de-devops-principes-in-dit-project" class="level2">
+<h2 class="anchored" data-anchor-id="de-devops-principes-in-dit-project">De DevOps principes in dit project</h2>
+<p>Zoals in de vorige post uitgelegd wil ik mij met ieder project ook bezig houden met de DevOps principes (om daar beter in te worden). Nu voel ik mij niet geschikt om DevOps samen te vatten, maar toch probeer ik het: “DevOps is een werkwijze welke het doel heeft om zo snel en goed mogelijk problemen op te lossen van een gebruiker (met software)”. Een voorbeeld daarvan is de taken zichtbaar maken (zoals hierboven beschreven). Maar er zijn ook vele andere manieren om het DevOps doel te bereiken (daar zijn verschillende boeken over bijvoorbeeld Accelerate van Nicole Forsgen en The DevOps Handbook van Gene Kim). De manieren in dit project om op de DevOps manier te werken wil ik hier graag herhalen:</p>
+<ul>
+<li>Vergaar en implementeer klant feedback: maak een MVP dat de klant zo snel mogelijk kan beoordelen en jij daardoor kan aanpassen.</li>
+<li>Alles in versie controle (ook configuratie bestanden!)</li>
+<li>CI/CD pipeline. Dat betekent in het kort: na iedere code incheck dat er automatisch testen worden uitgevoerd en wanneer deze testen succesvol zijn uitgevoerd dat deze nieuwe code automatisch in de live software komt.</li>
+<li>Werk in kleine batches/taken opdelen. Het liefste in taken die maximaal in 1 dag af te ronden zijn. Hierdoor hoef je niet in branches te werken.</li>
+<li>Maak je werk zichtbaar! Zelf gebruik ik nu een Trello board (dit ga ik misschien nog veranderen) waarin ik taken kan slepen van todo naar in progress en dan naar done.</li>
+</ul>
+<p>Er zijn nog veel meer principes, maar voor dit project focus ik mij op bovenstaande punten.</p>
+<p>Voordat ik deze post afrond wil ik nog melden dat dit de eerste keer is dat ik een android app maak. Dat betekent dat ik op de afgelopen tijd vooral bezig was met het leren van <a href="https://developer.android.com/courses/android-basics-kotlin/course">Kotlin voor Android apps</a>. Hiermee ben ik nu klaar. Daarnaast ben ik ook bezig geweest met <a href="https://flutter.dev/">Flutter</a>. Met Flutter kan je gemakkelijk multi-platform apps maken, wat het een interessante tool maakt. Daarom wil ik deze eerste app met Flutter schrijven om daar beter in te worden.</p>
+<p>Tot de volgende keer!</p>
+<p>Geniet van vandaag :)</p>
+<p>Mees</p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.2.269">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Mees Molenaar">
+<meta name="dcterms.date" content="2021-06-19">
+
+<title>CabbageMees - Kwaadaardige moedervlekken herkennen met artificiële intelligentie</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../images/logo.png" rel="icon" type="image/png">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-9GMDP6RW3B"></script>
+
+<script type="text/javascript">
+
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-9GMDP6RW3B', { 'anonymize_ip': true});
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
+
+
+<link rel="stylesheet" href="../../styles.css">
+<meta property="og:title" content="CabbageMees - Kwaadaardige moedervlekken herkennen met artificiële intelligentie">
+<meta property="og:description" content="Een voorbeeld van een AI project dat een biologisch probleem kan oplossen">
+<meta property="og:site-name" content="CabbageMees">
+<meta name="twitter:title" content="CabbageMees - Kwaadaardige moedervlekken herkennen met artificiële intelligentie">
+<meta name="twitter:description" content="Een voorbeeld van een AI project dat een biologisch probleem kan oplossen">
+<meta name="twitter:card" content="summary">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a href="../../index.html" class="navbar-brand navbar-brand-logo">
+    <img src="../../images/logo.png" alt="" class="navbar-logo">
+    </a>
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">CabbageMees</span>
+    </a>
+  </div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html">
+ <span class="menu-text">Over Mij</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/Mees-Molenaar"><i class="bi bi-github" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://twitter.com/CabbageMees"><i class="bi bi-twitter" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+</ul>
+              <div id="quarto-search" class="" title="Search"></div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">Kwaadaardige moedervlekken herkennen met artificiële intelligentie</h1>
+            <p class="subtitle lead">Een voorbeeld van een AI project dat een biologisch probleem kan oplossen</p>
+                                <div class="quarto-categories">
+                <div class="quarto-category">Projecten</div>
+                <div class="quarto-category">CNN</div>
+                <div class="quarto-category">Biologie</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>Mees Molenaar </p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">June 19, 2021</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        
+    </div>
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+<p>Hoi hoi,</p>
+<p>Vandaag wil ik een voorbeeld delen van Artificiële Intelligentie (AI) in de biologie. Maar voordat ik begin, een kleine waarschuwing. In deze post komen mogelijk onbekende en moeilijke termen voor. Wanneer ik ze allemaal in deze post uit ga leggen wordt de post ietwat lang. Daarom heb ik soms een korte uitleg gegeven ,maar op andere momenten niet ,want het idee is om deze termen uitvoerig te bespreken in de volgende posts. Dat gezegd hebbende, deze post gaat over mijn eerste project dat ik gemaakt heb, namelijk een model (eigenlijk een soort van computerprogramma) dat kan voorspellen of een moedervlek goed- of kwaadaardig is <a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>. Hiermee was ik begonnen ,omdat de (gratis!) online cursus van Fastai <a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> aanbeveelt om zo snel mogelijk te experimenteren. Zo kan je spelenderwijs leren en later, mocht je het interessant vinden, dieper in de theorie duiken.</p>
+<p>Om het nog makkelijker te maken en sneller te kunnen beginnen met experimenteren heeft Fastai een eigen Python library (een term dat gebruikt wordt als: een uitbreiding van de programmeertaal Python). Met deze library, kun je met relatief weinig programmeerkennis een model trainen dat een voorspelling kan maken van, ja van wat niet eigenlijk. Dit kan zolang je maar genoeg voorbeelden (je data) hebt. Gelukkig hoef je niet altijd zelf je data te verzamelen, maar zijn er mensen die data gratis met de wereld delen. Tschandl et al.<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a> hebben plaatjes van moedervlekken bij elkaar gezocht en gelabeld (een label is de waarde die de data, in dit geval een foto, heeft). Specialisten op het gebied van moedervlekken hebben iedere foto beoordeeld als goed- of kwaadaardige moedervlek. Deze stap is erg belangrijk ,want zonder gelabelde data kun je eigenlijk geen AI model maken dat een nuttige voorspelling kan doen (met uitzondering van technieken die ongelabelde data gebruiken, maar dat is voor een volgende keer). En vaak geldt: des te meer data ,des te beter.</p>
+<p>Nu we onze data hebben ,kunnen we bijna beginnen om een AI model te trainen. We hebben namelijk ook data nodig om ons model te evalueren. Hiervoor gebruik je data die niet is gebruikt tijdens het trainen. In de praktijk splits je daarom je data vaak in twee groepen. Een groep die je gebruikt om je model te trainen en een groep om te evalueren. Door deze splitsing evalueer je het getrainde model met data dat je model nog niet gezien heeft tijdens de training. Dat is erg belangrijk, want uiteindelijk wordt je model ook op deze manier gebruikt! Een foto die een gebruiker instuurt heeft het model nog nooit gezien en op deze foto’s wil je een accurate voorspelling doen.</p>
+<p>Ok, nu kunnen we dan echt beginnen met het trainen van het model. Voor foto’s en plaatjes wordt (vaak) een speciale vorm model gebruikt, namelijk een convolutioneel neuraal netwerk (CNN; nog een term die ik later verder ga uitleggen, voor nu kan je een convolutie zien als een speciale rekensom). Zo ’n CNN gaan wij nu ook gebruiken (en de Fastai library maakt het ons erg gemakkelijk om dit te doen, maar de details bespreek ik weer later).</p>
+<p>Tabel 1: Het trainen van een model. Epochs staat voor hoeveel keer je door je data heen gaat om je model te trainen. De train_loss is de loss die het model heeft op de trainingsdata en de valid_loss van je evaluatie data (hoe de loss wordt berekend ga ik later bespreken, de loss is berekend door het verschil tussen de voorspelde waarde door het model en de echte (gelabelde) waarde in een formule te stoppen). Als laatste bevat de tabel de tijd die 1 epoch duurt in minuten.</p>
+<p><img src="images/Tabel_error_rate_blog_moedervlekken.JPG" class="img-fluid"></p>
+<p>In onderstaande tabel zie je dat we (na maar een paar minuten trainen) een accuuraatheid van maarliefst 95% hebben (Tabel 1; De error rate is lager dan 0.05, wat betekent dat de accuraatheid groter is dan (1 - 0.05) * 100%). Dat is de kracht van transfer learning en trainen op een grafische kaart (GPU). Een wezenlijk probleem is echter dat de accuraatheid verbonden is aan of je model een soortgelijke moedervlek heeft gezien tijdens de training. Hoewel we dat probleem zo goed mogelijk proberen op te lossen door je data te splitsen, is het nog steeds een probleem wanneer een moedervlek er compleet anders uit ziet, dan de moedervlekken waarop je het model hebt getraind. Dat is een reden waarom deze modellen in de praktijk nog geen specialisten vervangen en waarom je dus met een gek uitziende moedervlek altijd naar een specialist moet gaan. Maar deze modellen kunnen wel als hulpmiddel dienen voor deze specialisten! Dit voorbeeld laat dus de kracht, maar zeker ook een grote uitdaging van AI zien.</p>
+<p>Er zijn veel voorbeelden waar soortgelijke technieken worden gebruikt (zie tabel 2). De code van dit project kan je vinden op <a href="https://github.com/Mees-Molenaar/melanoma-classifier">Github</a> en je kunt het getrainde model ook testen met een foto van een eigen moedervlek of eentje van het internet (<a href="https://melanoma-classifier.herokuapp.com/">moedervlek herkenner</a>).</p>
+<p>Tabel 2: Voorbeelden van andere projecten waarin biologische problemen worden opgelost met afbeeldingen.</p>
+<div class="cell" data-execution_count="3">
+<div class="cell-output cell-output-display" data-execution_count="3">
+
+<div>
+
+<table class="dataframe table table-sm table-striped">
+  <thead>
+    <tr>
+      <th></th>
+      <th>Soort Scan</th>
+      <th>Functie</th>
+      <th>Artikel</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>MRI</td>
+      <td>Hersen Tumoren</td>
+      <td>Ali Işın, Cem Direkoğlu, Melike Şah, Review of MRI-based Brain Tumor Image Segmentation Using Deep Learning Methods, Procedia Computer Science, Volume 102,2016,Pages 317-324,ISSN 1877-0509,https://doi.org/10.1016/j.procs.2016.09.407.</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>H&amp;E gekleurde cellen</td>
+      <td>Infiltrerende lymfocyten in tumoren</td>
+      <td>Spatial Organization and Molecular Correlation of Tumor-Infiltrating Lymphocytes Using Deep Learning on Pathology Images, Cell Reports, Volume 23, Issue 1, Pages 181-193.e7, ISSN 2211-1247, https://doi.org/10.1016/j.celrep.2018.03.086.</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>X-ray</td>
+      <td>Borstkas aandoeningen</td>
+      <td>Han Liu, Lei Wang, Yandong Nan, Faguang Jin, Qi Wang, Jiantao Pu, SDFN: Segmentation-based deep fusion network for thoracic disease classification in chest X-ray images, Computerized Medical Imaging and Graphics, Volume 75, Pages 66-73, ISSN 0895-6111, https://doi.org/10.1016/j.compmedimag.2019.05.005.</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+</div>
+<p>We zijn weer aan het einde gekomen en ik kan me goed voorstellen dat het duizelt van de moeilijke termen. Ik ga proberen om die termen in toekomstige berichten zo duidelijk mogelijk uit te leggen. Mochten er vragen of opmerkingen zijn, dan kunnen jullie die hieronder plaatsen! Bedankt voor het lezen en tot de volgende keer! (Smeer je goed in tegen de zon!!).</p>
+
+
+
+
+<div id="quarto-appendix" class="default"><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
+
+<ol>
+<li id="fn1"><p>Dit soort modellen zijn geen vervanging van een specialist. Wanneer je een rare (moeder)vlek hebt, raadpleeg altijd een dokter.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p><a href="https://www.fast.ai/">Fastai website</a><a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3"><p>Tschandl, Philipp, 2018, The HAM10000 dataset, a large collection of multi-source dermatoscopic images of common pigmented skin lesions, https://doi.org/10.7910/DVN/DBW86T, Harvard Dataverse, V3<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section></div></main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>
