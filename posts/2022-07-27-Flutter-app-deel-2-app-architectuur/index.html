@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.2.269">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Mees Molenaar">
+<meta name="dcterms.date" content="2022-07-27">
+
+<title>CabbageMees - Een Flutter App - Deel 2 - Voorbereiden App Structuur</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../images/logo.png" rel="icon" type="image/png">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-9GMDP6RW3B"></script>
+
+<script type="text/javascript">
+
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-9GMDP6RW3B', { 'anonymize_ip': true});
+</script>
+
+
+<link rel="stylesheet" href="../../styles.css">
+<meta property="og:title" content="CabbageMees - Een Flutter App - Deel 2 - Voorbereiden App Structuur">
+<meta property="og:description" content="Hoe gaat de code-structuur van de app er uit zien?">
+<meta property="og:image" content="https://cabbagemees.nl/posts/2022-07-27-Flutter-app-deel-2-app-architectuur/images/DALL·E 2022-08-26 17.15.46 - Vintage, detailed sketch of a mobile application blue print with full descriptions.png">
+<meta property="og:site-name" content="CabbageMees">
+<meta property="og:image:height" content="1024">
+<meta property="og:image:width" content="1024">
+<meta name="twitter:title" content="CabbageMees - Een Flutter App - Deel 2 - Voorbereiden App Structuur">
+<meta name="twitter:description" content="Hoe gaat de code-structuur van de app er uit zien?">
+<meta name="twitter:image" content="https://cabbagemees.nl/posts/2022-07-27-Flutter-app-deel-2-app-architectuur/images/DALL·E 2022-08-26 17.15.46 - Vintage, detailed sketch of a mobile application blue print with full descriptions.png">
+<meta name="twitter:image-height" content="1024">
+<meta name="twitter:image-width" content="1024">
+<meta name="twitter:card" content="summary_large_image">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a href="../../index.html" class="navbar-brand navbar-brand-logo">
+    <img src="../../images/logo.png" alt="" class="navbar-logo">
+    </a>
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">CabbageMees</span>
+    </a>
+  </div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html">
+ <span class="menu-text">Over Mij</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/Mees-Molenaar"><i class="bi bi-github" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://twitter.com/CabbageMees"><i class="bi bi-twitter" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+</ul>
+              <div id="quarto-search" class="" title="Search"></div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">Een Flutter App - Deel 2 - Voorbereiden App Structuur</h1>
+            <p class="subtitle lead">Hoe gaat de code-structuur van de app er uit zien?</p>
+                                <div class="quarto-categories">
+                <div class="quarto-category">Flutter</div>
+                <div class="quarto-category">Android</div>
+                <div class="quarto-category">DevOps</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>Mees Molenaar </p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">July 27, 2022</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#stappenplan-app-maken" id="toc-stappenplan-app-maken" class="nav-link active" data-scroll-target="#stappenplan-app-maken">Stappenplan App maken</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+<p>Hallo allemaal!</p>
+<p>Leuk dat jullie hier weer zijn om dit project te volgen. In deze post neem ik jullie mee in de planning voor de codestructuur van de app die ik aan het maken ben. Omdat dit mijn eerste eigen Flutter project is, neem ik veel informatie over van andere bronnen. Hierdoor leer je op een andere manier (dan je automatische piloot) kijken naar het opzetten van projecten. En wanneer dit bevalt kan je dat uiteraard inbouwen in je automatische werkwijze voor je volgende projecten!</p>
+<section id="stappenplan-app-maken" class="level1">
+<h1>Stappenplan App maken</h1>
+<p>In de vorige post van dit project<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> heb ik de vereisten vastgesteld. In die fase beschreef ik wat de app moet hebben om de klant haar problemen op te lossen. Maar op technisch vlak is dan nog niets bepaald. Deze fase gaat over het technische vlak, namelijk wat zijn de technische stappen die nodig zijn om de app op te leveren. Voor dit project heb ik grofweg de App Development Workflow van Code with Andrea<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> aangehouden.</p>
+<p>Over de eerste twee stappen, Design en Database/Backend, kan ik kort zijn. Het Design zal een simpele lijstweergave zijn (de standaard ingebouwd in Flutter). En voor versie 1 (V1) hebben we gezegd: hardcoded practices (dus geen database) en er is ook geen backend nodig. Dat waren de eerste twee stappen al, maar de volgende stap is een stuk uitdagender!</p>
+<p>De derde stap is namelijk het bepalen van de app architectuur. Nu is dit dus mijn eerste Flutter project en heb ik nog geen goed idee over wat de handigste app structuur voor een Flutter project is. Gelukkig werk ik ondertussen wel aan een andere Flutter app waarin we Flutter Blocs gebruiken. En in de voorbeelden van Flutter Blocs kwam ik een structuur tegen die mij aansprak<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a>. Hieronder heb ik diezelfde structuur vertaald naar de app die ik aan het maken ben.</p>
+<p><img src="images/flutter_deel_2_app_architectuur.PNG" class="img-fluid"></p>
+<blockquote class="blockquote">
+<p>Opmerking: Onderstaande alinea’s zijn technisch, maar daar ontkom je niet aan bij het bepalen van de app architectuur :).</p>
+</blockquote>
+<p>De Data Layer is, zoals de naam van de layer ook omschrijft, de connectie naar je onbewerkte data. Deze wil je het liefste zo generiek mogelijk houden en is vaak een simpele API om CRUD (Create, Read, Update, Delete) operaties uit te voeren. In de app Data Layer zitten twee componenten, de Daily Practices API en Hardcoded Daily Practices API. De eerstgenoemde is de generieke interface (een soort van blauwdruk van je verschillende implementaties). Als V1 heb ik vastgesteld dat de Daily Practices hardcoded en niet aanpasbaar zijn. Daarom hebben deze APIs voor V1 alleen een leesoperatie nodig. De specifieke implementatie hiervan wordt gedaan in de Hardcoded Daily Practices API.</p>
+<p>De volgende laag is de Domain Layer. Hierin koppel je de data APIs in een repository. Je voegt hieraan zogeheten business rules toe om bijvoorbeeld data te filteren of in een bepaalde structuur door te geven aan je Blocs in de feature layer.</p>
+<p>De repository layer geeft de data dus door aan je Blocs in de Feature Layer. Hierdoor fungeert je Bloc als brug tussen de data en de (User Interface) UI in je app. De Bloc bevat je business (b) logic (loc). Afhankelijk van acties van de gebruiker vraagt de Bloc data op uit (mogelijk verschillende) repositories. Hierdoor verandert de state van je Bloc. Deze verandering wordt opgepikt door de UI en daardoor past de UI van de app zich aan. Het grootste voordeel van deze structuur is dat de business logic en UI gescheiden zijn. Dit reduceert coupling en daardoor zijn de afzonderlijke onderdelen van je app in isolatie te testen en te gebruiken!</p>
+<p>Nadat de app architectuur is bepaald, kan je samen met de vereisten een project board maken. In eerste instantie gebruikte ik Trello maar later dacht ik dat het handiger zou zijn om alles op 1 plek te hebben. Daarom ben ik overgestapt naar Github Projects<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a>. Ik heb geprobeerd om het zo volledig mogelijk te maken, maar het zal vast zijn dat ik zaken ben vergeten. Dus dat vul ik in wanneer ik dat tegenkom. Het project board heb ik opgedeeld in verschillende onderwerpen (Test, UI, Flutter en CI/CD). En daaronder heb ik dan de verschillende taken bedacht en aangemaakt. Toen dat gedaan was kon ik beginnen aan de volgende stap, de CI/CD pipeline.</p>
+<p>Door te beginnen met de CI/CD pipeline kan je zo vroeg mogelijk beginnen met testen. Omdat alles op Github staat gebruiken we in dit geval Github Actions voor onze (in eerste instantie niet CD) CI pipeline. De specifieke implementatie van de Github Actions zal ik in een volgende post vertellen.</p>
+<p>De laatste stap is het uitvoeren van de taken op je project board! Ondertussen ben ik al begonnen. Doordat ik bij mijn vorige projecten een andere werkwijze aanhield, was even wennen. Maar eenmaal in het ritme gekomen ging alles voortvarend! Ik heb veel geleerd en veel van de taken zijn voltooid. Op dit moment ben ik vastgelopen op het notificatie deel maar wanneer dat werkt is V1 zo goed als af! Hopelijk lukt dat binnenkort!</p>
+<p>Tot de volgende keer :)</p>
+<p>Mees</p>
+
+
+</section>
+
+
+<div id="quarto-appendix" class="default"><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
+
+<ol>
+<li id="fn1"><p><a href="https://cabbagemees.nl/flutter/android/devops/2022/06/27/Flutter-app-deel-1-voorbereiding.html">Android App in Flutter Deel 1 - Voorbereiding</a><a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p><a href="https://github.com/bizz84/flutter-tips-and-tricks/blob/main/tips/0022-app-development-workflow-in-six-steps/index.md">Code With Andrea App Development Worklfow</a><a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3"><p><a href="https://bloclibrary.dev/#/fluttertodostutorial">Bloclibrary - Flutter Todos Tutorial</a><a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn4"><p><a href="https://github.com/users/Mees-Molenaar/projects/1">Github Project Board - Flutter App</a><a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section></div></main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

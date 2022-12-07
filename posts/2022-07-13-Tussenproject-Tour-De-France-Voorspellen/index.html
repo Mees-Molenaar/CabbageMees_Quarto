@@ -1,0 +1,893 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.2.269">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Mees Molenaar">
+<meta name="dcterms.date" content="2022-07-13">
+
+<title>CabbageMees - Tussenproject - Tour de France Voorpspellen met Machine Learning</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../images/logo.png" rel="icon" type="image/png">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-9GMDP6RW3B"></script>
+
+<script type="text/javascript">
+
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-9GMDP6RW3B', { 'anonymize_ip': true});
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
+        <script type="text/javascript">
+        window.PlotlyConfig = {MathJaxConfig: 'local'};
+        if (window.MathJax && window.MathJax.Hub && window.MathJax.Hub.Config) {window.MathJax.Hub.Config({SVG: {font: "STIX-Web"}});}
+        if (typeof require !== 'undefined') {
+        require.undef("plotly");
+        requirejs.config({
+            paths: {
+                'plotly': ['https://cdn.plot.ly/plotly-2.16.1.min']
+            }
+        });
+        require(['plotly'], function(Plotly) {
+            window._Plotly = Plotly;
+        });
+        }
+        </script>
+        
+
+
+<link rel="stylesheet" href="../../styles.css">
+<meta property="og:title" content="CabbageMees - Tussenproject - Tour de France Voorpspellen met Machine Learning">
+<meta property="og:description" content="Best presterende renners van de Tour de France voorspellen">
+<meta property="og:image" content="https://cabbagemees.nl/posts/2022-07-13-Tussenproject-Tour-De-France-Voorspellen/images/DALL·E 2022-08-26 17.15.37 - A 4k photo of cyberpunk cyborgs riding futuristic bicycles .png">
+<meta property="og:site-name" content="CabbageMees">
+<meta property="og:image:height" content="1024">
+<meta property="og:image:width" content="1024">
+<meta name="twitter:title" content="CabbageMees - Tussenproject - Tour de France Voorpspellen met Machine Learning">
+<meta name="twitter:description" content="Best presterende renners van de Tour de France voorspellen">
+<meta name="twitter:image" content="https://cabbagemees.nl/posts/2022-07-13-Tussenproject-Tour-De-France-Voorspellen/images/DALL·E 2022-08-26 17.15.37 - A 4k photo of cyberpunk cyborgs riding futuristic bicycles .png">
+<meta name="twitter:image-height" content="1024">
+<meta name="twitter:image-width" content="1024">
+<meta name="twitter:card" content="summary_large_image">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a href="../../index.html" class="navbar-brand navbar-brand-logo">
+    <img src="../../images/logo.png" alt="" class="navbar-logo">
+    </a>
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">CabbageMees</span>
+    </a>
+  </div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html">
+ <span class="menu-text">Over Mij</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/Mees-Molenaar"><i class="bi bi-github" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://twitter.com/CabbageMees"><i class="bi bi-twitter" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+</ul>
+              <div id="quarto-search" class="" title="Search"></div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">Tussenproject - Tour de France Voorpspellen met Machine Learning</h1>
+            <p class="subtitle lead">Best presterende renners van de Tour de France voorspellen</p>
+                                <div class="quarto-categories">
+                <div class="quarto-category">Python</div>
+                <div class="quarto-category">Tussenproject</div>
+                <div class="quarto-category">AI</div>
+                <div class="quarto-category">ML</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>Mees Molenaar </p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">July 13, 2022</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#data-van-een-website-halen" id="toc-data-van-een-website-halen" class="nav-link active" data-scroll-target="#data-van-een-website-halen">Data van een website halen</a></li>
+  <li><a href="#de-opgehaalde-data" id="toc-de-opgehaalde-data" class="nav-link" data-scroll-target="#de-opgehaalde-data">De opgehaalde data</a></li>
+  <li><a href="#features-maken" id="toc-features-maken" class="nav-link" data-scroll-target="#features-maken">Features maken</a></li>
+  <li><a href="#het-trainen-van-een-model" id="toc-het-trainen-van-een-model" class="nav-link" data-scroll-target="#het-trainen-van-een-model">Het trainen van een model</a></li>
+  <li><a href="#de-resultaten" id="toc-de-resultaten" class="nav-link" data-scroll-target="#de-resultaten">De resultaten</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+<p>Het jaarlijkse wielerspektakel de Tour de France staat weer voor de deur! Dat betekent ook dat ik renners mag gaan kiezen voor de eveneens jaarlijks terugkerende Wielerpoule (in het kort, je kiest een aantal wielrenners die mee gaan doen met de Tour en op basis van hun uitslag haal je punten). Nu heb ik de laatste jaren het wielrennen niet tot nauwelijks gevolgd waardoor ik geen idee heb welke renners er in vorm zijn. Daarom heb ik weer besloten om mijn programmeer en machine learning (ML) vaardigheden te gebruiken. Hiermee hoop ik het beste team samen te stellen. Als eerste hebben we data nodig om de beste renners te kunnen voorspellen en gelukkig is er een mooie website waar wij die data vanaf kunnen halen!</p>
+<section id="data-van-een-website-halen" class="level1">
+<h1>Data van een website halen</h1>
+<p>Om met Python data van een website te halen heb je verschillende Python packages ter beschikking. Een van deze packages heb ik al vaker gebruikt en voor dit project ga ik dat weer gebruiken, BeautifulSoup (BS). Met BS kan je makkelijk navigeren door de HTML (opmaak) van een website en daarvandaan dan ook tekst ophalen. Maar dan moet je wel een website kunnen opvragen met coderen! Gelukkig kan dit ook met Python, namelijk met de requests package. In onderstaande code zie je een voorbeeld van hoe je een website in een BS object laad (zie hieronder).</p>
+<div class="cell" data-execution_count="8">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1"></a><span class="co"># Example: How to open a page using requests and BeautifulSoup</span></span>
+<span id="cb1-2"><a href="#cb1-2"></a></span>
+<span id="cb1-3"><a href="#cb1-3"></a>race_url <span class="op">=</span> <span class="vs">r"https://www.procyclingstats.com/race/tour-de-france/2022/stage-4"</span></span>
+<span id="cb1-4"><a href="#cb1-4"></a></span>
+<span id="cb1-5"><a href="#cb1-5"></a><span class="co"># Perform a get request on the url</span></span>
+<span id="cb1-6"><a href="#cb1-6"></a>req <span class="op">=</span> requests.get(race_url)</span>
+<span id="cb1-7"><a href="#cb1-7"></a></span>
+<span id="cb1-8"><a href="#cb1-8"></a><span class="co"># Make a BeautifulSoup object from the requests's text</span></span>
+<span id="cb1-9"><a href="#cb1-9"></a>soup <span class="op">=</span> BeautifulSoup(req.text, <span class="st">"lxml"</span>)</span>
+<span id="cb1-10"><a href="#cb1-10"></a></span>
+<span id="cb1-11"><a href="#cb1-11"></a><span class="co"># Get the title of the page</span></span>
+<span id="cb1-12"><a href="#cb1-12"></a><span class="bu">print</span>(soup.find(<span class="st">'title'</span>).string)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-error">
+<pre><code>FeatureNotFound: Couldn't find a tree builder with the features you requested: lxml. Do you need to install a parser library?</code></pre>
+</div>
+</div>
+<p>Vervolgens kan je ingebouwde methodes van het BS object gebruiken om door de HTML te zoeken. Zelf kijk ik eerst in de internet browser naar de elementen van de website waarvan ik de data wil. Afhankelijk van de browser die je gebruikt kan je elementen inspecteren. Ik let daarbij op het het HTML type (div, table, etc) en of het een class of id heeft. Met deze informatie kan je dan een specifiek element zoeken, zoals de top-20 van een uitslag (zie hieronder).</p>
+<div class="cell" data-execution_count="9">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1"></a><span class="co"># Example: Getting the top-20 results of a race</span></span>
+<span id="cb3-2"><a href="#cb3-2"></a></span>
+<span id="cb3-3"><a href="#cb3-3"></a>race_url <span class="op">=</span> <span class="vs">r"https://www.procyclingstats.com/race/tour-de-france/2022/stage-4"</span></span>
+<span id="cb3-4"><a href="#cb3-4"></a></span>
+<span id="cb3-5"><a href="#cb3-5"></a><span class="co"># Perform a get request on the url</span></span>
+<span id="cb3-6"><a href="#cb3-6"></a>req <span class="op">=</span> requests.get(race_url)</span>
+<span id="cb3-7"><a href="#cb3-7"></a></span>
+<span id="cb3-8"><a href="#cb3-8"></a><span class="co"># Make a BeautifulSoup object from the requests's text</span></span>
+<span id="cb3-9"><a href="#cb3-9"></a>soup <span class="op">=</span> BeautifulSoup(req.text, <span class="st">"lxml"</span>)</span>
+<span id="cb3-10"><a href="#cb3-10"></a></span>
+<span id="cb3-11"><a href="#cb3-11"></a><span class="co"># I used the browser to find the element we are interested in</span></span>
+<span id="cb3-12"><a href="#cb3-12"></a>result_list <span class="op">=</span> soup.find(<span class="st">"table"</span>, class_<span class="op">=</span><span class="st">"results basic moblist10"</span>).find(<span class="st">"tbody"</span>)</span>
+<span id="cb3-13"><a href="#cb3-13"></a></span>
+<span id="cb3-14"><a href="#cb3-14"></a><span class="co"># Each result is in a table row (tr)</span></span>
+<span id="cb3-15"><a href="#cb3-15"></a>results <span class="op">=</span> result_list.find_all(<span class="st">"tr"</span>)</span>
+<span id="cb3-16"><a href="#cb3-16"></a></span>
+<span id="cb3-17"><a href="#cb3-17"></a>race_top_20 <span class="op">=</span> {}</span>
+<span id="cb3-18"><a href="#cb3-18"></a></span>
+<span id="cb3-19"><a href="#cb3-19"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">20</span>):</span>
+<span id="cb3-20"><a href="#cb3-20"></a>    result <span class="op">=</span> results[i]</span>
+<span id="cb3-21"><a href="#cb3-21"></a>    </span>
+<span id="cb3-22"><a href="#cb3-22"></a>    <span class="co"># Again, use your browser to find the element you are interested in</span></span>
+<span id="cb3-23"><a href="#cb3-23"></a>    rider <span class="op">=</span> result.find_all(<span class="st">"a"</span>)[<span class="dv">0</span>].text</span>
+<span id="cb3-24"><a href="#cb3-24"></a>    </span>
+<span id="cb3-25"><a href="#cb3-25"></a>    race_top_20[i <span class="op">+</span> <span class="dv">1</span>] <span class="op">=</span> rider </span>
+<span id="cb3-26"><a href="#cb3-26"></a>    </span>
+<span id="cb3-27"><a href="#cb3-27"></a>pprint.pprint(race_top_20)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-error">
+<pre><code>FeatureNotFound: Couldn't find a tree builder with the features you requested: lxml. Do you need to install a parser library?</code></pre>
+</div>
+</div>
+</section>
+<section id="de-opgehaalde-data" class="level1">
+<h1>De opgehaalde data</h1>
+<p>In totaal had ik deze data opgehaald: * Van de Tour de France van 2000 - 2021 alle renners die mee deden * Via al die renners, voor ieder jaar, de races en eindklassering URLs * Voor alle renners de geboortedatum, de teams en de PCS score (de laatste twee voor ieder jaar) * Voor iedere race de datum, top-20 en de gemiddelde PCS score van de top-20</p>
+<p>Nadat al deze data is verzameld kunnen we deze data gebruiken om de features te gaan maken waarmee je een ML model kunt trainen.</p>
+</section>
+<section id="features-maken" class="level1">
+<h1>Features maken</h1>
+<p>Een feature is een deel van de totale informatie waarmee je een voorspelling kunt maken. Bijvoorbeeld, wanneer je iemands gewicht wilt voorspellen aan de hand van iemands lengte, dan is lengte je feature (zie grafiek hieronder). Hoewel het verband tussen gewicht en lengte niet 1 op 1 is zijn over het algemeen lange mensen zwaarder dan kleine mensen. Een andere feature die je dan zou kunnen toevoegen om je voorspelling te verbeteren is bijvoorbeeld het aantal uren sporten per week. Samen met de lengte zal dit betere voorspellingen geven omdat (vaak) wanneer je meer sport je geen uitschieter hebt in gewicht (een nogal grove aanname). Zoals je misschien merkt kan je vele features bedenken en daarom heb je zeker een mate van creativiteit nodig!</p>
+<div class="cell" data-execution_count="10">
+<div class="cell-output cell-output-display">
+
+<div>                            <div id="9f8f3d20-6b1f-419b-9e81-1feddb6b1c56" class="plotly-graph-div" style="height:525px; width:100%;"></div>            <script type="text/javascript">                require(["plotly"], function(Plotly) {                    window.PLOTLYENV=window.PLOTLYENV || {};                                    if (document.getElementById("9f8f3d20-6b1f-419b-9e81-1feddb6b1c56")) {                    Plotly.newPlot(                        "9f8f3d20-6b1f-419b-9e81-1feddb6b1c56",                        [{"hovertemplate":"lengte=%{x}<br>gewicht=%{y}<extra></extra>","legendgroup":"","marker":{"color":"#636efa","symbol":"circle"},"mode":"markers","name":"","orientation":"v","showlegend":false,"x":[60,70,80,90,100,110,120,130,140,150,160,170,180,190],"xaxis":"x","y":[5.5,8.0,11.5,13.5,15.8,18.2,22.0,24.0,28.0,36.0,45.0,60.0,64.0,75.0],"yaxis":"y","type":"scatter"},{"hovertemplate":"<b>OLS trendline</b><br>gewicht = 0.507451 * lengte + -32.967<br>R<sup>2</sup>=0.903689<br><br>lengte=%{x}<br>gewicht=%{y} <b>(trend)</b><extra></extra>","legendgroup":"","marker":{"color":"#636efa","symbol":"circle"},"mode":"lines","name":"","showlegend":false,"x":[60,70,80,90,100,110,120,130,140,150,160,170,180,190],"xaxis":"x","y":[-2.520000000000004,2.554505494505493,7.62901098901099,12.703516483516486,17.778021978021982,22.85252747252748,27.92703296703298,33.00153846153847,38.07604395604397,43.15054945054947,48.225054945054964,53.29956043956046,58.37406593406596,63.448571428571455],"yaxis":"y","type":"scatter"}],                        {"template":{"data":{"histogram2dcontour":[{"type":"histogram2dcontour","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"choropleth":[{"type":"choropleth","colorbar":{"outlinewidth":0,"ticks":""}}],"histogram2d":[{"type":"histogram2d","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"heatmap":[{"type":"heatmap","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"heatmapgl":[{"type":"heatmapgl","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"contourcarpet":[{"type":"contourcarpet","colorbar":{"outlinewidth":0,"ticks":""}}],"contour":[{"type":"contour","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"surface":[{"type":"surface","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"mesh3d":[{"type":"mesh3d","colorbar":{"outlinewidth":0,"ticks":""}}],"scatter":[{"fillpattern":{"fillmode":"overlay","size":10,"solidity":0.2},"type":"scatter"}],"parcoords":[{"type":"parcoords","line":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterpolargl":[{"type":"scatterpolargl","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"bar":[{"error_x":{"color":"#2a3f5f"},"error_y":{"color":"#2a3f5f"},"marker":{"line":{"color":"#E5ECF6","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"bar"}],"scattergeo":[{"type":"scattergeo","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterpolar":[{"type":"scatterpolar","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"histogram":[{"marker":{"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"histogram"}],"scattergl":[{"type":"scattergl","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatter3d":[{"type":"scatter3d","line":{"colorbar":{"outlinewidth":0,"ticks":""}},"marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scattermapbox":[{"type":"scattermapbox","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterternary":[{"type":"scatterternary","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scattercarpet":[{"type":"scattercarpet","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"carpet":[{"aaxis":{"endlinecolor":"#2a3f5f","gridcolor":"white","linecolor":"white","minorgridcolor":"white","startlinecolor":"#2a3f5f"},"baxis":{"endlinecolor":"#2a3f5f","gridcolor":"white","linecolor":"white","minorgridcolor":"white","startlinecolor":"#2a3f5f"},"type":"carpet"}],"table":[{"cells":{"fill":{"color":"#EBF0F8"},"line":{"color":"white"}},"header":{"fill":{"color":"#C8D4E3"},"line":{"color":"white"}},"type":"table"}],"barpolar":[{"marker":{"line":{"color":"#E5ECF6","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"barpolar"}],"pie":[{"automargin":true,"type":"pie"}]},"layout":{"autotypenumbers":"strict","colorway":["#636efa","#EF553B","#00cc96","#ab63fa","#FFA15A","#19d3f3","#FF6692","#B6E880","#FF97FF","#FECB52"],"font":{"color":"#2a3f5f"},"hovermode":"closest","hoverlabel":{"align":"left"},"paper_bgcolor":"white","plot_bgcolor":"#E5ECF6","polar":{"bgcolor":"#E5ECF6","angularaxis":{"gridcolor":"white","linecolor":"white","ticks":""},"radialaxis":{"gridcolor":"white","linecolor":"white","ticks":""}},"ternary":{"bgcolor":"#E5ECF6","aaxis":{"gridcolor":"white","linecolor":"white","ticks":""},"baxis":{"gridcolor":"white","linecolor":"white","ticks":""},"caxis":{"gridcolor":"white","linecolor":"white","ticks":""}},"coloraxis":{"colorbar":{"outlinewidth":0,"ticks":""}},"colorscale":{"sequential":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"sequentialminus":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"diverging":[[0,"#8e0152"],[0.1,"#c51b7d"],[0.2,"#de77ae"],[0.3,"#f1b6da"],[0.4,"#fde0ef"],[0.5,"#f7f7f7"],[0.6,"#e6f5d0"],[0.7,"#b8e186"],[0.8,"#7fbc41"],[0.9,"#4d9221"],[1,"#276419"]]},"xaxis":{"gridcolor":"white","linecolor":"white","ticks":"","title":{"standoff":15},"zerolinecolor":"white","automargin":true,"zerolinewidth":2},"yaxis":{"gridcolor":"white","linecolor":"white","ticks":"","title":{"standoff":15},"zerolinecolor":"white","automargin":true,"zerolinewidth":2},"scene":{"xaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2},"yaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2},"zaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2}},"shapedefaults":{"line":{"color":"#2a3f5f"}},"annotationdefaults":{"arrowcolor":"#2a3f5f","arrowhead":0,"arrowwidth":1},"geo":{"bgcolor":"white","landcolor":"#E5ECF6","subunitcolor":"white","showland":true,"showlakes":true,"lakecolor":"white"},"title":{"x":0.05},"mapbox":{"style":"light"}}},"xaxis":{"anchor":"y","domain":[0.0,1.0],"title":{"text":"lengte"}},"yaxis":{"anchor":"x","domain":[0.0,1.0],"title":{"text":"gewicht"}},"legend":{"tracegroupgap":0},"title":{"text":"Lengte en gewicht van jongens 1-21 jaar"}},                        {"responsive": true}                    ).then(function(){
+                            
+var gd = document.getElementById('9f8f3d20-6b1f-419b-9e81-1feddb6b1c56');
+var x = new MutationObserver(function (mutations, observer) {{
+        var display = window.getComputedStyle(gd).display;
+        if (!display || display === 'none') {{
+            console.log([gd, 'removed!']);
+            Plotly.purge(gd);
+            observer.disconnect();
+        }}
+}});
+
+// Listen for the removal of the full notebook cells
+var notebookContainer = gd.closest('#notebook-container');
+if (notebookContainer) {{
+    x.observe(notebookContainer, {childList: true});
+}}
+
+// Listen for the clearing of the current output cell
+var outputEl = gd.closest('.output');
+if (outputEl) {{
+    x.observe(outputEl, {childList: true});
+}}
+
+                        })                };                });            </script>        </div>
+</div>
+</div>
+<blockquote class="blockquote">
+<p>data van: https://www.tno.nl/groei</p>
+</blockquote>
+<p>Twee jaar geleden (v1) had ik ook een ML model gemaakt maar dit keer wilde ik nieuwe features gebruiken. In V1 had ik het idee om de races op te delen in types (vlak, heuvelachtig met vlakke finish, heuvelachtig met finish bergop, gebergte met vlakke finish en gebergte met finish bergop; Voor de races waar dit niet voor bekend was had ik zelfs een model getraind om dat te voorspellen). Vervolgens had ik voor iedere types de plekken 1 t/m 4, 5 t/m 8 en 9 t/m 12 ingedeeld (zie Tabel hieronder). Voor iedere renner telde ik dan in het voorgaande jaar hoe vaak iemand deze uitslag in deze type had (zie voorbeeld van Chris Froome hieronder). Hoewel ik best tevreden was met deze features, namen ze niet mee hoe sterk het deelnemersveld was. Wanneer je veel wint maar je tegenstand niet heel sterk is, is deze overwinning minder relevant (weer een grove aanname) in de Tour, want in de Tour is het deelnemersveld vaak erg sterk. Daarom heb ik voor deze Tour de France nieuwe features bedacht.</p>
+<table class="table">
+<thead>
+<tr class="header">
+<th>Features</th>
+<th>Chris Froome</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>PCS</td>
+<td>1377</td>
+</tr>
+<tr class="even">
+<td>Team PCS</td>
+<td>4172</td>
+</tr>
+<tr class="odd">
+<td>Age</td>
+<td>29</td>
+</tr>
+<tr class="even">
+<td>flat1-4</td>
+<td>1.0</td>
+</tr>
+<tr class="odd">
+<td>flat5-8</td>
+<td>0.0</td>
+</tr>
+<tr class="even">
+<td>flat9-12</td>
+<td>2.0</td>
+</tr>
+<tr class="odd">
+<td>hills(flat)1-4</td>
+<td>1.0</td>
+</tr>
+<tr class="even">
+<td>hills(flat)5-8</td>
+<td>0.0</td>
+</tr>
+<tr class="odd">
+<td>hills(flat)9-12</td>
+<td>1.0</td>
+</tr>
+<tr class="even">
+<td>hills(uphill)1-4</td>
+<td>2.0</td>
+</tr>
+<tr class="odd">
+<td>hills(uphill)5-8</td>
+<td>1.0</td>
+</tr>
+<tr class="even">
+<td>hills(uphill)9-12</td>
+<td>1.0</td>
+</tr>
+<tr class="odd">
+<td>mountains(flat)1-4</td>
+<td>1.0</td>
+</tr>
+<tr class="even">
+<td>mountains(flat)5-8</td>
+<td>0.0</td>
+</tr>
+<tr class="odd">
+<td>mountains(flat)9-12</td>
+<td>1.0</td>
+</tr>
+<tr class="even">
+<td>mountains(uphill)1-4</td>
+<td>4.0</td>
+</tr>
+<tr class="odd">
+<td>mountains(uphill)5-8</td>
+<td>5.0</td>
+</tr>
+<tr class="even">
+<td>mountains(uphill)9-12</td>
+<td>1.0</td>
+</tr>
+<tr class="odd">
+<td>gc1-4</td>
+<td>3.0</td>
+</tr>
+<tr class="even">
+<td>gc5-8</td>
+<td>1.0</td>
+</tr>
+<tr class="odd">
+<td>gc9-12</td>
+<td>1.0</td>
+</tr>
+</tbody>
+</table>
+<p>Voor deze Tour nemen we bij iedere rit dus de sterkte van het deelnemersveld mee. Dat doen we door de gemiddelde PCS score van de top-20 uit te rekenen. Vervolgens verdelen we de ritten in 5 kwantielen (zeer weinig competitief, weinig competitief, competitief, erg competitief en zeer erg competitief). En daarbij had ik dan dit keer de resultaten als volgt verdeeld: 1 t/m 5, 6 t/m 10, 11 t/m 15 en 16 t/m 20 (zie tabel met voorbeeld van Wout van Aert hieronder).</p>
+<table class="table">
+<thead>
+<tr class="header">
+<th>Features</th>
+<th>Wout van Aert</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>PCS</td>
+<td>2820</td>
+</tr>
+<tr class="even">
+<td>Team PCS</td>
+<td>9724</td>
+</tr>
+<tr class="odd">
+<td>PCS ratio</td>
+<td>0.29</td>
+</tr>
+<tr class="even">
+<td>Age</td>
+<td>27</td>
+</tr>
+<tr class="odd">
+<td>top_5s_category_0</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td>top_10s_category_0</td>
+<td>0</td>
+</tr>
+<tr class="odd">
+<td>top_15s_category_0</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td>top_20s_category_0</td>
+<td>0</td>
+</tr>
+<tr class="odd">
+<td>top_5s_category_1</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td>top_10s_category_1</td>
+<td>0.0</td>
+</tr>
+<tr class="odd">
+<td>top_15s_category_1</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td>top_20s_category_1</td>
+<td>0</td>
+</tr>
+<tr class="odd">
+<td>top_5s_category_2</td>
+<td>2</td>
+</tr>
+<tr class="even">
+<td>top_10s_category_2</td>
+<td>0</td>
+</tr>
+<tr class="odd">
+<td>top_15s_category_2</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td>top_20s_category_2</td>
+<td>0</td>
+</tr>
+<tr class="odd">
+<td>top_5s_category_3</td>
+<td>1</td>
+</tr>
+<tr class="even">
+<td>top_10s_category_3</td>
+<td>1</td>
+</tr>
+<tr class="odd">
+<td>top_15s_category_3</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td>top_20s_category_3</td>
+<td>0</td>
+</tr>
+<tr class="odd">
+<td>top_5s_category_4</td>
+<td>11</td>
+</tr>
+<tr class="even">
+<td>top_10s_category_4</td>
+<td>2</td>
+</tr>
+<tr class="odd">
+<td>top_15s_category_4</td>
+<td>2</td>
+</tr>
+<tr class="even">
+<td>top_20s_category_4</td>
+<td>0</td>
+</tr>
+<tr class="odd">
+<td>top_5s_category_gc</td>
+<td>1.0</td>
+</tr>
+<tr class="even">
+<td>top_10s_category_gc</td>
+<td>0.0</td>
+</tr>
+<tr class="odd">
+<td>top_15s_category_gc</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td>top_20s_category_gc</td>
+<td>0</td>
+</tr>
+</tbody>
+</table>
+<p>Daarnaast had ik nog een aantal renner specifieke features: leeftijd, PCS score, PCS punten van het team en PCS ratio (eigen PCS / team PCS). Nu hebben we alle features waarop we een ML model kunnen trainen!</p>
+</section>
+<section id="het-trainen-van-een-model" class="level1">
+<h1>Het trainen van een model</h1>
+<p>Voor data, zoals in dit project, in een tabel structuur is het meest gebruikte en vaak ook beste model een vorm van een gradient boosted tree. In het kort is een tree vaak verdeeld in een aantal ja/nee vragen. Een voorbeeld van een simpele tree is een decision tree (voorbeeld hieronder). Het idee van deze tree is in de loop van de tijd al meer uitgebreid, van random forests naar dus gradient boosted trees. Dit zijn (simpel en kort door de bocht) een verzameling van meerdere trees die na het trainen heel goed zijn om een voorspelling te maken. Een van mijn favoriete tree algoritmes is XGBoost en deze gaan we dan ook gebruiken!</p>
+<p><img src="images/tussenproject_decision_tree_example.PNG" class="img-fluid"></p>
+<p>Een XGBoost model is redelijk makkelijk te trainen door (jawel alweer!) een Python package: XGBoost. Alhoewel, je hebt dan nog heel veel instellingen die kunt optimaliseren. Gelukkig heb je daar ook een goede bron voor, namelijk Gridsearch van Sklearn (alweer een package!). Wanneer je Gridsearch en XGBoost combineert kan je meerdere instellingen vergelijken en dan krijg je als resultaat de getrainde modellen (met de verschillende parameters). Je kunt dan zelfs het beste model met de beste instellingen opvragen! Ideaal en het voelt als magie!</p>
+</section>
+<section id="de-resultaten" class="level1">
+<h1>De resultaten</h1>
+<p>De resultaten van het model zien er op het eerste gezicht niet raar uit (zie hieronder). De volgens Wielerpoule duurste renners zitten qua voorspelling bovenin. Met voor mij als opvallendste naam Vlasov (voor mij geen bekende naam maar de laatste tijd volg ik het wielrennen nauwelijks). Om mijn team samen te stellen heb ik de voorspelde punten gedeeld door de kosten. En daar heb ik, naast de top 4, mijn team mee opgevuld. Eens zien of we mee gaan spelen voor de prijzen!</p>
+<table class="table">
+<thead>
+<tr class="header">
+<th></th>
+<th>rider_name</th>
+<th>prediction</th>
+<th>price</th>
+<th>score_price_ratio</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td></td>
+<td>VAN DER POEL Mathieu</td>
+<td>84.196594</td>
+<td>200</td>
+<td>0.420983</td>
+</tr>
+<tr class="even">
+<td></td>
+<td>VLASOV Aleksandr</td>
+<td>75.061699</td>
+<td>150</td>
+<td>0.500411</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td>POGACAR Tadej</td>
+<td>70.501328</td>
+<td>200</td>
+<td>0.352507</td>
+</tr>
+<tr class="even">
+<td></td>
+<td>ROGLIC Primož</td>
+<td>67.192093</td>
+<td>200</td>
+<td>0.335960</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td>VAN AERT Wout</td>
+<td>66.121864</td>
+<td>200</td>
+<td>0.330609</td>
+</tr>
+<tr class="even">
+<td></td>
+<td>MARTINEZ Daniel Felipe</td>
+<td>58.990757</td>
+<td>100</td>
+<td>0.589908</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td>VINGEGAARD Jonas</td>
+<td>57.898109</td>
+<td>150</td>
+<td>0.385987</td>
+</tr>
+<tr class="even">
+<td></td>
+<td>JAKOBSEN Fabio</td>
+<td>55.955868</td>
+<td>150</td>
+<td>0.373039</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td>KUNG Stefan</td>
+<td>55.773567</td>
+<td>100</td>
+<td>0.557736</td>
+</tr>
+<tr class="even">
+<td></td>
+<td>KRISTOFF Alexander</td>
+<td>54.939995</td>
+<td>100</td>
+<td>0.549400</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td>COSNEFROY Benoit</td>
+<td>54.132721</td>
+<td>100</td>
+<td>0.541327</td>
+</tr>
+<tr class="even">
+<td></td>
+<td>PEDERSEN Mads</td>
+<td>50.576691</td>
+<td>100</td>
+<td>0.505767</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td>MOHORIC Matej</td>
+<td>50.398064</td>
+<td>100</td>
+<td>0.503981</td>
+</tr>
+<tr class="even">
+<td></td>
+<td>VAN BAARLE Dylan</td>
+<td>49.590599</td>
+<td>100</td>
+<td>0.495906</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td>HOFSTETTER Hugo</td>
+<td>49.079250</td>
+<td>100</td>
+<td>0.490793</td>
+</tr>
+<tr class="even">
+<td></td>
+<td>EWAN Caleb</td>
+<td>46.512360</td>
+<td>100</td>
+<td>0.465124</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td>LAPORTE Christophe</td>
+<td>44.920681</td>
+<td>100</td>
+<td>0.449207</td>
+</tr>
+<tr class="even">
+<td></td>
+<td>TEUNS Dylan</td>
+<td>44.595673</td>
+<td>100</td>
+<td>0.445957</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td>MCNULTY Brandon</td>
+<td>44.574734</td>
+<td>100</td>
+<td>0.445747</td>
+</tr>
+<tr class="even">
+<td></td>
+<td>PHILIPSEN Jasper</td>
+<td>44.041866</td>
+<td>100</td>
+<td>0.440419</td>
+</tr>
+</tbody>
+</table>
+<p>Tot de volgende keer en veel plezier met het volgen van de Tour de France!</p>
+<p>Mees</p>
+<p>P.S: De uiteindelijke dataset samen met de code voor het trainen van het ML model kan je vinden in <a href="https://github.com/Mees-Molenaar/cycling-fantasy-prediction/tree/master/v2">deze Github repo</a>.</p>
+<p>P.S 2: Tot dusver werkt het model (na ongeveer 1 week) redelijk. Helaas valt Mathieu van der Poel tegen (en die was het duurste).</p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>
