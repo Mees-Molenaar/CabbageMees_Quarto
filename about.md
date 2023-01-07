@@ -10,31 +10,28 @@ Leuk dat je kijkt op deze blog van een rare vogel (een Koolmees bijvoorbeeld). A
 
 Dit blog gaat dus over twee passies Artificiele Intelligentie (AI) en biologie. Op dit moment is eerst het plan om een van de beste AI beoefenaars te worden van Nederland. Om dat vervolgens toe te passen in de Biologie met als droom: op een goedkopere manier medicijnen te ontwikkelen. Ik neem jullie mee op dit avontuur.
 
-Omdat de focus op dit moment ligt bij de beste AI beoefenaar te worden zal de komende tijd vooral de focus liggen op de volgende zaken:
+De laatste tijd ligt op Software ontwikkeling. Ondertussen heb ik de eerste ervaringen met Flutter voor het maken van mobiele maar ook web apps. Programmeren in Flutter is zo een fijne ervaring dat ik mij daar graag verder in ontwikkel.
 
-- Programmeren (vooral Python)
-- AI-technieken
+Daarnaast ben ik ook vooral bezig met Python. Hiermee was ik begonnen omdat het een gemakkelijke taal is en er veel online cursussen zijn over Machine Learning gebruiken die Python gebruiken. Nu ben ik bezig met een App waarmee ik de back-end met FastAPI (een Python package) aan het schrijven ben. Omdat Python veel in de ML wereld wordt gebruikt en ik mij daar in de toekomst weer mee bezig blijf houden ga ik mij daar graag verder in verdiepen.
 
-Wanneer ik dit beter onder de knie heb, wil ik ook mijn focus wat meer verschuiven naar AI in de biologie!
+Als laatste, het word al minder gebruikelijk om fysieke servers te hebben. Bijna alles gaat nu in de Cloud. Het is een interessante manier van programmeren en eigenlijk zorgt het ervoor dat je alles kan doen wat je maar wilt. Daarom wil ik dit jaar mij graag ook verder ontwikkelen in dit gebied.
 
-### Wat doe ik nu (07JUN22)
+Mijn droom is nog steeds om AI, programmeren en biologie te combineren. Maar eerst wil ik deze programmeer fundamenten goed onder de knie hebben.
+
+### Wat doe ik nu (07JAN23)
 
 Werk: Consultant bij Navara
 
 #### Project
 
-- Flutter App maken
+- Recepten App maken
 
 #### Boeken
 
-- Herman Hesse - SteppenWolf (Roman)
+- Ayn Rand - Atlas Shrugged
 - Gerald Jay Sussman en Hal Abelson - Structure and Interpretation of Computer Programs (Programmeren)
 
 #### Cursussen
 
 - [Berkeley 61A](https://archive.org/details/ucberkeley-webcast-PL3E89002AA9B9879E?sort=titleSorter)
-- [Flutter Course for Beginners](https://www.youtube.com/watch?v=VPvVD8t02U8)
-
-This website is powered by **[fastpages](https://github.com/fastai/fastpages)** [^1].
-
-[^1]: a blogging platform that natively supports Jupyter notebooks in addition to other formats.
+- [AWS Developer Associate](https://www.udemy.com/course/aws-certified-developer-associate-dva-c01/)
