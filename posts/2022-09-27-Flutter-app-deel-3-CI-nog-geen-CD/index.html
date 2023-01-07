@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.2.269">
+<meta name="generator" content="quarto-1.2.313">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -253,6 +253,7 @@ gtag('config', 'G-9GMDP6RW3B', { 'anonymize_ip': true});
 <h1>Intro</h1>
 <p>Hallootjes,</p>
 <p>welkom bij de volgende stap in het proces om een Flutter app te maken. In de vorige post heb ik de app-structuur bepaald, maar voordat wij daaraan beginnen gaan we eerst een Continuous Integration (CI) pipeline opzetten. Deze pipeline zorgt ervoor dat wanneer er nieuwe code wordt gepushed er automatisch wordt gecontroleerd of de bestaande code en app nog naar behoren werken. Dit doe je door tests te schrijven die vervolgens worden uitgevoerd door je pipeline.</p>
+<p>PS: <a href="https://github.com/Mees-Molenaar/blog-daily-practices-app">Hier is de Github repository</a></p>
 <p>In Flutter heb je drie soorten tests: integration, widget en unit tests. Laten we eerst kijken naar de integration tests. Dit zijn tests om de gehele app te testen. Deze test repliceert het gedrag van een gebruiker en is wat mij betreft daarom ook de belangrijkste soort test. Deze tests moeten altijd werken om te garanderen dat je app hetzelfde functioneert. Ten tweede, widget test: dit zijn tests (zoals de naam al doet vermoeden) om widgets, onderdelen van de User Interface (UI) te testen. En als laatste unit tests. Deze tests zijn handig om de werkzaamheid van losse functies of classes te testen. En deze tests zouden zo simpel moeten zijn dat ze zelfs op de pc van je oma kunnen draaien (ben de bron van deze quote kwijt). Maar waarom testen wij eigenlijk?</p>
 <p>Er zijn een legio voordelen aan het automatisch testen van code, zoals het besparen van kosten (omdat je (minder) manueel hoeft te testen), sneller developen en deployen en een hogere code qualiteit. Lees voor nog meer voordelen en adviezen over automatisch testen eens The DevOps Handbook. Maar de belangrijkste van alles is het korter maken van de feedback loop. Als developer is er namelijk niets frustrerender dan dat je code hebt gemaakt waarna je maanden later hoort dat er iets niet werkte. Het zou veel beter zijn om direct te weten dat er iets niet meer werkt zodat je na jou aanpassing/toevoeging het probleem direct kan oplossen en daar dan ook van te leren. In tegenstelling tot lang wachten want dan weet je niet eens meer waarom je dat stukje code hebt geschreven laat staan hoe je het kunt oplossen.</p>
 </section>
@@ -287,7 +288,7 @@ gtag('config', 'G-9GMDP6RW3B', { 'anonymize_ip': true});
 <span id="cb1-18"><a href="#cb1-18"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Install and set Flutter version</span></span>
 <span id="cb1-19"><a href="#cb1-19"></a><span class="at">        </span><span class="fu">uses</span><span class="kw">:</span><span class="at"> subosito/flutter-action@v2</span></span>
 <span id="cb1-20"><a href="#cb1-20"></a><span class="at">        </span><span class="fu">with</span><span class="kw">:</span></span>
-<span id="cb1-21"><a href="#cb1-21"></a><span class="at">          </span><span class="fu">flutter-version</span><span class="kw">:</span><span class="at"> </span><span class="st">"3.0.5"</span></span>
+<span id="cb1-21"><a href="#cb1-21"></a><span class="at">          </span><span class="fu">flutter-version</span><span class="kw">:</span><span class="at"> </span><span class="st">"3.3.10"</span></span>
 <span id="cb1-22"><a href="#cb1-22"></a><span class="at">          </span><span class="fu">channel</span><span class="kw">:</span><span class="at"> </span><span class="st">"stable"</span></span>
 <span id="cb1-23"><a href="#cb1-23"></a></span>
 <span id="cb1-24"><a href="#cb1-24"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Show Flutter version</span></span>
@@ -330,7 +331,7 @@ gtag('config', 'G-9GMDP6RW3B', { 'anonymize_ip': true});
 <span id="cb2-18"><a href="#cb2-18"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Install and set Flutter version</span></span>
 <span id="cb2-19"><a href="#cb2-19"></a><span class="at">        </span><span class="fu">uses</span><span class="kw">:</span><span class="at"> subosito/flutter-action@v2</span></span>
 <span id="cb2-20"><a href="#cb2-20"></a><span class="at">        </span><span class="fu">with</span><span class="kw">:</span></span>
-<span id="cb2-21"><a href="#cb2-21"></a><span class="at">          </span><span class="fu">flutter-version</span><span class="kw">:</span><span class="at"> </span><span class="st">"3.0.5"</span></span>
+<span id="cb2-21"><a href="#cb2-21"></a><span class="at">          </span><span class="fu">flutter-version</span><span class="kw">:</span><span class="at"> </span><span class="st">"3.3.10"</span></span>
 <span id="cb2-22"><a href="#cb2-22"></a><span class="at">          </span><span class="fu">channel</span><span class="kw">:</span><span class="at"> </span><span class="st">"stable"</span></span>
 <span id="cb2-23"><a href="#cb2-23"></a></span>
 <span id="cb2-24"><a href="#cb2-24"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Show Flutter version</span></span>
@@ -342,14 +343,14 @@ gtag('config', 'G-9GMDP6RW3B', { 'anonymize_ip': true});
 <span id="cb2-30"><a href="#cb2-30"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Start Chromedriver</span></span>
 <span id="cb2-31"><a href="#cb2-31"></a><span class="at">        </span><span class="fu">run</span><span class="kw">:</span><span class="at"> chromedriver --port=4444 &amp;</span></span>
 <span id="cb2-32"><a href="#cb2-32"></a></span>
-<span id="cb2-33"><a href="#cb2-33"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Run Web instrumentation test</span></span>
-<span id="cb2-34"><a href="#cb2-34"></a><span class="at">        </span><span class="fu">run</span><span class="kw">:</span><span class="at"> flutter drive --driver=test_driver/integration_test.dart --target=integration_test/app_test.dart -d web-server</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb2-33"><a href="#cb2-33"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Run Web integration test</span></span>
+<span id="cb2-34"><a href="#cb2-34"></a><span class="at">        </span><span class="fu">run</span><span class="kw">:</span><span class="at"> flutter drive --driver=test_driver/integration_test.dart --target=integration_test/integration_test.dart -d web-server</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Voorbeeld is gebaseerd op: <a href="https://flutterfly.io/post/gha-automated-tests/">Run Flutter Integration Tests in GitHub Actions</a></p>
 </section>
 <section id="iphone-integration-tests" class="level1">
 <h1>IPhone Integration Tests</h1>
 <p>Nu zijn we aangekomen bij de complexere integration tests (en ook bij de duurdere wanneer je een Private repo hebt). Deze tests worden namelijk uitgevoerd op een macOS runner. Ook zit er een klein stukje code in de Github Action dat ervoor zorgt dat je de juiste UDID krijgt van de IPhone Emulator. Met deze UDID kan je dan succesvol de integration testen uitvoeren (zie voorbeeld Action hieronder). In het geval van deze integration tests kun je de folder waar de tests zich bevinden aangeven i.p.v. een bestand zoals met de web integration tests. Hierdoor kan je de tests wel verdelen in verschillende bestanden.</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode numberSource yaml number-lines code-with-copy"><code class="sourceCode yaml"><span id="cb3-1"><a href="#cb3-1"></a><span class="fu">name</span><span class="kw">:</span><span class="at"> flutter iphone instrumentation test</span></span>
+<div class="sourceCode" id="cb3"><pre class="sourceCode numberSource yaml number-lines code-with-copy"><code class="sourceCode yaml"><span id="cb3-1"><a href="#cb3-1"></a><span class="fu">name</span><span class="kw">:</span><span class="at"> flutter iphone integration test</span></span>
 <span id="cb3-2"><a href="#cb3-2"></a></span>
 <span id="cb3-3"><a href="#cb3-3"></a><span class="co"># Perform action when code is pushed to the main branch</span></span>
 <span id="cb3-4"><a href="#cb3-4"></a><span class="fu">on</span><span class="kw">:</span></span>
@@ -357,14 +358,14 @@ gtag('config', 'G-9GMDP6RW3B', { 'anonymize_ip': true});
 <span id="cb3-6"><a href="#cb3-6"></a><span class="at">    </span><span class="fu">branches</span><span class="kw">:</span><span class="at"> </span><span class="kw">[</span><span class="at">main</span><span class="kw">]</span></span>
 <span id="cb3-7"><a href="#cb3-7"></a></span>
 <span id="cb3-8"><a href="#cb3-8"></a><span class="fu">jobs</span><span class="kw">:</span></span>
-<span id="cb3-9"><a href="#cb3-9"></a><span class="at">  </span><span class="fu">iphone_instrumentation_test</span><span class="kw">:</span></span>
+<span id="cb3-9"><a href="#cb3-9"></a><span class="at">  </span><span class="fu">iphone_integration_test</span><span class="kw">:</span></span>
 <span id="cb3-10"><a href="#cb3-10"></a><span class="co">    # </span><span class="al">NOTE</span><span class="co">: Running on macOS</span></span>
 <span id="cb3-11"><a href="#cb3-11"></a><span class="at">    </span><span class="fu">runs-on</span><span class="kw">:</span><span class="at"> macOS-latest</span></span>
 <span id="cb3-12"><a href="#cb3-12"></a></span>
 <span id="cb3-13"><a href="#cb3-13"></a><span class="co">    # The device name is saved in an environment variable</span></span>
 <span id="cb3-14"><a href="#cb3-14"></a><span class="co">    # we use this environment variable to search for the device UDID</span></span>
 <span id="cb3-15"><a href="#cb3-15"></a><span class="at">    </span><span class="fu">env</span><span class="kw">:</span></span>
-<span id="cb3-16"><a href="#cb3-16"></a><span class="at">      </span><span class="fu">device</span><span class="kw">:</span><span class="at"> </span><span class="st">'iPhone 13 Simulator \(15.2\)'</span></span>
+<span id="cb3-16"><a href="#cb3-16"></a><span class="at">      </span><span class="fu">device</span><span class="kw">:</span><span class="at"> </span><span class="st">'iPhone 13 Simulator \(16.0\)'</span></span>
 <span id="cb3-17"><a href="#cb3-17"></a></span>
 <span id="cb3-18"><a href="#cb3-18"></a><span class="at">    </span><span class="fu">steps</span><span class="kw">:</span></span>
 <span id="cb3-19"><a href="#cb3-19"></a><span class="co">      # We list the simulators for debugging purposes</span></span>
@@ -381,7 +382,7 @@ gtag('config', 'G-9GMDP6RW3B', { 'anonymize_ip': true});
 <span id="cb3-30"><a href="#cb3-30"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Install and set Flutter version</span></span>
 <span id="cb3-31"><a href="#cb3-31"></a><span class="at">        </span><span class="fu">uses</span><span class="kw">:</span><span class="at"> subosito/flutter-action@v2</span></span>
 <span id="cb3-32"><a href="#cb3-32"></a><span class="at">        </span><span class="fu">with</span><span class="kw">:</span></span>
-<span id="cb3-33"><a href="#cb3-33"></a><span class="at">          </span><span class="fu">flutter-version</span><span class="kw">:</span><span class="at"> </span><span class="st">"3.0.5"</span></span>
+<span id="cb3-33"><a href="#cb3-33"></a><span class="at">          </span><span class="fu">flutter-version</span><span class="kw">:</span><span class="at"> </span><span class="st">"3.3.10"</span></span>
 <span id="cb3-34"><a href="#cb3-34"></a><span class="at">          </span><span class="fu">channel</span><span class="kw">:</span><span class="at"> </span><span class="st">"stable"</span></span>
 <span id="cb3-35"><a href="#cb3-35"></a></span>
 <span id="cb3-36"><a href="#cb3-36"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Show Flutter version</span></span>
@@ -431,7 +432,7 @@ gtag('config', 'G-9GMDP6RW3B', { 'anonymize_ip': true});
 <span id="cb4-26"><a href="#cb4-26"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Install and set Flutter version</span></span>
 <span id="cb4-27"><a href="#cb4-27"></a><span class="at">        </span><span class="fu">uses</span><span class="kw">:</span><span class="at"> subosito/flutter-action@v2</span></span>
 <span id="cb4-28"><a href="#cb4-28"></a><span class="at">        </span><span class="fu">with</span><span class="kw">:</span></span>
-<span id="cb4-29"><a href="#cb4-29"></a><span class="at">          </span><span class="fu">flutter-version</span><span class="kw">:</span><span class="at"> </span><span class="st">"3.0.5"</span></span>
+<span id="cb4-29"><a href="#cb4-29"></a><span class="at">          </span><span class="fu">flutter-version</span><span class="kw">:</span><span class="at"> </span><span class="st">"3.3.10"</span></span>
 <span id="cb4-30"><a href="#cb4-30"></a><span class="at">          </span><span class="fu">channel</span><span class="kw">:</span><span class="at"> </span><span class="st">"stable"</span></span>
 <span id="cb4-31"><a href="#cb4-31"></a></span>
 <span id="cb4-32"><a href="#cb4-32"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Show Flutter version</span></span>

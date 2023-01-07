@@ -2,46 +2,46 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://cabbagemees.nl/about.html</loc>
-    <lastmod>2022-12-07T15:59:55.192Z</lastmod>
+    <lastmod>2023-01-07T19:12:00.543Z</lastmod>
   </url>
   <url>
     <loc>https://cabbagemees.nl/posts/2022-06-07-Een-nieuwe-stap/index.html</loc>
-    <lastmod>2022-12-07T15:59:56.156Z</lastmod>
-  </url>
-  <url>
-    <loc>https://cabbagemees.nl/posts/2022-07-27-Flutter-app-deel-2-app-architectuur/index.html</loc>
-    <lastmod>2022-12-07T15:59:56.692Z</lastmod>
-  </url>
-  <url>
-    <loc>https://cabbagemees.nl/posts/2022-06-27-Flutter-app-deel-1-voorbereiding/index.html</loc>
-    <lastmod>2022-12-07T15:59:57.204Z</lastmod>
-  </url>
-  <url>
-    <loc>https://cabbagemees.nl/posts/2022-11-27-Side-Project-FastAPI-nbdev/index.html</loc>
-    <lastmod>2022-12-07T15:59:57.632Z</lastmod>
-  </url>
-  <url>
-    <loc>https://cabbagemees.nl/posts/2021-05-26-Eerste-blog-post/index.html</loc>
-    <lastmod>2022-12-07T15:59:58.052Z</lastmod>
-  </url>
-  <url>
-    <loc>https://cabbagemees.nl/posts/2022-10-16-Flutter-app-deel-4-de-integration-test/index.html</loc>
-    <lastmod>2022-12-07T15:59:58.496Z</lastmod>
+    <lastmod>2023-01-07T19:12:01.263Z</lastmod>
   </url>
   <url>
     <loc>https://cabbagemees.nl/posts/2022-09-27-Flutter-app-deel-3-CI-nog-geen-CD/index.html</loc>
-    <lastmod>2022-12-07T15:59:59.068Z</lastmod>
+    <lastmod>2023-01-07T19:12:01.783Z</lastmod>
   </url>
   <url>
-    <loc>https://cabbagemees.nl/posts/2021-06-19-Kwaadaardige-Moedervlekken/index.html</loc>
-    <lastmod>2022-12-07T15:59:59.556Z</lastmod>
+    <loc>https://cabbagemees.nl/posts/2022-07-27-Flutter-app-deel-2-app-architectuur/index.html</loc>
+    <lastmod>2023-01-07T19:12:02.199Z</lastmod>
+  </url>
+  <url>
+    <loc>https://cabbagemees.nl/posts/2022-06-27-Flutter-app-deel-1-voorbereiding/index.html</loc>
+    <lastmod>2023-01-07T19:12:02.603Z</lastmod>
+  </url>
+  <url>
+    <loc>https://cabbagemees.nl/posts/2022-11-27-Side-Project-FastAPI-nbdev/index.html</loc>
+    <lastmod>2023-01-07T19:12:02.987Z</lastmod>
+  </url>
+  <url>
+    <loc>https://cabbagemees.nl/posts/2021-05-26-Eerste-blog-post/index.html</loc>
+    <lastmod>2023-01-07T19:12:03.299Z</lastmod>
+  </url>
+  <url>
+    <loc>https://cabbagemees.nl/posts/2022-10-16-Flutter-app-deel-4-de-integration-test/index.html</loc>
+    <lastmod>2023-01-07T19:12:03.667Z</lastmod>
   </url>
   <url>
     <loc>https://cabbagemees.nl/posts/2022-07-13-Tussenproject-Tour-De-France-Voorspellen/index.html</loc>
-    <lastmod>2022-12-07T16:00:00.180Z</lastmod>
+    <lastmod>2023-01-07T19:12:04.167Z</lastmod>
+  </url>
+  <url>
+    <loc>https://cabbagemees.nl/posts/2021-06-19-Kwaadaardige-Moedervlekken/index.html</loc>
+    <lastmod>2023-01-07T19:12:04.559Z</lastmod>
   </url>
   <url>
     <loc>https://cabbagemees.nl/index.html</loc>
-    <lastmod>2022-12-07T16:00:00.764Z</lastmod>
+    <lastmod>2023-01-07T19:12:05.059Z</lastmod>
   </url>
 </urlset>
