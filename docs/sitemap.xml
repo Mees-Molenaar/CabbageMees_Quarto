@@ -1,47 +1,51 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>https://cabbagemees.nl/posts/2023-01-08-Flutter-app-deel-5-start-app/index.html</loc>
+    <lastmod>2023-01-11T19:29:30.563Z</lastmod>
+  </url>
+  <url>
     <loc>https://cabbagemees.nl/posts/2022-07-27-Flutter-app-deel-2-app-architectuur/index.html</loc>
-    <lastmod>2023-01-07T19:24:34.512Z</lastmod>
+    <lastmod>2023-01-11T19:29:30.939Z</lastmod>
   </url>
   <url>
     <loc>https://cabbagemees.nl/posts/2022-11-27-Side-Project-FastAPI-nbdev/index.html</loc>
-    <lastmod>2023-01-07T19:24:34.857Z</lastmod>
+    <lastmod>2023-01-11T19:29:31.269Z</lastmod>
   </url>
   <url>
     <loc>https://cabbagemees.nl/posts/2021-05-26-Eerste-blog-post/index.html</loc>
-    <lastmod>2023-01-07T19:24:35.171Z</lastmod>
+    <lastmod>2023-01-11T19:29:31.586Z</lastmod>
   </url>
   <url>
     <loc>https://cabbagemees.nl/posts/2022-09-27-Flutter-app-deel-3-CI-nog-geen-CD/index.html</loc>
-    <lastmod>2023-01-07T19:24:35.581Z</lastmod>
+    <lastmod>2023-01-11T19:29:31.985Z</lastmod>
   </url>
   <url>
     <loc>https://cabbagemees.nl/posts/2022-07-13-Tussenproject-Tour-De-France-Voorspellen/index.html</loc>
-    <lastmod>2023-01-07T19:24:36.020Z</lastmod>
+    <lastmod>2023-01-11T19:29:32.433Z</lastmod>
   </url>
   <url>
     <loc>https://cabbagemees.nl/posts/2021-06-19-Kwaadaardige-Moedervlekken/index.html</loc>
-    <lastmod>2023-01-07T19:24:36.377Z</lastmod>
+    <lastmod>2023-01-11T19:29:32.776Z</lastmod>
   </url>
   <url>
     <loc>https://cabbagemees.nl/posts/2022-06-27-Flutter-app-deel-1-voorbereiding/index.html</loc>
-    <lastmod>2023-01-07T19:24:36.714Z</lastmod>
+    <lastmod>2023-01-11T19:29:33.133Z</lastmod>
   </url>
   <url>
     <loc>https://cabbagemees.nl/posts/2022-06-07-Een-nieuwe-stap/index.html</loc>
-    <lastmod>2023-01-07T19:24:37.017Z</lastmod>
+    <lastmod>2023-01-11T19:29:33.465Z</lastmod>
   </url>
   <url>
     <loc>https://cabbagemees.nl/posts/2022-10-16-Flutter-app-deel-4-de-integration-test/index.html</loc>
-    <lastmod>2023-01-07T19:24:37.355Z</lastmod>
+    <lastmod>2023-01-11T19:29:33.798Z</lastmod>
   </url>
   <url>
     <loc>https://cabbagemees.nl/index.html</loc>
-    <lastmod>2023-01-07T19:24:37.729Z</lastmod>
+    <lastmod>2023-01-11T19:29:34.214Z</lastmod>
   </url>
   <url>
     <loc>https://cabbagemees.nl/about.html</loc>
-    <lastmod>2023-01-07T19:24:38.021Z</lastmod>
+    <lastmod>2023-01-11T19:29:34.512Z</lastmod>
   </url>
 </urlset>
