@@ -259,9 +259,24 @@ gtag('config', 'G-9GMDP6RW3B', { 'anonymize_ip': true});
 <p>Een widget test<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> is een test wat een onderdeel van de User Interface (UI) test. Hetgeen dat er getest gaat worden is wederom gebaseerd op de ruwe schets (hieronder weergeven). En met de widget test, wordt in dat geval ook dezelfde logica getest (mede doordat de app nog niet zo complex is).</p>
 <p><img src="images/flutter_deel_4_ruwe_schets.PNG" class="img-fluid"></p>
 <p>In onderstaande Widget test zijn de tests in verschillende groepen verdeelt, omdat dit losse Widgets zijn.</p>
-<p>De eerste groep is de DailyPracticeApp groep, en die test de Widget <code>DailyPracticeApp</code>. Wanneer je deze weergeeft verwacht ik dat de <code>PracticesPage</code> wordt weergeven. De test werkt als volgt: * Je rendert (weergeven van) de Widget met <code>tester.pumtWidget()</code> * Je zoekt de <code>PracticesPage</code> wordt weergeven met <code>find.byType()</code> * Je test de verwachting (<code>expect</code>) dat er 1 Widget met het type <code>PracticesPage</code> is gerendert (<code>findsOneWidget</code>).</p>
-<p>In bovenstaande test zit een structuur. * De test wordt voorbereid (in dit geval door je Widget te renderen) * Je zoekt iets (de <code>PracticesPage</code>) * Je test je verwachting</p>
-<p>Deze structuur wordt Arrange, Act en Assert genoemd. Al moet ik zeggen dat Arrange en Act in dit geval zijn samengevoegd tot het renderen van de Widget. Een test die deze structuur beter aanhoud zou de volgende kunnen zijn: * Je rendert een Widget met een knop (Arrange) * Je voert een actie uit, deze actie is op de knop drukken (Act) * Je verwacht dat onButtonClick (bijvoorbeeld) 1x wordt uitegevoerd (Assert)</p>
+<p>De eerste groep is de DailyPracticeApp groep, en die test de Widget <code>DailyPracticeApp</code>. Wanneer je deze weergeeft verwacht ik dat de <code>PracticesPage</code> wordt weergeven. De test werkt als volgt:</p>
+<ul>
+<li>Je rendert (weergeven van) de Widget met <code>tester.pumtWidget()</code></li>
+<li>Je zoekt de <code>PracticesPage</code> wordt weergeven met <code>find.byType()</code></li>
+<li>Je test de verwachting (<code>expect</code>) dat er 1 Widget met het type <code>PracticesPage</code> is gerendert (<code>findsOneWidget</code>).</li>
+</ul>
+<p>In bovenstaande test zit een structuur.</p>
+<ul>
+<li>De test wordt voorbereid (in dit geval door je Widget te renderen)</li>
+<li>Je zoekt iets (de <code>PracticesPage</code>)</li>
+<li>Je test je verwachting</li>
+</ul>
+<p>Deze structuur wordt Arrange, Act en Assert genoemd. Al moet ik zeggen dat Arrange en Act in dit geval zijn samengevoegd tot het renderen van de Widget. Een test die deze structuur beter aanhoud zou de volgende kunnen zijn:</p>
+<ul>
+<li>Je rendert een Widget met een knop (Arrange)</li>
+<li>Je voert een actie uit, deze actie is op de knop drukken (Act)</li>
+<li>Je verwacht dat onButtonClick (bijvoorbeeld) 1x wordt uitegevoerd (Assert)</li>
+</ul>
 <p>Je zult deze structuur in veel tests terug vinden omdat het structurenen van tests de tests leesbaarder maken!</p>
 <p>De volgende test groep <code>PracticesPage</code>, test ongeveer hetzelfde, maar dan wordt er getest of er een andere Widget gerenderd wordt (<code>PracticesView</code>). Hierna volger er interessantere tests, namelijk de <code>PracticesView</code> groep.</p>
 <p>In deze groep wordt er namelijk getest of de app titel en alle practices worden gerenderd. Als eerste de app titel, die vindt je door in de AppBar te kijken (een Widget dat bovenaan je mobiele scherm verschijnt). En daarin te zoeken naar de titel ‘Daily Practices’.</p>
@@ -272,8 +287,14 @@ gtag('config', 'G-9GMDP6RW3B', { 'anonymize_ip': true});
 <p>flutter test</p>
 </blockquote>
 <p>uit te voeren! Omdat er verder geen functionaliteit in de basis app hoeft te zitten kan er eindelijk aan de app gewerkt worden!</p>
-<p>PS: Ik heb van een collega geleerd om je groepen en tests op de volgende manier te benoemen: * De buitenste groep is de class of functie naam die je wilt testen * Dan schrijf je in de test wat die moet doen, dan kan je namelijk de groep en de test lezen als 1 zin. * Bijvoorbeeld: DailyPracticeApp, renders PracticesPage</p>
+<p>PS: Ik heb van een collega geleerd om je groepen en tests op de volgende manier te benoemen:</p>
 <ul>
+<li>De buitenste groep is de class of functie naam die je wilt testen
+<ul>
+<li>Dan schrijf je in de test wat die moet doen, dan kan je namelijk de groep en de test lezen als 1 zin.
+<ul>
+<li>Bijvoorbeeld: DailyPracticeApp, renders PracticesPage</li>
+</ul></li>
 <li>Maar wanneer je als in de zin gaat gebruiken, dan maak je een nieuwe groep!
 <ul>
 <li>Bijvoorbeeld, DailyPracticesApp, (als) je op de knop drukt (dan) render je een succes bericht (de ‘als’ en ‘dan’ schrijf je niet expliciet op)
@@ -281,6 +302,7 @@ gtag('config', 'G-9GMDP6RW3B', { 'anonymize_ip': true});
 <li>Groep: DailyPracticesApp</li>
 <li>Groep: je op de knop drukt</li>
 <li>Test: render je een succes bericht</li>
+</ul></li>
 </ul></li>
 </ul></li>
 </ul>
@@ -406,6 +428,185 @@ gtag('config', 'G-9GMDP6RW3B', { 'anonymize_ip': true});
 <section id="home.dart" class="level3">
 <h3 class="anchored" data-anchor-id="home.dart">home.dart</h3>
 <p>In de <code>PracticesPage</code> wordt de <code>PracticesView</code> gerenderd (het is de bedoeling dat er nog andere code bijkomt). In de <code>PracticesView</code> wordt er een <code>Scaffold</code> Widget<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a> aangemaakt waardoor we een titel kunnen toevoegen (<code>AppBar</code><a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a>) en een <code>ListView</code><a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a> waarin alle practices aan een lijst toegevoegd kunnen worden. De practices zijn <code>Card</code>s<a href="#fn7" class="footnote-ref" id="fnref7" role="doc-noteref"><sup>7</sup></a> en 1 van de practices is nu actief (dat wordt voor nu bepaald door een willekeurig getal; code regel 119).</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode numberSource default number-lines code-with-copy"><code class="sourceCode default"><span id="cb4-1"><a href="#cb4-1"></a>import 'dart:math';</span>
+<span id="cb4-2"><a href="#cb4-2"></a></span>
+<span id="cb4-3"><a href="#cb4-3"></a>import 'package:flutter/material.dart';</span>
+<span id="cb4-4"><a href="#cb4-4"></a></span>
+<span id="cb4-5"><a href="#cb4-5"></a>const practices = &lt;Map&lt;String, dynamic&gt;&gt;[</span>
+<span id="cb4-6"><a href="#cb4-6"></a>  {</span>
+<span id="cb4-7"><a href="#cb4-7"></a>    'id': 1,</span>
+<span id="cb4-8"><a href="#cb4-8"></a>    'practice': 'Sleep eight hours',</span>
+<span id="cb4-9"><a href="#cb4-9"></a>  },</span>
+<span id="cb4-10"><a href="#cb4-10"></a>  {</span>
+<span id="cb4-11"><a href="#cb4-11"></a>    'id': 2,</span>
+<span id="cb4-12"><a href="#cb4-12"></a>    'practice': 'Eat two meals instead of three',</span>
+<span id="cb4-13"><a href="#cb4-13"></a>  },</span>
+<span id="cb4-14"><a href="#cb4-14"></a>  {</span>
+<span id="cb4-15"><a href="#cb4-15"></a>    'id': 3,</span>
+<span id="cb4-16"><a href="#cb4-16"></a>    'practice': 'No TV (or YouTube)',</span>
+<span id="cb4-17"><a href="#cb4-17"></a>  },</span>
+<span id="cb4-18"><a href="#cb4-18"></a>  {</span>
+<span id="cb4-19"><a href="#cb4-19"></a>    'id': 4,</span>
+<span id="cb4-20"><a href="#cb4-20"></a>    'practice': 'No junk food',</span>
+<span id="cb4-21"><a href="#cb4-21"></a>  },</span>
+<span id="cb4-22"><a href="#cb4-22"></a>  {</span>
+<span id="cb4-23"><a href="#cb4-23"></a>    'id': 5,</span>
+<span id="cb4-24"><a href="#cb4-24"></a>    'practice': 'No complaining for one whole day',</span>
+<span id="cb4-25"><a href="#cb4-25"></a>  },</span>
+<span id="cb4-26"><a href="#cb4-26"></a>  {</span>
+<span id="cb4-27"><a href="#cb4-27"></a>    'id': 6,</span>
+<span id="cb4-28"><a href="#cb4-28"></a>    'practice': 'No gossip',</span>
+<span id="cb4-29"><a href="#cb4-29"></a>  },</span>
+<span id="cb4-30"><a href="#cb4-30"></a>  {</span>
+<span id="cb4-31"><a href="#cb4-31"></a>    'id': 7,</span>
+<span id="cb4-32"><a href="#cb4-32"></a>    'practice': 'Return an e-mail from five years ago',</span>
+<span id="cb4-33"><a href="#cb4-33"></a>  },</span>
+<span id="cb4-34"><a href="#cb4-34"></a>  {</span>
+<span id="cb4-35"><a href="#cb4-35"></a>    'id': 8,</span>
+<span id="cb4-36"><a href="#cb4-36"></a>    'practice': 'Express thanks to a friend',</span>
+<span id="cb4-37"><a href="#cb4-37"></a>  },</span>
+<span id="cb4-38"><a href="#cb4-38"></a>  {</span>
+<span id="cb4-39"><a href="#cb4-39"></a>    'id': 9,</span>
+<span id="cb4-40"><a href="#cb4-40"></a>    'practice': 'Watch a funny movie or a stand-up comic',</span>
+<span id="cb4-41"><a href="#cb4-41"></a>  },</span>
+<span id="cb4-42"><a href="#cb4-42"></a>  {</span>
+<span id="cb4-43"><a href="#cb4-43"></a>    'id': 10,</span>
+<span id="cb4-44"><a href="#cb4-44"></a>    'practice': 'Write down a list of ideas. The ideas can be about anything',</span>
+<span id="cb4-45"><a href="#cb4-45"></a>  },</span>
+<span id="cb4-46"><a href="#cb4-46"></a>  {</span>
+<span id="cb4-47"><a href="#cb4-47"></a>    'id': 11,</span>
+<span id="cb4-48"><a href="#cb4-48"></a>    'practice':</span>
+<span id="cb4-49"><a href="#cb4-49"></a>        'Read a spiritual text. Any one that is inspirational to you. The bible, the Tao te Ching, anything you want',</span>
+<span id="cb4-50"><a href="#cb4-50"></a>  },</span>
+<span id="cb4-51"><a href="#cb4-51"></a>  {</span>
+<span id="cb4-52"><a href="#cb4-52"></a>    'id': 12,</span>
+<span id="cb4-53"><a href="#cb4-53"></a>    'practice':</span>
+<span id="cb4-54"><a href="#cb4-54"></a>        'Say to yourself when you wake up, "I am going to save a life today. Keep an eye out for that life you can save',</span>
+<span id="cb4-55"><a href="#cb4-55"></a>  },</span>
+<span id="cb4-56"><a href="#cb4-56"></a>  {</span>
+<span id="cb4-57"><a href="#cb4-57"></a>    'id': 13,</span>
+<span id="cb4-58"><a href="#cb4-58"></a>    'practice': 'Take up a hobby. Do not say you do not have time',</span>
+<span id="cb4-59"><a href="#cb4-59"></a>  },</span>
+<span id="cb4-60"><a href="#cb4-60"></a>  {</span>
+<span id="cb4-61"><a href="#cb4-61"></a>    'id': 14,</span>
+<span id="cb4-62"><a href="#cb4-62"></a>    'practice':</span>
+<span id="cb4-63"><a href="#cb4-63"></a>        'Write down your entire schedule. The schedule you do everyday. Cross out one item and do not do that anymore',</span>
+<span id="cb4-64"><a href="#cb4-64"></a>  },</span>
+<span id="cb4-65"><a href="#cb4-65"></a>  {</span>
+<span id="cb4-66"><a href="#cb4-66"></a>    'id': 15,</span>
+<span id="cb4-67"><a href="#cb4-67"></a>    'practice': 'Suprise someone',</span>
+<span id="cb4-68"><a href="#cb4-68"></a>  },</span>
+<span id="cb4-69"><a href="#cb4-69"></a>  {</span>
+<span id="cb4-70"><a href="#cb4-70"></a>    'id': 16,</span>
+<span id="cb4-71"><a href="#cb4-71"></a>    'practice': 'Think of ten people you are grateful for',</span>
+<span id="cb4-72"><a href="#cb4-72"></a>  },</span>
+<span id="cb4-73"><a href="#cb4-73"></a>  {</span>
+<span id="cb4-74"><a href="#cb4-74"></a>    'id': 17,</span>
+<span id="cb4-75"><a href="#cb4-75"></a>    'practice':</span>
+<span id="cb4-76"><a href="#cb4-76"></a>        'Forgive someone. You do not have to tell them. Just write it down on a piece of paper and burn the paper (or throw it away)',</span>
+<span id="cb4-77"><a href="#cb4-77"></a>  },</span>
+<span id="cb4-78"><a href="#cb4-78"></a>  {</span>
+<span id="cb4-79"><a href="#cb4-79"></a>    'id': 18,</span>
+<span id="cb4-80"><a href="#cb4-80"></a>    'practice': 'Take the stairs instead of the elevator',</span>
+<span id="cb4-81"><a href="#cb4-81"></a>  },</span>
+<span id="cb4-82"><a href="#cb4-82"></a>  {</span>
+<span id="cb4-83"><a href="#cb4-83"></a>    'id': 19,</span>
+<span id="cb4-84"><a href="#cb4-84"></a>    'practice':</span>
+<span id="cb4-85"><a href="#cb4-85"></a>        'When you find yourself thinking of that special someone who is causing you grief, think very quietly, "No". If you think of him and (or?) her again, think loudly, "No!" Again? Whisper, "No!" Again, say it. Louder. Yell it. Louder. And so on',</span>
+<span id="cb4-86"><a href="#cb4-86"></a>  },</span>
+<span id="cb4-87"><a href="#cb4-87"></a>  {</span>
+<span id="cb4-88"><a href="#cb4-88"></a>    'id': 20,</span>
+<span id="cb4-89"><a href="#cb4-89"></a>    'practice': 'Tell someone every day that you love them',</span>
+<span id="cb4-90"><a href="#cb4-90"></a>  },</span>
+<span id="cb4-91"><a href="#cb4-91"></a>  {</span>
+<span id="cb4-92"><a href="#cb4-92"></a>    'id': 21,</span>
+<span id="cb4-93"><a href="#cb4-93"></a>    'practice': 'Do not have sex with someone you do not love',</span>
+<span id="cb4-94"><a href="#cb4-94"></a>  },</span>
+<span id="cb4-95"><a href="#cb4-95"></a>  {</span>
+<span id="cb4-96"><a href="#cb4-96"></a>    'id': 22,</span>
+<span id="cb4-97"><a href="#cb4-97"></a>    'practice': 'Shower. Scrub. Clean the toxins of your body',</span>
+<span id="cb4-98"><a href="#cb4-98"></a>  },</span>
+<span id="cb4-99"><a href="#cb4-99"></a>  {</span>
+<span id="cb4-100"><a href="#cb4-100"></a>    'id': 23,</span>
+<span id="cb4-101"><a href="#cb4-101"></a>    'practice':</span>
+<span id="cb4-102"><a href="#cb4-102"></a>        'Read a chapter in a biography about someone who is an inspiration to you',</span>
+<span id="cb4-103"><a href="#cb4-103"></a>  },</span>
+<span id="cb4-104"><a href="#cb4-104"></a>  {</span>
+<span id="cb4-105"><a href="#cb4-105"></a>    'id': 24,</span>
+<span id="cb4-106"><a href="#cb4-106"></a>    'practice': 'Make plans to spend time with a friend',</span>
+<span id="cb4-107"><a href="#cb4-107"></a>  },</span>
+<span id="cb4-108"><a href="#cb4-108"></a>  {</span>
+<span id="cb4-109"><a href="#cb4-109"></a>    'id': 25,</span>
+<span id="cb4-110"><a href="#cb4-110"></a>    'practice':</span>
+<span id="cb4-111"><a href="#cb4-111"></a>        'If you think, "Everything would be better of if I were death" then think. "That is really cool. Now I can do anything I want and I can postpone this thought for a while, maybe even a few months." Because what does it matter now? The planet might not even be around in a few months',</span>
+<span id="cb4-112"><a href="#cb4-112"></a>  },</span>
+<span id="cb4-113"><a href="#cb4-113"></a>  {</span>
+<span id="cb4-114"><a href="#cb4-114"></a>    'id': 26,</span>
+<span id="cb4-115"><a href="#cb4-115"></a>    'practice': 'Deep breathing',</span>
+<span id="cb4-116"><a href="#cb4-116"></a>  },</span>
+<span id="cb4-117"><a href="#cb4-117"></a>];</span>
+<span id="cb4-118"><a href="#cb4-118"></a></span>
+<span id="cb4-119"><a href="#cb4-119"></a>final activePractice = Random().nextInt(26) + 1;</span>
+<span id="cb4-120"><a href="#cb4-120"></a></span>
+<span id="cb4-121"><a href="#cb4-121"></a>class PracticesPage extends StatelessWidget {</span>
+<span id="cb4-122"><a href="#cb4-122"></a>  const PracticesPage({super.key});</span>
+<span id="cb4-123"><a href="#cb4-123"></a></span>
+<span id="cb4-124"><a href="#cb4-124"></a>  @override</span>
+<span id="cb4-125"><a href="#cb4-125"></a>  Widget build(BuildContext context) {</span>
+<span id="cb4-126"><a href="#cb4-126"></a>    return const PracticesView();</span>
+<span id="cb4-127"><a href="#cb4-127"></a>  }</span>
+<span id="cb4-128"><a href="#cb4-128"></a>}</span>
+<span id="cb4-129"><a href="#cb4-129"></a></span>
+<span id="cb4-130"><a href="#cb4-130"></a>class PracticesView extends StatelessWidget {</span>
+<span id="cb4-131"><a href="#cb4-131"></a>  const PracticesView({super.key});</span>
+<span id="cb4-132"><a href="#cb4-132"></a></span>
+<span id="cb4-133"><a href="#cb4-133"></a>  @override</span>
+<span id="cb4-134"><a href="#cb4-134"></a>  Widget build(BuildContext context) {</span>
+<span id="cb4-135"><a href="#cb4-135"></a>    return Scaffold(</span>
+<span id="cb4-136"><a href="#cb4-136"></a>      appBar: AppBar(</span>
+<span id="cb4-137"><a href="#cb4-137"></a>        title: const Text('Daily Practices'),</span>
+<span id="cb4-138"><a href="#cb4-138"></a>      ),</span>
+<span id="cb4-139"><a href="#cb4-139"></a>      body: ListView.builder(</span>
+<span id="cb4-140"><a href="#cb4-140"></a>        padding: const EdgeInsets.all(8),</span>
+<span id="cb4-141"><a href="#cb4-141"></a>        itemCount: practices.length,</span>
+<span id="cb4-142"><a href="#cb4-142"></a>        itemBuilder: (BuildContext context, int index) {</span>
+<span id="cb4-143"><a href="#cb4-143"></a>          if (index == activePractice) {</span>
+<span id="cb4-144"><a href="#cb4-144"></a>            return Card(</span>
+<span id="cb4-145"><a href="#cb4-145"></a>              key: const Key('ActivePractice'),</span>
+<span id="cb4-146"><a href="#cb4-146"></a>              elevation: 3,</span>
+<span id="cb4-147"><a href="#cb4-147"></a>              color: Theme.of(context).colorScheme.primary,</span>
+<span id="cb4-148"><a href="#cb4-148"></a>              child: ListTile(</span>
+<span id="cb4-149"><a href="#cb4-149"></a>                leading: CircleAvatar(</span>
+<span id="cb4-150"><a href="#cb4-150"></a>                  backgroundColor: Colors.white,</span>
+<span id="cb4-151"><a href="#cb4-151"></a>                  child: Text(</span>
+<span id="cb4-152"><a href="#cb4-152"></a>                    practices[index]['id'].toString(),</span>
+<span id="cb4-153"><a href="#cb4-153"></a>                  ),</span>
+<span id="cb4-154"><a href="#cb4-154"></a>                ),</span>
+<span id="cb4-155"><a href="#cb4-155"></a>                title: Text(</span>
+<span id="cb4-156"><a href="#cb4-156"></a>                  practices[index]['practice'],</span>
+<span id="cb4-157"><a href="#cb4-157"></a>                  style: const TextStyle(</span>
+<span id="cb4-158"><a href="#cb4-158"></a>                    color: Colors.white,</span>
+<span id="cb4-159"><a href="#cb4-159"></a>                  ),</span>
+<span id="cb4-160"><a href="#cb4-160"></a>                ),</span>
+<span id="cb4-161"><a href="#cb4-161"></a>              ),</span>
+<span id="cb4-162"><a href="#cb4-162"></a>            );</span>
+<span id="cb4-163"><a href="#cb4-163"></a>          } else {</span>
+<span id="cb4-164"><a href="#cb4-164"></a>            return Card(</span>
+<span id="cb4-165"><a href="#cb4-165"></a>              elevation: 3,</span>
+<span id="cb4-166"><a href="#cb4-166"></a>              child: ListTile(</span>
+<span id="cb4-167"><a href="#cb4-167"></a>                leading: CircleAvatar(</span>
+<span id="cb4-168"><a href="#cb4-168"></a>                  backgroundColor: Theme.of(context).colorScheme.primary,</span>
+<span id="cb4-169"><a href="#cb4-169"></a>                  child: Text(practices[index]['id'].toString()),</span>
+<span id="cb4-170"><a href="#cb4-170"></a>                ),</span>
+<span id="cb4-171"><a href="#cb4-171"></a>                title: Text(practices[index]['practice']),</span>
+<span id="cb4-172"><a href="#cb4-172"></a>              ),</span>
+<span id="cb4-173"><a href="#cb4-173"></a>            );</span>
+<span id="cb4-174"><a href="#cb4-174"></a>          }</span>
+<span id="cb4-175"><a href="#cb4-175"></a>        },</span>
+<span id="cb4-176"><a href="#cb4-176"></a>      ),</span>
+<span id="cb4-177"><a href="#cb4-177"></a>    );</span>
+<span id="cb4-178"><a href="#cb4-178"></a>  }</span>
+<span id="cb4-179"><a href="#cb4-179"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Als je dan nu naar <code>main.dart</code> navigeert en op de play knop drukt zal je app starten. Voor voorbeelden om je app te starten, <a href="https://codelabs.developers.google.com/codelabs/flutter-codelab-first#3">kan je hier kijken duidelijke uitleg vinden</a>.</p>
 <p>Dit was de eerste versie van de app! Alleen het is nog niet volgens de MVP, daarvoor moet de app namelijk iedere ochtend een notificatie geven. Hoe je dat kunt doen zal ik gaan omschrijven in de volgende post.</p>
 <p>Tot dan!</p>
@@ -418,13 +619,13 @@ gtag('config', 'G-9GMDP6RW3B', { 'anonymize_ip': true});
 <div id="quarto-appendix" class="default"><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
 
 <ol>
-<li id="fn1"><p>https://cabbagemees.nl/posts/2022-10-16-Flutter-app-deel-4-de-integration-test/<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn2"><p>https://docs.flutter.dev/cookbook/testing/widget/introduction<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn3"><p>https://api.flutter.dev/flutter/material/MaterialApp-class.html<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn4"><p>https://api.flutter.dev/flutter/material/Scaffold-class.html<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn5"><p>https://api.flutter.dev/flutter/material/AppBar-class.html<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn6"><p>https://api.flutter.dev/flutter/widgets/ListView-class.html<a href="#fnref6" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn7"><p>https://api.flutter.dev/flutter/material/Card-class.html<a href="#fnref7" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn1"><p><a href="https://cabbagemees.nl/posts/2022-10-16-Flutter-app-deel-4-de-integration-test/" class="uri">https://cabbagemees.nl/posts/2022-10-16-Flutter-app-deel-4-de-integration-test/</a><a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p><a href="https://docs.flutter.dev/cookbook/testing/widget/introduction" class="uri">https://docs.flutter.dev/cookbook/testing/widget/introduction</a><a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3"><p><a href="https://api.flutter.dev/flutter/material/MaterialApp-class.html" class="uri">https://api.flutter.dev/flutter/material/MaterialApp-class.html</a><a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn4"><p><a href="https://api.flutter.dev/flutter/material/Scaffold-class.html" class="uri">https://api.flutter.dev/flutter/material/Scaffold-class.html</a><a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn5"><p><a href="https://api.flutter.dev/flutter/material/AppBar-class.html" class="uri">https://api.flutter.dev/flutter/material/AppBar-class.html</a><a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn6"><p><a href="https://api.flutter.dev/flutter/widgets/ListView-class.html" class="uri">https://api.flutter.dev/flutter/widgets/ListView-class.html</a><a href="#fnref6" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn7"><p><a href="https://api.flutter.dev/flutter/material/Card-class.html" class="uri">https://api.flutter.dev/flutter/material/Card-class.html</a><a href="#fnref7" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
