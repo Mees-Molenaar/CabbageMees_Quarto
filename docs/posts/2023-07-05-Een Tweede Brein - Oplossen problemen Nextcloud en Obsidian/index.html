@@ -205,10 +205,24 @@ gtag('config', 'G-9GMDP6RW3B', { 'anonymize_ip': true});
 <p>Na de installatie en het starten van Syncthing navigeer je naar http://localhost:8384/ om naar de grafische interface (GUI) van Syncthing te gaan (dat ziet er uit zoals hieronder).</p>
 <p><img src="images/Pasted image 20230617083456.png" class="img-fluid"></p>
 <p>Als eerste moet je op je laptop je mobiel als extern apparaat (remote device) toevoegen. En vervolgens voeg je, op je mobiel, de laptop toe als extern apparaat. Alleen dan is er voor beide apparaten toestemming om met elkaar te synchroniseren. Dit doe je voor je laptop door op “Extern Apparaat Toevoegen” (“Add Remote Device”) in de GUI te klikken en dan het Apparaat ID (van je mobiel, deze is te vinden door de mobiele app te openen, dan linksboven het menu te openen en daar op Show Device ID te klikken) en de naam van het Apparaat in te vullen (let wel op dat beide apparaten op hetzelfde netwerk zitten). Nadat je dat hebt gedaan zal het toegevoegd apparaat onder Externe Apparaten (Remote Devices verschijnen).</p>
-<p>Voor de mobiele app werkt het nagenoeg hetzelfde. 1. Open de app 2. Navigeer naar devices 3. Klik op het plusje (rechtsboven) 4. Vul hier het Device ID (van je laptop, deze is te vinden door in de GUI op “Acties” (“Actions”) te klikken en dan op “ID weergeven” (“Show ID”)) en “Name” in te vullen.</p>
+<p>Voor de mobiele app werkt het nagenoeg hetzelfde.</p>
+<ol type="1">
+<li>Open de app</li>
+<li>Navigeer naar devices</li>
+<li>Klik op het plusje (rechtsboven)</li>
+<li>Vul hier het Device ID (van je laptop, deze is te vinden door in de GUI op “Acties” (“Actions”) te klikken en dan op “ID weergeven” (“Show ID”)) en “Name” in te vullen.</li>
+</ol>
 <p>Nu kunnen je laptop en mobiel met elkaar synchroniseren, alleen moet je nog vertellen welke map(pen) ze met elkaar synchroniseren.</p>
 <p>Je begint op je laptop (waar ook Nextcloud opstaat) en in de GUI klik je op “Map Toevoegen” (“Add Folder”). Dan vul je de map waar je Obsidian vault staat in in het “MapLocatie” (“Folder Location”) veld. Vervolgens ga je naar de “Delen” (“Share”) tab en daar vink je je mobiel aan. Tot slot klik je op “Opslaan” (“Save”).</p>
-<p>Dan moet je op je mobiel dezelfde folder toevoegen. 1. Open de App 2. Navigeer naar Folders 3. Klik op het plusje (rechtsboven) 4. <strong>Vul bij Folder Label hetzelfde label in als die in de GUI op je laptop</strong> 5. Vink aan met welk apparaat je wilt delen (de naam van je Laptop) 6. Kies een “Directory” waar je de gedeelde data wilt opslaan (onthoudt deze)</p>
+<p>Dan moet je op je mobiel dezelfde folder toevoegen.</p>
+<ol type="1">
+<li>Open de App</li>
+<li>Navigeer naar Folders</li>
+<li>Klik op het plusje (rechtsboven)</li>
+<li><strong>Vul bij Folder Label hetzelfde label in als die in de GUI op je laptop</strong></li>
+<li>Vink aan met welk apparaat je wilt delen (de naam van je Laptop)</li>
+<li>Kies een “Directory” waar je de gedeelde data wilt opslaan (onthoudt deze)</li>
+</ol>
 <p>Wanneer je deze stappen hebt gevolgd, dan kan je ieder moment dat je mobiel en computer op hetzelfde netwerk zitten, de folders synchroniseren. Je hoeft alleen Syncthing op te starten.</p>
 <p>Nu kan je op je mobiel de <a href="https://play.google.com/store/apps/details?id=md.obsidian&amp;hl=en_US">Obsidian App</a> downloaden en de Obsidian Vault openen die je in bovenstaande folder (stap 6) hebt gekozen om te synchroniseren.</p>
 </section>
@@ -220,18 +234,30 @@ gtag('config', 'G-9GMDP6RW3B', { 'anonymize_ip': true});
 <ol type="1">
 <li>Open MacroDroid en klik op “Add Macro”</li>
 <li>Geef de macro een naam. Bijvoorbeeld: Snel Notitie Toevoegen</li>
-<li>Stel een trigger in en kies “Shortcut Launched” (zie afbeelding hieronder) <img src="images/Pasted image 20230630142828.png" class="img-fluid"></li>
-<li>Stel een actie in en kies “Set Variable” en stel deze in (zie afbeeldingen hieronder) <img src="images/Pasted image 20230630143042.png" class="img-fluid"></li>
+<li>Stel een trigger in en kies “Shortcut Launched” (zie afbeelding hieronder)</li>
 </ol>
+<p><img src="images/Pasted image 20230630142828.png" class="img-fluid"></p>
+<ol start="4" type="1">
+<li>Stel een actie in en kies “Set Variable” en stel deze in (zie afbeeldingen hieronder)</li>
+</ol>
+<p><img src="images/Pasted image 20230630143042.png" class="img-fluid"></p>
 <ul>
-<li><p>Voer “input” in als variable name</p></li>
-<li><p>Kies “String” als variable type</p></li>
-<li><p>Vink Create variable now aan</p></li>
-<li><p>Klik op “OK” <img src="images/Pasted image 20230630143105.png" class="img-fluid"></p></li>
-<li><p>Vink [User Prompt] aan</p></li>
-<li><p>Klik op “OK”</p></li>
+<li>Voer “input” in als variable name</li>
+<li>Kies “String” als variable type</li>
+<li>Vink Create variable now aan</li>
+<li>Klik op “OK”</li>
 </ul>
-<p><img src="images/Pasted image 20230630143154.png" class="img-fluid"> * Vul een Title naar keuze in * Vink de volgende vakjes aan: “Allow cancel”, “Cancel prevents subsequent actions running” en “Dark mode (als je dat wilt)” * Klik op “OK”</p>
+<p><img src="images/Pasted image 20230630143105.png" class="img-fluid"></p>
+<ul>
+<li>Vink [User Prompt] aan</li>
+<li>Klik op “OK”</li>
+</ul>
+<p><img src="images/Pasted image 20230630143154.png" class="img-fluid"></p>
+<ul>
+<li>Vul een Title naar keuze in</li>
+<li>Vink de volgende vakjes aan: “Allow cancel”, “Cancel prevents subsequent actions running” en “Dark mode (als je dat wilt)”</li>
+<li>Klik op “OK”</li>
+</ul>
 <p><img src="Pasted image 20230630143524.png" class="img-fluid"></p>
 <ol start="5" type="1">
 <li>Voeg nog een actie toe, “Write to file” en stel in (zie afbeeldingen hieronder)</li>
@@ -245,7 +271,10 @@ gtag('config', 'G-9GMDP6RW3B', { 'anonymize_ip': true});
 </ul>
 <p><img src="images/Pasted image 20230630143759.png" class="img-fluid"></p>
 <ol start="6" type="1">
-<li>Je macro ziet er nu zo uit <img src="images/Pasted image 20230630144340.png" class="img-fluid"></li>
+<li>Je macro ziet er nu zo uit</li>
+</ol>
+<p><img src="images/Pasted image 20230630144340.png" class="img-fluid"></p>
+<ol start="7" type="1">
 <li>Sla de macro op en nu kan je via een Widget de Macro aan je scherm toevoegen.</li>
 </ol>
 <ul>
