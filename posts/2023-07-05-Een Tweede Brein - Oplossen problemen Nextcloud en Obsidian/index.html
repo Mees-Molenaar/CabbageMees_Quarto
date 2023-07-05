@@ -7,9 +7,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Mees Molenaar">
-<meta name="dcterms.date" content="2022-07-27">
+<meta name="dcterms.date" content="2023-07-05">
 
-<title>CabbageMees - Een Flutter App - Deel 2 - Voorbereiden App Structuur</title>
+<title>CabbageMees - Een Tweede Brein - Oplossen problemen Nextcloud en Obsidian</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -74,17 +74,13 @@ gtag('config', 'G-9GMDP6RW3B', { 'anonymize_ip': true});
 
 
 <link rel="stylesheet" href="../../styles.css">
-<meta property="og:title" content="CabbageMees - Een Flutter App - Deel 2 - Voorbereiden App Structuur">
-<meta property="og:description" content="Hoe gaat de code-structuur van de app er uit zien?">
-<meta property="og:image" content="https://cabbagemees.nl/posts/2022-07-27-Flutter-app-deel-2-app-architectuur/images/DALL·E 2022-08-26 17.15.46 - Vintage, detailed sketch of a mobile application blue print with full descriptions.png">
+<meta property="og:title" content="CabbageMees - Een Tweede Brein - Oplossen problemen Nextcloud en Obsidian">
+<meta property="og:description" content="Los de two-two sync en snel notitie maken problemen op">
+<meta property="og:image" content="https://cabbagemees.nl/posts/2023-07-05-Een Tweede Brein - Oplossen problemen Nextcloud en Obsidian/images/bing-man-juggling.jpg">
 <meta property="og:site-name" content="CabbageMees">
-<meta property="og:image:height" content="1024">
-<meta property="og:image:width" content="1024">
-<meta name="twitter:title" content="CabbageMees - Een Flutter App - Deel 2 - Voorbereiden App Structuur">
-<meta name="twitter:description" content="Hoe gaat de code-structuur van de app er uit zien?">
-<meta name="twitter:image" content="https://cabbagemees.nl/posts/2022-07-27-Flutter-app-deel-2-app-architectuur/images/DALL·E 2022-08-26 17.15.46 - Vintage, detailed sketch of a mobile application blue print with full descriptions.png">
-<meta name="twitter:image-height" content="1024">
-<meta name="twitter:image-width" content="1024">
+<meta name="twitter:title" content="CabbageMees - Een Tweede Brein - Oplossen problemen Nextcloud en Obsidian">
+<meta name="twitter:description" content="Los de two-two sync en snel notitie maken problemen op">
+<meta name="twitter:image" content="https://cabbagemees.nl/posts/2023-07-05-Een Tweede Brein - Oplossen problemen Nextcloud en Obsidian/images/bing-man-juggling.jpg">
 <meta name="twitter:card" content="summary_large_image">
 </head>
 
@@ -133,12 +129,14 @@ gtag('config', 'G-9GMDP6RW3B', { 'anonymize_ip': true});
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title">Een Flutter App - Deel 2 - Voorbereiden App Structuur</h1>
-            <p class="subtitle lead">Hoe gaat de code-structuur van de app er uit zien?</p>
+      <h1 class="title">Een Tweede Brein - Oplossen problemen Nextcloud en Obsidian</h1>
+            <p class="subtitle lead">Los de two-two sync en snel notitie maken problemen op</p>
                                 <div class="quarto-categories">
-                <div class="quarto-category">Flutter</div>
-                <div class="quarto-category">Android</div>
-                <div class="quarto-category">DevOps</div>
+                <div class="quarto-category">Raspberry Pi</div>
+                <div class="quarto-category">Nextcloud</div>
+                <div class="quarto-category">Obsidian</div>
+                <div class="quarto-category">Synccthing</div>
+                <div class="quarto-category">MacroDroid</div>
               </div>
                   </div>
   </div>
@@ -156,7 +154,7 @@ gtag('config', 'G-9GMDP6RW3B', { 'anonymize_ip': true});
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">July 27, 2022</p>
+        <p class="date">July 5, 2023</p>
       </div>
     </div>
     
@@ -172,7 +170,10 @@ gtag('config', 'G-9GMDP6RW3B', { 'anonymize_ip': true});
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#stappenplan-app-maken" id="toc-stappenplan-app-maken" class="nav-link active" data-scroll-target="#stappenplan-app-maken">Stappenplan App maken</a></li>
+  <li><a href="#inleiding" id="toc-inleiding" class="nav-link active" data-scroll-target="#inleiding">Inleiding</a></li>
+  <li><a href="#obsidian-vault-in-nextcloud" id="toc-obsidian-vault-in-nextcloud" class="nav-link" data-scroll-target="#obsidian-vault-in-nextcloud">Obsidian vault in Nextcloud</a></li>
+  <li><a href="#merkwaardig-probleem-mobiele-nextcloud-client-synchroniseert-niet-twee-kanten-op" id="toc-merkwaardig-probleem-mobiele-nextcloud-client-synchroniseert-niet-twee-kanten-op" class="nav-link" data-scroll-target="#merkwaardig-probleem-mobiele-nextcloud-client-synchroniseert-niet-twee-kanten-op">Merkwaardig probleem: Mobiele Nextcloud Client Synchroniseert niet twee kanten op</a></li>
+  <li><a href="#merkwaardig-probleem-je-kunt-niet-snel-een-notitie-maken-met-obsidian-mobiel" id="toc-merkwaardig-probleem-je-kunt-niet-snel-een-notitie-maken-met-obsidian-mobiel" class="nav-link" data-scroll-target="#merkwaardig-probleem-je-kunt-niet-snel-een-notitie-maken-met-obsidian-mobiel">Merkwaardig probleem: Je kunt niet snel een notitie maken met Obsidian mobiel</a></li>
   </ul>
 </nav>
     </div>
@@ -182,39 +183,88 @@ gtag('config', 'G-9GMDP6RW3B', { 'anonymize_ip': true});
 
 
 
-<p>Hallo allemaal!</p>
-<p>Leuk dat jullie hier weer zijn om dit project te volgen. In deze post neem ik jullie mee in de planning voor de codestructuur van de app die ik aan het maken ben. Omdat dit mijn eerste eigen Flutter project is, neem ik veel informatie over van andere bronnen. Hierdoor leer je op een andere manier (dan je automatische piloot) kijken naar het opzetten van projecten. En wanneer dit bevalt kan je dat uiteraard inbouwen in je automatische werkwijze voor je volgende projecten!</p>
-<section id="stappenplan-app-maken" class="level1">
-<h1>Stappenplan App maken</h1>
-<p>In de vorige post van dit project<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> heb ik de vereisten vastgesteld. In die fase beschreef ik wat de app moet hebben om de klant haar problemen op te lossen. Maar op technisch vlak is dan nog niets bepaald. Deze fase gaat over het technische vlak, namelijk wat zijn de technische stappen die nodig zijn om de app op te leveren. Voor dit project heb ik grofweg de App Development Workflow van Code with Andrea<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> aangehouden.</p>
-<p>Over de eerste twee stappen, Design en Database/Backend, kan ik kort zijn. Het Design zal een simpele lijstweergave zijn (de standaard ingebouwd in Flutter). En voor versie 1 (V1) hebben we gezegd: hardcoded practices (dus geen database) en er is ook geen backend nodig. Dat waren de eerste twee stappen al, maar de volgende stap is een stuk uitdagender!</p>
-<p>De derde stap is namelijk het bepalen van de app architectuur. Nu is dit dus mijn eerste Flutter project en heb ik nog geen goed idee over wat de handigste app structuur voor een Flutter project is. Gelukkig werk ik ondertussen wel aan een andere Flutter app waarin we Flutter Blocs gebruiken. En in de voorbeelden van Flutter Blocs kwam ik een structuur tegen die mij aansprak<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a>. Hieronder heb ik diezelfde structuur vertaald naar de app die ik aan het maken ben.</p>
-<p><img src="images/flutter_deel_2_app_architectuur.PNG" class="img-fluid"></p>
-<blockquote class="blockquote">
-<p>Opmerking: Onderstaande alinea’s zijn technisch, maar daar ontkom je niet aan bij het bepalen van de app architectuur :).</p>
-</blockquote>
-<p>De Data Layer is, zoals de naam van de layer ook omschrijft, de connectie naar je onbewerkte data. Deze wil je het liefste zo generiek mogelijk houden en is vaak een simpele API om CRUD (Create, Read, Update, Delete) operaties uit te voeren. In de app Data Layer zitten twee componenten, de Daily Practices API en Hardcoded Daily Practices API. De eerstgenoemde is de generieke interface (een soort van blauwdruk van je verschillende implementaties). Als V1 heb ik vastgesteld dat de Daily Practices hardcoded en niet aanpasbaar zijn. Daarom hebben deze APIs voor V1 alleen een leesoperatie nodig. De specifieke implementatie hiervan wordt gedaan in de Hardcoded Daily Practices API.</p>
-<p>De volgende laag is de Domain Layer. Hierin koppel je de data APIs in een repository. Je voegt hieraan zogeheten business rules toe om bijvoorbeeld data te filteren of in een bepaalde structuur door te geven aan je Blocs in de feature layer.</p>
-<p>De repository layer geeft de data dus door aan je Blocs in de Feature Layer. Hierdoor fungeert je Bloc als brug tussen de data en de (User Interface) UI in je app. De Bloc bevat je business (b) logic (loc). Afhankelijk van acties van de gebruiker vraagt de Bloc data op uit (mogelijk verschillende) repositories. Hierdoor verandert de state van je Bloc. Deze verandering wordt opgepikt door de UI en daardoor past de UI van de app zich aan. Het grootste voordeel van deze structuur is dat de business logic en UI gescheiden zijn. Dit reduceert coupling en daardoor zijn de afzonderlijke onderdelen van je app in isolatie te testen en te gebruiken!</p>
-<p>Nadat de app architectuur is bepaald, kan je samen met de vereisten een project board maken. In eerste instantie gebruikte ik Trello maar later dacht ik dat het handiger zou zijn om alles op 1 plek te hebben. Daarom ben ik overgestapt naar Github Projects<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a>. Ik heb geprobeerd om het zo volledig mogelijk te maken, maar het zal vast zijn dat ik zaken ben vergeten. Dus dat vul ik in wanneer ik dat tegenkom. Het project board heb ik opgedeeld in verschillende onderwerpen (Test, UI, Flutter en CI/CD). En daaronder heb ik dan de verschillende taken bedacht en aangemaakt. Toen dat gedaan was kon ik beginnen aan de volgende stap, de CI/CD pipeline.</p>
-<p>Door te beginnen met de CI/CD pipeline kan je zo vroeg mogelijk beginnen met testen. Omdat alles op Github staat gebruiken we in dit geval Github Actions voor onze (in eerste instantie niet CD) CI pipeline. De specifieke implementatie van de Github Actions zal ik in een volgende post vertellen.</p>
-<p>De laatste stap is het uitvoeren van de taken op je project board! Ondertussen ben ik al begonnen. Doordat ik bij mijn vorige projecten een andere werkwijze aanhield, was even wennen. Maar eenmaal in het ritme gekomen ging alles voortvarend! Ik heb veel geleerd en veel van de taken zijn voltooid. Op dit moment ben ik vastgelopen op het notificatie deel maar wanneer dat werkt is V1 zo goed als af! Hopelijk lukt dat binnenkort!</p>
-<p>Tot de volgende keer :)</p>
+<section id="inleiding" class="level2">
+<h2 class="anchored" data-anchor-id="inleiding">Inleiding</h2>
+<p>Hallo hallo!</p>
+<p><a href="https://cabbagemees.nl/posts/2023-05-15-Raspberry-pi-Nextcloud/">Vorige post</a> heb ik verteld hoe je Nextcloud kunt hosten op je Raspberry Pi. In deze post wil ik jullie uitleggen hoe je Nextcloud vervolgens kunt koppelen met een Obsidian vault om deze te synchroniseren met verschillende apparaten. Ook zijn er twee (ik vind het merkwaardige) problemen waarvoor ik ook een oplossing zal bespreken.</p>
+<p>Maar eerst de Obsidian vault in Nextcloud starten!</p>
+</section>
+<section id="obsidian-vault-in-nextcloud" class="level2">
+<h2 class="anchored" data-anchor-id="obsidian-vault-in-nextcloud">Obsidian vault in Nextcloud</h2>
+<p>Allereerst is het verstandig om naast het Nextcloud Admin account, ook een los account te maken voor het dagelijkse gebruik. <a href="https://docs.nextcloud.com/server/latest/admin_manual/configuration_user/user_configuration.html">Klik hier om naar de uitleg te gaan om gebruikers toe te voegen.</a></p>
+<p>Wanneer je dat gedaan hebt, heb je zowel de Nextcloud Client als Obsidian nodig op je computer.</p>
+<p><a href="https://obsidian.md/download">Obsidian Download Pagina</a> <a href="https://nextcloud.com/install/">Nextcloud Client Download Pagina</a></p>
+<p>Na de installatie log je in met de aangemaakte gebruiker via de URL die je hebt gekozen bij het <a href="https://cabbagemees.nl/posts/2023-05-15-Raspberry-pi-Nextcloud/">opzetten van de Nextcloud server</a>. Vervolgens kan je dan een Obsidian vault maken in de Nextcloud map (ik heb een losse map “Obsidian” gemaakt in de Nextcloud map en die gekozen voor de Obsidian vault).</p>
+<p><img src="images/Obsidian_Map_Kiezen.png" class="img-fluid"></p>
+<p>En dat was het eigenlijk al, wanneer je nu op je laptop ook Obsidian en de Nextcloud client installeert, hoef je alleen nog maar de vault&nbsp; te openen die in je Nextcloud map zit. Tada, je Obsidian vault wordt nu gesynchroniseerd tussen je laptop en desktop.</p>
+<p>Hierboven heb ik het specifiek over een laptop en een desktop, maar ik denk dat het gebruikelijker is om een laptop/desktop te willen synchroniseren met een mobiel apparaat (telefoon of tablet). Dat wil ik namelijk ook! Helaas komen we nu in aanraking met merkwaardig probleem nummer één.</p>
+</section>
+<section id="merkwaardig-probleem-mobiele-nextcloud-client-synchroniseert-niet-twee-kanten-op" class="level2">
+<h2 class="anchored" data-anchor-id="merkwaardig-probleem-mobiele-nextcloud-client-synchroniseert-niet-twee-kanten-op">Merkwaardig probleem: Mobiele Nextcloud Client Synchroniseert niet twee kanten op</h2>
+<p>Het probleem is dat de mobiele Nextcloud client, geen synchronisatie heeft die twee kanten op werkt (two-way sync). Hierdoor worden aanpassingen in bestaande bestanden niet opnieuw geüpload naar Nextcloud, waardoor je andere apparaten die updates niet hebben. Ik vind het vervelend dat de mobiele client dat niet kan (hopelijk gaat iemand het ooit maken er is een bounty voor: <a href="https://app.bountysource.com/issues/35153835-allow-2-way-sync">https://app.bountysource.com/issues/35153835-allow-2-way-sync</a>), maar gelukkig is er wel een manier om dit probleem op te lossen.</p>
+<p>De oplossing is: nog een andere applicatie, namelijk <a href="https://syncthing.net/">Syncthing</a>. Met Syncthing kan je verschillende mappen synchroniseren met apparaten die op hetzelfde netwerk zitten. Dit lost bovenstaand probleem op door de map waar je Obsidian vault in zit op je mobiel, te synchroniseren naar je computer. De computer synchroniseert dan wel naar Nextcloud via de Nextcloud Client, omdat die wel two-way sync ondersteunt.</p>
+<p>Allereerst installeer je Syncthing op zowel je laptop als je mobiel (via de Playstore of App Store)</p>
+<p><a href="https://syncthing.net/downloads/">Syncthing Download Pagina</a>(Ik heb zelf de Base Syncthing gedownload. De uitleg in deze post gaat dus ook over die versie van Syncthing) <a href="https://play.google.com/store/apps/details?id=com.nutomic.syncthingandroid&amp;hl=en_US">Synchthing Play Store</a></p>
+<p>Na de installatie en het starten van Syncthing navigeer je naar http://localhost:8384/ om naar de grafische interface (GUI) van Syncthing te gaan (dat ziet er uit zoals hieronder).</p>
+<p><img src="images/Pasted image 20230617083456.png" class="img-fluid"></p>
+<p>Als eerste moet je op je laptop je mobiel als extern apparaat (remote device) toevoegen. En vervolgens voeg je, op je mobiel, de laptop toe als extern apparaat. Alleen dan is er voor beide apparaten toestemming om met elkaar te synchroniseren. Dit doe je voor je laptop door op “Extern Apparaat Toevoegen” (“Add Remote Device”) in de GUI te klikken en dan het Apparaat ID (van je mobiel, deze is te vinden door de mobiele app te openen, dan linksboven het menu te openen en daar op Show Device ID te klikken) en de naam van het Apparaat in te vullen (let wel op dat beide apparaten op hetzelfde netwerk zitten). Nadat je dat hebt gedaan zal het toegevoegd apparaat onder Externe Apparaten (Remote Devices verschijnen).</p>
+<p>Voor de mobiele app werkt het nagenoeg hetzelfde. 1. Open de app 2. Navigeer naar devices 3. Klik op het plusje (rechtsboven) 4. Vul hier het Device ID (van je laptop, deze is te vinden door in de GUI op “Acties” (“Actions”) te klikken en dan op “ID weergeven” (“Show ID”)) en “Name” in te vullen.</p>
+<p>Nu kunnen je laptop en mobiel met elkaar synchroniseren, alleen moet je nog vertellen welke map(pen) ze met elkaar synchroniseren.</p>
+<p>Je begint op je laptop (waar ook Nextcloud opstaat) en in de GUI klik je op “Map Toevoegen” (“Add Folder”). Dan vul je de map waar je Obsidian vault staat in in het “MapLocatie” (“Folder Location”) veld. Vervolgens ga je naar de “Delen” (“Share”) tab en daar vink je je mobiel aan. Tot slot klik je op “Opslaan” (“Save”).</p>
+<p>Dan moet je op je mobiel dezelfde folder toevoegen. 1. Open de App 2. Navigeer naar Folders 3. Klik op het plusje (rechtsboven) 4. <strong>Vul bij Folder Label hetzelfde label in als die in de GUI op je laptop</strong> 5. Vink aan met welk apparaat je wilt delen (de naam van je Laptop) 6. Kies een “Directory” waar je de gedeelde data wilt opslaan (onthoudt deze)</p>
+<p>Wanneer je deze stappen hebt gevolgd, dan kan je ieder moment dat je mobiel en computer op hetzelfde netwerk zitten, de folders synchroniseren. Je hoeft alleen Syncthing op te starten.</p>
+<p>Nu kan je op je mobiel de <a href="https://play.google.com/store/apps/details?id=md.obsidian&amp;hl=en_US">Obsidian App</a> downloaden en de Obsidian Vault openen die je in bovenstaande folder (stap 6) hebt gekozen om te synchroniseren.</p>
+</section>
+<section id="merkwaardig-probleem-je-kunt-niet-snel-een-notitie-maken-met-obsidian-mobiel" class="level2">
+<h2 class="anchored" data-anchor-id="merkwaardig-probleem-je-kunt-niet-snel-een-notitie-maken-met-obsidian-mobiel">Merkwaardig probleem: Je kunt niet snel een notitie maken met Obsidian mobiel</h2>
+<p>Dan nu naar het tweede merkwaardige probleem, namelijk dat je eerst je telefoon ontgrendelt, dan de Obsidian app moet openen, links boven op het krant (ik weet eigenlijk niet goed hoe je zo een icoontje noemt, maar krant lijkt er het meeste op) icoontje klikken en dan links onder op het papier en potlood icoontje, je typt je notitie en als laatste sluit je de app. Dat zijn te veel handelingen om even snel een notitie te maken van wat je hoort, leest, tegenkomt of herinnert. Jammer genoeg kan je ook geen Obsidian widget instellen. Daarom moet je zelf een (soort van) widget maken.</p>
+<p>Hiervoor gebruik je een andere app, namelijk <a href="https://play.google.com/store/apps/details?id=com.arlosoft.macrodroid&amp;hl=nl&amp;gl=US&amp;pli=1">Macrodroid</a>. Macrodroid is een app waarmee je door het klikken van één knop verschillende acties kunt doen, dat heet een macro. Of je kan door één klik een input schermpje openen waarin je een notitie kan typen en wanneer je op “ok” drukt die automatisch toevoegen aan je Obsidian notitie van de dag. Een extraatje is dat je deze knop op je startscherm kunt zetten.&nbsp; Waardoor je alleen nog deze stappen hoeft te doen:&nbsp; telefoon ontgrendelen, op de gemaakte widget klikken, notitie typen en dan “ok” je notitie is opgeslagen. Dat maakt opkomende ideeën zoveel makkelijker om op te slaan.</p>
+<p>Hieronder staat beschreven hoe je dat zelf kunt instellen op je telefoon.</p>
+<ol type="1">
+<li>Open MacroDroid en klik op “Add Macro”</li>
+<li>Geef de macro een naam. Bijvoorbeeld: Snel Notitie Toevoegen</li>
+<li>Stel een trigger in en kies “Shortcut Launched” (zie afbeelding hieronder) <img src="images/Pasted image 20230630142828.png" class="img-fluid"></li>
+<li>Stel een actie in en kies “Set Variable” en stel deze in (zie afbeeldingen hieronder) <img src="images/Pasted image 20230630143042.png" class="img-fluid"></li>
+</ol>
+<ul>
+<li><p>Voer “input” in als variable name</p></li>
+<li><p>Kies “String” als variable type</p></li>
+<li><p>Vink Create variable now aan</p></li>
+<li><p>Klik op “OK” <img src="images/Pasted image 20230630143105.png" class="img-fluid"></p></li>
+<li><p>Vink [User Prompt] aan</p></li>
+<li><p>Klik op “OK”</p></li>
+</ul>
+<p><img src="images/Pasted image 20230630143154.png" class="img-fluid"> * Vul een Title naar keuze in * Vink de volgende vakjes aan: “Allow cancel”, “Cancel prevents subsequent actions running” en “Dark mode (als je dat wilt)” * Klik op “OK”</p>
+<p><img src="Pasted image 20230630143524.png" class="img-fluid"></p>
+<ol start="5" type="1">
+<li>Voeg nog een actie toe, “Write to file” en stel in (zie afbeeldingen hieronder)</li>
+</ol>
+<p><img src="Pasted image 20230630143729.png" class="img-fluid"></p>
+<ul>
+<li>Bij “Select Folder” kies je je Obsidian folder (ik heb in de Obsidian Vault een folder gemaakt genaamd Inbox. Hierin worden alle notities opgeslagen en die verwerk ik dan 1x in de week)</li>
+<li>Vul {year}-{month_digit}-{dayofmonth}.md in bij “filename”. De namen tussen de curly brackets ({}) zijn variabelen en die worden ingevuld door MacroDroid. Het resultaat daarvan is bijvoorbeeld 2023-06-30.md</li>
+<li>Vul - [ ] {lv=input} in bij “Enter Text”. Deze regel zorgt ervoor dat er in je nieuwe notitie een nieuwe regel wordt gemaakt die begint met een checkbox. Achter de checkbox komt dan je notitie.</li>
+<li>Kies “Append to file” zodat je een nieuwe notitie toevoeg aan de bestaande file en die niet overschrijft waardoor je je oude notities van die dag behoudt.</li>
+</ul>
+<p><img src="images/Pasted image 20230630143759.png" class="img-fluid"></p>
+<ol start="6" type="1">
+<li>Je macro ziet er nu zo uit <img src="images/Pasted image 20230630144340.png" class="img-fluid"></li>
+<li>Sla de macro op en nu kan je via een Widget de Macro aan je scherm toevoegen.</li>
+</ol>
+<ul>
+<li>Voeg een Widget toe</li>
+<li>Kies “MacroDroid Custom”</li>
+<li>Selecteer de gemaakte Macro</li>
+</ul>
+<p>Tada, nu heb je een makkelijke manier om notities toe te voegen aan Obsidian!</p>
+<p>Met deze twee extra applicaties is het dus mogelijk om de twee tekortkomingen van Nextcloud en Obsidian op te lossen. Ik hoop zelf dat er in de toekomst updates van beide applicaties komen zodat je niet nog twee extra apps nodig hebt. Maar tot die tijd is dit een fantastische oplossing.</p>
+<p>Veel plezier en tot de volgende keer :)</p>
 <p>Mees</p>
 
 
 </section>
 
-
-<div id="quarto-appendix" class="default"><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
-
-<ol>
-<li id="fn1"><p><a href="https://cabbagemees.nl/flutter/android/devops/2022/06/27/Flutter-app-deel-1-voorbereiding.html">Android App in Flutter Deel 1 - Voorbereiding</a><a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn2"><p><a href="https://github.com/bizz84/flutter-tips-and-tricks/blob/main/tips/0022-app-development-workflow-in-six-steps/index.md">Code With Andrea App Development Worklfow</a><a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn3"><p><a href="https://bloclibrary.dev/#/fluttertodostutorial">Bloclibrary - Flutter Todos Tutorial</a><a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn4"><p><a href="https://github.com/users/Mees-Molenaar/projects/1">Github Project Board - Flutter App</a><a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-</ol>
-</section></div></main> <!-- /main -->
+</main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {

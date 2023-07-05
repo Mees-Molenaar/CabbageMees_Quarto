@@ -2,54 +2,58 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://cabbagemees.nl/index.html</loc>
-    <lastmod>2023-05-15T07:23:13.301Z</lastmod>
-  </url>
-  <url>
-    <loc>https://cabbagemees.nl/posts/2022-09-27-Flutter-app-deel-3-CI-nog-geen-CD/index.html</loc>
-    <lastmod>2023-05-15T07:23:14.229Z</lastmod>
-  </url>
-  <url>
-    <loc>https://cabbagemees.nl/posts/2022-11-27-Side-Project-FastAPI-nbdev/index.html</loc>
-    <lastmod>2023-05-15T07:23:14.665Z</lastmod>
-  </url>
-  <url>
-    <loc>https://cabbagemees.nl/posts/2022-06-07-Een-nieuwe-stap/index.html</loc>
-    <lastmod>2023-05-15T07:23:15.077Z</lastmod>
-  </url>
-  <url>
-    <loc>https://cabbagemees.nl/posts/2022-10-16-Flutter-app-deel-4-de-integration-test/index.html</loc>
-    <lastmod>2023-05-15T07:23:15.537Z</lastmod>
-  </url>
-  <url>
-    <loc>https://cabbagemees.nl/posts/2022-07-27-Flutter-app-deel-2-app-architectuur/index.html</loc>
-    <lastmod>2023-05-15T07:23:15.985Z</lastmod>
-  </url>
-  <url>
-    <loc>https://cabbagemees.nl/posts/2021-06-19-Kwaadaardige-Moedervlekken/index.html</loc>
-    <lastmod>2023-05-15T07:23:16.513Z</lastmod>
-  </url>
-  <url>
-    <loc>https://cabbagemees.nl/posts/2023-05-15-Raspberry-pi-Nextcloud/index.html</loc>
-    <lastmod>2023-05-15T07:23:17.437Z</lastmod>
-  </url>
-  <url>
-    <loc>https://cabbagemees.nl/posts/2022-06-27-Flutter-app-deel-1-voorbereiding/index.html</loc>
-    <lastmod>2023-05-15T07:23:17.953Z</lastmod>
+    <lastmod>2023-07-05T08:48:03.845Z</lastmod>
   </url>
   <url>
     <loc>https://cabbagemees.nl/posts/2022-07-13-Tussenproject-Tour-De-France-Voorspellen/index.html</loc>
-    <lastmod>2023-05-15T07:23:18.741Z</lastmod>
+    <lastmod>2023-07-05T08:48:02.205Z</lastmod>
   </url>
   <url>
     <loc>https://cabbagemees.nl/posts/2021-05-26-Eerste-blog-post/index.html</loc>
-    <lastmod>2023-05-15T07:23:19.121Z</lastmod>
+    <lastmod>2023-07-05T08:48:00.973Z</lastmod>
+  </url>
+  <url>
+    <loc>https://cabbagemees.nl/posts/2021-06-19-Kwaadaardige-Moedervlekken/index.html</loc>
+    <lastmod>2023-07-05T08:48:00.157Z</lastmod>
+  </url>
+  <url>
+    <loc>https://cabbagemees.nl/posts/2023-05-15-Raspberry-pi-Nextcloud/index.html</loc>
+    <lastmod>2023-07-05T08:47:59.057Z</lastmod>
+  </url>
+  <url>
+    <loc>https://cabbagemees.nl/posts/2022-06-27-Flutter-app-deel-1-voorbereiding/index.html</loc>
+    <lastmod>2023-07-05T08:47:57.518Z</lastmod>
+  </url>
+  <url>
+    <loc>https://cabbagemees.nl/posts/2022-06-07-Een-nieuwe-stap/index.html</loc>
+    <lastmod>2023-07-05T08:47:56.522Z</lastmod>
+  </url>
+  <url>
+    <loc>https://cabbagemees.nl/posts/2022-09-27-Flutter-app-deel-3-CI-nog-geen-CD/index.html</loc>
+    <lastmod>2023-07-05T08:47:55.774Z</lastmod>
+  </url>
+  <url>
+    <loc>https://cabbagemees.nl/posts/2022-10-16-Flutter-app-deel-4-de-integration-test/index.html</loc>
+    <lastmod>2023-07-05T08:47:56.994Z</lastmod>
   </url>
   <url>
     <loc>https://cabbagemees.nl/posts/2023-01-08-Flutter-app-deel-5-start-app/index.html</loc>
-    <lastmod>2023-05-15T07:23:19.709Z</lastmod>
+    <lastmod>2023-07-05T08:47:58.146Z</lastmod>
+  </url>
+  <url>
+    <loc>https://cabbagemees.nl/posts/2023-07-05-Een Tweede Brein - Oplossen problemen Nextcloud en Obsidian/index.html</loc>
+    <lastmod>2023-07-05T08:47:59.649Z</lastmod>
+  </url>
+  <url>
+    <loc>https://cabbagemees.nl/posts/2022-07-27-Flutter-app-deel-2-app-architectuur/index.html</loc>
+    <lastmod>2023-07-05T08:48:00.605Z</lastmod>
+  </url>
+  <url>
+    <loc>https://cabbagemees.nl/posts/2022-11-27-Side-Project-FastAPI-nbdev/index.html</loc>
+    <lastmod>2023-07-05T08:48:01.389Z</lastmod>
   </url>
   <url>
     <loc>https://cabbagemees.nl/about.html</loc>
-    <lastmod>2023-05-15T07:23:20.013Z</lastmod>
+    <lastmod>2023-07-05T08:48:02.525Z</lastmod>
   </url>
 </urlset>
