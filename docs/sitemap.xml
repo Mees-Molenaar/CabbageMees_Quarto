@@ -1,55 +1,59 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>https://cabbagemees.nl/posts/2023-07-05-Een Tweede Brein - Oplossen problemen Nextcloud en Obsidian/index.html</loc>
+    <lastmod>2023-07-05T08:46:54.908Z</lastmod>
+  </url>
+  <url>
     <loc>https://cabbagemees.nl/posts/2023-01-08-Flutter-app-deel-5-start-app/index.html</loc>
-    <lastmod>2023-05-15T07:21:52.631Z</lastmod>
+    <lastmod>2023-07-05T08:46:55.342Z</lastmod>
   </url>
   <url>
     <loc>https://cabbagemees.nl/posts/2022-07-27-Flutter-app-deel-2-app-architectuur/index.html</loc>
-    <lastmod>2023-05-15T07:21:53.008Z</lastmod>
+    <lastmod>2023-07-05T08:46:55.716Z</lastmod>
   </url>
   <url>
     <loc>https://cabbagemees.nl/posts/2022-11-27-Side-Project-FastAPI-nbdev/index.html</loc>
-    <lastmod>2023-05-15T07:21:53.368Z</lastmod>
+    <lastmod>2023-07-05T08:46:56.061Z</lastmod>
   </url>
   <url>
     <loc>https://cabbagemees.nl/posts/2021-05-26-Eerste-blog-post/index.html</loc>
-    <lastmod>2023-05-15T07:21:53.689Z</lastmod>
+    <lastmod>2023-07-05T08:46:56.386Z</lastmod>
   </url>
   <url>
     <loc>https://cabbagemees.nl/posts/2022-09-27-Flutter-app-deel-3-CI-nog-geen-CD/index.html</loc>
-    <lastmod>2023-05-15T07:21:54.114Z</lastmod>
+    <lastmod>2023-07-05T08:46:56.796Z</lastmod>
   </url>
   <url>
     <loc>https://cabbagemees.nl/posts/2022-07-13-Tussenproject-Tour-De-France-Voorspellen/index.html</loc>
-    <lastmod>2023-05-15T07:21:54.562Z</lastmod>
+    <lastmod>2023-07-05T08:46:57.237Z</lastmod>
   </url>
   <url>
     <loc>https://cabbagemees.nl/posts/2021-06-19-Kwaadaardige-Moedervlekken/index.html</loc>
-    <lastmod>2023-05-15T07:21:54.925Z</lastmod>
+    <lastmod>2023-07-05T08:46:57.605Z</lastmod>
   </url>
   <url>
     <loc>https://cabbagemees.nl/posts/2022-06-27-Flutter-app-deel-1-voorbereiding/index.html</loc>
-    <lastmod>2023-05-15T07:21:55.270Z</lastmod>
+    <lastmod>2023-07-05T08:46:57.963Z</lastmod>
   </url>
   <url>
     <loc>https://cabbagemees.nl/posts/2022-06-07-Een-nieuwe-stap/index.html</loc>
-    <lastmod>2023-05-15T07:21:55.601Z</lastmod>
+    <lastmod>2023-07-05T08:46:58.281Z</lastmod>
   </url>
   <url>
     <loc>https://cabbagemees.nl/posts/2023-05-15-Raspberry-pi-Nextcloud/index.html</loc>
-    <lastmod>2023-05-15T07:21:56.261Z</lastmod>
+    <lastmod>2023-07-05T08:46:58.931Z</lastmod>
   </url>
   <url>
     <loc>https://cabbagemees.nl/posts/2022-10-16-Flutter-app-deel-4-de-integration-test/index.html</loc>
-    <lastmod>2023-05-15T07:21:56.613Z</lastmod>
+    <lastmod>2023-07-05T08:46:59.265Z</lastmod>
   </url>
   <url>
     <loc>https://cabbagemees.nl/index.html</loc>
-    <lastmod>2023-05-15T07:21:57.034Z</lastmod>
+    <lastmod>2023-07-05T08:46:59.704Z</lastmod>
   </url>
   <url>
     <loc>https://cabbagemees.nl/about.html</loc>
-    <lastmod>2023-05-15T07:21:57.325Z</lastmod>
+    <lastmod>2023-07-05T08:47:00.002Z</lastmod>
   </url>
 </urlset>

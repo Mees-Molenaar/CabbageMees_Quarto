@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.2.269">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Mees Molenaar">
+<meta name="dcterms.date" content="2023-07-05">
+
+<title>CabbageMees - Een Tweede Brein - Oplossen problemen Nextcloud en Obsidian</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../images/logo.png" rel="icon" type="image/png">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-9GMDP6RW3B"></script>
+
+<script type="text/javascript">
+
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-9GMDP6RW3B', { 'anonymize_ip': true});
+</script>
+
+
+<link rel="stylesheet" href="../../styles.css">
+<meta property="og:title" content="CabbageMees - Een Tweede Brein - Oplossen problemen Nextcloud en Obsidian">
+<meta property="og:description" content="Los de two-two sync en snel notitie maken problemen op">
+<meta property="og:image" content="https://cabbagemees.nl/posts/2023-07-05-Een Tweede Brein - Oplossen problemen Nextcloud en Obsidian/images/bing-man-juggling.jpg">
+<meta property="og:site-name" content="CabbageMees">
+<meta name="twitter:title" content="CabbageMees - Een Tweede Brein - Oplossen problemen Nextcloud en Obsidian">
+<meta name="twitter:description" content="Los de two-two sync en snel notitie maken problemen op">
+<meta name="twitter:image" content="https://cabbagemees.nl/posts/2023-07-05-Een Tweede Brein - Oplossen problemen Nextcloud en Obsidian/images/bing-man-juggling.jpg">
+<meta name="twitter:card" content="summary_large_image">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a href="../../index.html" class="navbar-brand navbar-brand-logo">
+    <img src="../../images/logo.png" alt="" class="navbar-logo">
+    </a>
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">CabbageMees</span>
+    </a>
+  </div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html">
+ <span class="menu-text">Over Mij</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/Mees-Molenaar"><i class="bi bi-github" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://twitter.com/CabbageMees"><i class="bi bi-twitter" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+</ul>
+              <div id="quarto-search" class="" title="Search"></div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">Een Tweede Brein - Oplossen problemen Nextcloud en Obsidian</h1>
+            <p class="subtitle lead">Los de two-two sync en snel notitie maken problemen op</p>
+                                <div class="quarto-categories">
+                <div class="quarto-category">Raspberry Pi</div>
+                <div class="quarto-category">Nextcloud</div>
+                <div class="quarto-category">Obsidian</div>
+                <div class="quarto-category">Synccthing</div>
+                <div class="quarto-category">MacroDroid</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>Mees Molenaar </p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">July 5, 2023</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#inleiding" id="toc-inleiding" class="nav-link active" data-scroll-target="#inleiding">Inleiding</a></li>
+  <li><a href="#obsidian-vault-in-nextcloud" id="toc-obsidian-vault-in-nextcloud" class="nav-link" data-scroll-target="#obsidian-vault-in-nextcloud">Obsidian vault in Nextcloud</a></li>
+  <li><a href="#merkwaardig-probleem-mobiele-nextcloud-client-synchroniseert-niet-twee-kanten-op" id="toc-merkwaardig-probleem-mobiele-nextcloud-client-synchroniseert-niet-twee-kanten-op" class="nav-link" data-scroll-target="#merkwaardig-probleem-mobiele-nextcloud-client-synchroniseert-niet-twee-kanten-op">Merkwaardig probleem: Mobiele Nextcloud Client Synchroniseert niet twee kanten op</a></li>
+  <li><a href="#merkwaardig-probleem-je-kunt-niet-snel-een-notitie-maken-met-obsidian-mobiel" id="toc-merkwaardig-probleem-je-kunt-niet-snel-een-notitie-maken-met-obsidian-mobiel" class="nav-link" data-scroll-target="#merkwaardig-probleem-je-kunt-niet-snel-een-notitie-maken-met-obsidian-mobiel">Merkwaardig probleem: Je kunt niet snel een notitie maken met Obsidian mobiel</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+<section id="inleiding" class="level2">
+<h2 class="anchored" data-anchor-id="inleiding">Inleiding</h2>
+<p>Hallo hallo!</p>
+<p><a href="https://cabbagemees.nl/posts/2023-05-15-Raspberry-pi-Nextcloud/">Vorige post</a> heb ik verteld hoe je Nextcloud kunt hosten op je Raspberry Pi. In deze post wil ik jullie uitleggen hoe je Nextcloud vervolgens kunt koppelen met een Obsidian vault om deze te synchroniseren met verschillende apparaten. Ook zijn er twee (ik vind het merkwaardige) problemen waarvoor ik ook een oplossing zal bespreken.</p>
+<p>Maar eerst de Obsidian vault in Nextcloud starten!</p>
+</section>
+<section id="obsidian-vault-in-nextcloud" class="level2">
+<h2 class="anchored" data-anchor-id="obsidian-vault-in-nextcloud">Obsidian vault in Nextcloud</h2>
+<p>Allereerst is het verstandig om naast het Nextcloud Admin account, ook een los account te maken voor het dagelijkse gebruik. <a href="https://docs.nextcloud.com/server/latest/admin_manual/configuration_user/user_configuration.html">Klik hier om naar de uitleg te gaan om gebruikers toe te voegen.</a></p>
+<p>Wanneer je dat gedaan hebt, heb je zowel de Nextcloud Client als Obsidian nodig op je computer.</p>
+<p><a href="https://obsidian.md/download">Obsidian Download Pagina</a> <a href="https://nextcloud.com/install/">Nextcloud Client Download Pagina</a></p>
+<p>Na de installatie log je in met de aangemaakte gebruiker via de URL die je hebt gekozen bij het <a href="https://cabbagemees.nl/posts/2023-05-15-Raspberry-pi-Nextcloud/">opzetten van de Nextcloud server</a>. Vervolgens kan je dan een Obsidian vault maken in de Nextcloud map (ik heb een losse map “Obsidian” gemaakt in de Nextcloud map en die gekozen voor de Obsidian vault).</p>
+<p><img src="images/Obsidian_Map_Kiezen.png" class="img-fluid"></p>
+<p>En dat was het eigenlijk al, wanneer je nu op je laptop ook Obsidian en de Nextcloud client installeert, hoef je alleen nog maar de vault&nbsp; te openen die in je Nextcloud map zit. Tada, je Obsidian vault wordt nu gesynchroniseerd tussen je laptop en desktop.</p>
+<p>Hierboven heb ik het specifiek over een laptop en een desktop, maar ik denk dat het gebruikelijker is om een laptop/desktop te willen synchroniseren met een mobiel apparaat (telefoon of tablet). Dat wil ik namelijk ook! Helaas komen we nu in aanraking met merkwaardig probleem nummer één.</p>
+</section>
+<section id="merkwaardig-probleem-mobiele-nextcloud-client-synchroniseert-niet-twee-kanten-op" class="level2">
+<h2 class="anchored" data-anchor-id="merkwaardig-probleem-mobiele-nextcloud-client-synchroniseert-niet-twee-kanten-op">Merkwaardig probleem: Mobiele Nextcloud Client Synchroniseert niet twee kanten op</h2>
+<p>Het probleem is dat de mobiele Nextcloud client, geen synchronisatie heeft die twee kanten op werkt (two-way sync). Hierdoor worden aanpassingen in bestaande bestanden niet opnieuw geüpload naar Nextcloud, waardoor je andere apparaten die updates niet hebben. Ik vind het vervelend dat de mobiele client dat niet kan (hopelijk gaat iemand het ooit maken er is een bounty voor: <a href="https://app.bountysource.com/issues/35153835-allow-2-way-sync">https://app.bountysource.com/issues/35153835-allow-2-way-sync</a>), maar gelukkig is er wel een manier om dit probleem op te lossen.</p>
+<p>De oplossing is: nog een andere applicatie, namelijk <a href="https://syncthing.net/">Syncthing</a>. Met Syncthing kan je verschillende mappen synchroniseren met apparaten die op hetzelfde netwerk zitten. Dit lost bovenstaand probleem op door de map waar je Obsidian vault in zit op je mobiel, te synchroniseren naar je computer. De computer synchroniseert dan wel naar Nextcloud via de Nextcloud Client, omdat die wel two-way sync ondersteunt.</p>
+<p>Allereerst installeer je Syncthing op zowel je laptop als je mobiel (via de Playstore of App Store)</p>
+<p><a href="https://syncthing.net/downloads/">Syncthing Download Pagina</a>(Ik heb zelf de Base Syncthing gedownload. De uitleg in deze post gaat dus ook over die versie van Syncthing) <a href="https://play.google.com/store/apps/details?id=com.nutomic.syncthingandroid&amp;hl=en_US">Synchthing Play Store</a></p>
+<p>Na de installatie en het starten van Syncthing navigeer je naar http://localhost:8384/ om naar de grafische interface (GUI) van Syncthing te gaan (dat ziet er uit zoals hieronder).</p>
+<p><img src="images/Pasted image 20230617083456.png" class="img-fluid"></p>
+<p>Als eerste moet je op je laptop je mobiel als extern apparaat (remote device) toevoegen. En vervolgens voeg je, op je mobiel, de laptop toe als extern apparaat. Alleen dan is er voor beide apparaten toestemming om met elkaar te synchroniseren. Dit doe je voor je laptop door op “Extern Apparaat Toevoegen” (“Add Remote Device”) in de GUI te klikken en dan het Apparaat ID (van je mobiel, deze is te vinden door de mobiele app te openen, dan linksboven het menu te openen en daar op Show Device ID te klikken) en de naam van het Apparaat in te vullen (let wel op dat beide apparaten op hetzelfde netwerk zitten). Nadat je dat hebt gedaan zal het toegevoegd apparaat onder Externe Apparaten (Remote Devices verschijnen).</p>
+<p>Voor de mobiele app werkt het nagenoeg hetzelfde. 1. Open de app 2. Navigeer naar devices 3. Klik op het plusje (rechtsboven) 4. Vul hier het Device ID (van je laptop, deze is te vinden door in de GUI op “Acties” (“Actions”) te klikken en dan op “ID weergeven” (“Show ID”)) en “Name” in te vullen.</p>
+<p>Nu kunnen je laptop en mobiel met elkaar synchroniseren, alleen moet je nog vertellen welke map(pen) ze met elkaar synchroniseren.</p>
+<p>Je begint op je laptop (waar ook Nextcloud opstaat) en in de GUI klik je op “Map Toevoegen” (“Add Folder”). Dan vul je de map waar je Obsidian vault staat in in het “MapLocatie” (“Folder Location”) veld. Vervolgens ga je naar de “Delen” (“Share”) tab en daar vink je je mobiel aan. Tot slot klik je op “Opslaan” (“Save”).</p>
+<p>Dan moet je op je mobiel dezelfde folder toevoegen. 1. Open de App 2. Navigeer naar Folders 3. Klik op het plusje (rechtsboven) 4. <strong>Vul bij Folder Label hetzelfde label in als die in de GUI op je laptop</strong> 5. Vink aan met welk apparaat je wilt delen (de naam van je Laptop) 6. Kies een “Directory” waar je de gedeelde data wilt opslaan (onthoudt deze)</p>
+<p>Wanneer je deze stappen hebt gevolgd, dan kan je ieder moment dat je mobiel en computer op hetzelfde netwerk zitten, de folders synchroniseren. Je hoeft alleen Syncthing op te starten.</p>
+<p>Nu kan je op je mobiel de <a href="https://play.google.com/store/apps/details?id=md.obsidian&amp;hl=en_US">Obsidian App</a> downloaden en de Obsidian Vault openen die je in bovenstaande folder (stap 6) hebt gekozen om te synchroniseren.</p>
+</section>
+<section id="merkwaardig-probleem-je-kunt-niet-snel-een-notitie-maken-met-obsidian-mobiel" class="level2">
+<h2 class="anchored" data-anchor-id="merkwaardig-probleem-je-kunt-niet-snel-een-notitie-maken-met-obsidian-mobiel">Merkwaardig probleem: Je kunt niet snel een notitie maken met Obsidian mobiel</h2>
+<p>Dan nu naar het tweede merkwaardige probleem, namelijk dat je eerst je telefoon ontgrendelt, dan de Obsidian app moet openen, links boven op het krant (ik weet eigenlijk niet goed hoe je zo een icoontje noemt, maar krant lijkt er het meeste op) icoontje klikken en dan links onder op het papier en potlood icoontje, je typt je notitie en als laatste sluit je de app. Dat zijn te veel handelingen om even snel een notitie te maken van wat je hoort, leest, tegenkomt of herinnert. Jammer genoeg kan je ook geen Obsidian widget instellen. Daarom moet je zelf een (soort van) widget maken.</p>
+<p>Hiervoor gebruik je een andere app, namelijk <a href="https://play.google.com/store/apps/details?id=com.arlosoft.macrodroid&amp;hl=nl&amp;gl=US&amp;pli=1">Macrodroid</a>. Macrodroid is een app waarmee je door het klikken van één knop verschillende acties kunt doen, dat heet een macro. Of je kan door één klik een input schermpje openen waarin je een notitie kan typen en wanneer je op “ok” drukt die automatisch toevoegen aan je Obsidian notitie van de dag. Een extraatje is dat je deze knop op je startscherm kunt zetten.&nbsp; Waardoor je alleen nog deze stappen hoeft te doen:&nbsp; telefoon ontgrendelen, op de gemaakte widget klikken, notitie typen en dan “ok” je notitie is opgeslagen. Dat maakt opkomende ideeën zoveel makkelijker om op te slaan.</p>
+<p>Hieronder staat beschreven hoe je dat zelf kunt instellen op je telefoon.</p>
+<ol type="1">
+<li>Open MacroDroid en klik op “Add Macro”</li>
+<li>Geef de macro een naam. Bijvoorbeeld: Snel Notitie Toevoegen</li>
+<li>Stel een trigger in en kies “Shortcut Launched” (zie afbeelding hieronder) <img src="images/Pasted image 20230630142828.png" class="img-fluid"></li>
+<li>Stel een actie in en kies “Set Variable” en stel deze in (zie afbeeldingen hieronder) <img src="images/Pasted image 20230630143042.png" class="img-fluid"></li>
+</ol>
+<ul>
+<li><p>Voer “input” in als variable name</p></li>
+<li><p>Kies “String” als variable type</p></li>
+<li><p>Vink Create variable now aan</p></li>
+<li><p>Klik op “OK” <img src="images/Pasted image 20230630143105.png" class="img-fluid"></p></li>
+<li><p>Vink [User Prompt] aan</p></li>
+<li><p>Klik op “OK”</p></li>
+</ul>
+<p><img src="images/Pasted image 20230630143154.png" class="img-fluid"> * Vul een Title naar keuze in * Vink de volgende vakjes aan: “Allow cancel”, “Cancel prevents subsequent actions running” en “Dark mode (als je dat wilt)” * Klik op “OK”</p>
+<p><img src="Pasted image 20230630143524.png" class="img-fluid"></p>
+<ol start="5" type="1">
+<li>Voeg nog een actie toe, “Write to file” en stel in (zie afbeeldingen hieronder)</li>
+</ol>
+<p><img src="Pasted image 20230630143729.png" class="img-fluid"></p>
+<ul>
+<li>Bij “Select Folder” kies je je Obsidian folder (ik heb in de Obsidian Vault een folder gemaakt genaamd Inbox. Hierin worden alle notities opgeslagen en die verwerk ik dan 1x in de week)</li>
+<li>Vul {year}-{month_digit}-{dayofmonth}.md in bij “filename”. De namen tussen de curly brackets ({}) zijn variabelen en die worden ingevuld door MacroDroid. Het resultaat daarvan is bijvoorbeeld 2023-06-30.md</li>
+<li>Vul - [ ] {lv=input} in bij “Enter Text”. Deze regel zorgt ervoor dat er in je nieuwe notitie een nieuwe regel wordt gemaakt die begint met een checkbox. Achter de checkbox komt dan je notitie.</li>
+<li>Kies “Append to file” zodat je een nieuwe notitie toevoeg aan de bestaande file en die niet overschrijft waardoor je je oude notities van die dag behoudt.</li>
+</ul>
+<p><img src="images/Pasted image 20230630143759.png" class="img-fluid"></p>
+<ol start="6" type="1">
+<li>Je macro ziet er nu zo uit <img src="images/Pasted image 20230630144340.png" class="img-fluid"></li>
+<li>Sla de macro op en nu kan je via een Widget de Macro aan je scherm toevoegen.</li>
+</ol>
+<ul>
+<li>Voeg een Widget toe</li>
+<li>Kies “MacroDroid Custom”</li>
+<li>Selecteer de gemaakte Macro</li>
+</ul>
+<p>Tada, nu heb je een makkelijke manier om notities toe te voegen aan Obsidian!</p>
+<p>Met deze twee extra applicaties is het dus mogelijk om de twee tekortkomingen van Nextcloud en Obsidian op te lossen. Ik hoop zelf dat er in de toekomst updates van beide applicaties komen zodat je niet nog twee extra apps nodig hebt. Maar tot die tijd is dit een fantastische oplossing.</p>
+<p>Veel plezier en tot de volgende keer :)</p>
+<p>Mees</p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>
