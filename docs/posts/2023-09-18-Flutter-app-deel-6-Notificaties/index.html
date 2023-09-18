@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.450">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Mees Molenaar">
+<meta name="dcterms.date" content="2023-09-18">
+
+<title>CabbageMees - Een Flutter App - Deel 6 - Notificaties</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../images/logo.png" rel="icon" type="image/png">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-9GMDP6RW3B"></script>
+
+<script type="text/javascript">
+
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-9GMDP6RW3B', { 'anonymize_ip': true});
+</script>
+
+
+<link rel="stylesheet" href="../../styles.css">
+<meta property="og:title" content="CabbageMees - Een Flutter App - Deel 6 - Notificaties">
+<meta property="og:description" content="Geef je gebruik een notificatie">
+<meta property="og:image" content="https://cabbagemees.nl/posts/2023-09-18-Flutter-app-deel-6-Notificaties/images/notification.jpg">
+<meta property="og:site-name" content="CabbageMees">
+<meta name="twitter:title" content="CabbageMees - Een Flutter App - Deel 6 - Notificaties">
+<meta name="twitter:description" content="Geef je gebruik een notificatie">
+<meta name="twitter:image" content="https://cabbagemees.nl/posts/2023-09-18-Flutter-app-deel-6-Notificaties/images/notification.jpg">
+<meta name="twitter:card" content="summary_large_image">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a href="../../index.html" class="navbar-brand navbar-brand-logo">
+    <img src="../../images/logo.png" alt="" class="navbar-logo">
+    </a>
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">CabbageMees</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html" rel="" target="">
+ <span class="menu-text">Over Mij</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/Mees-Molenaar" rel="" target=""><i class="bi bi-github" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://twitter.com/CabbageMees" rel="" target=""><i class="bi bi-twitter" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+</ul>
+            <div class="quarto-navbar-tools">
+</div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">Een Flutter App - Deel 6 - Notificaties</h1>
+            <p class="subtitle lead">Geef je gebruik een notificatie</p>
+                                <div class="quarto-categories">
+                <div class="quarto-category">Flutter</div>
+                <div class="quarto-category">Notificatie</div>
+                <div class="quarto-category">Factory</div>
+                <div class="quarto-category">Gateway</div>
+                <div class="quarto-category">flutter_local_notifications</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>Mees Molenaar </p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">September 18, 2023</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#inleiding" id="toc-inleiding" class="nav-link active" data-scroll-target="#inleiding">Inleiding</a></li>
+  <li><a href="#flutter-local-notifications-package" id="toc-flutter-local-notifications-package" class="nav-link" data-scroll-target="#flutter-local-notifications-package">Flutter Local Notifications Package</a></li>
+  <li><a href="#de-interface" id="toc-de-interface" class="nav-link" data-scroll-target="#de-interface">De Interface</a></li>
+  <li><a href="#de-implementaties" id="toc-de-implementaties" class="nav-link" data-scroll-target="#de-implementaties">De Implementaties</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+<section id="inleiding" class="level2">
+<h2 class="anchored" data-anchor-id="inleiding">Inleiding</h2>
+<p>In de <a href="https://cabbagemees.nl/posts/2023-01-08-Flutter-app-deel-5-start-app/">vorige Flutter App post</a> is het raamwerk van de Best Practices App opgezet. Maar voor het Minimum Viable Product af is, dient de app iedere ochtend een notificatie te geven dat er een nieuwe practice klaar staat. In deze post wordt beschreven hoe je dat kunt doen.</p>
+</section>
+<section id="flutter-local-notifications-package" class="level2">
+<h2 class="anchored" data-anchor-id="flutter-local-notifications-package">Flutter Local Notifications Package</h2>
+<p>Gelukkig hoef je het notificatiedeel niet helemaal vanaf nul te bouwen. Er is namelijk een aantal packages die het meeste vuile werk al voor je opknappen. Voor deze app is ervoor gekozen om de <a href="https://pub.dev/packages/flutter_local_notifications">flutter_local_notifications</a> package te gebruiken. Deze package is gekozen omdat het de meeste likes heeft, een Flutter favourite is, en het redelijk actief onderhouden wordt (Het nadeel van deze package is dat het niet voor het web werkt, maar gelukkig wel voor Android en iOS&nbsp; (het is mij tot dusver nog niet gelukt om het voor het web werkend te krijgen, misschien een keer leuk om dat voor de community te maken?).</p>
+</section>
+<section id="de-interface" class="level2">
+<h2 class="anchored" data-anchor-id="de-interface">De Interface</h2>
+<p>Het is vaak niet verstandig om de code van een package rechtstreeks te gebruiken. Want wanneer je dan van package wilt veranderen, moet je overal waar je deze package gebruikt hebt de code wijzigen. Het is daarom verstandiger om je package te verpakken (wrappen) door een eigen klasse. Zelf noemde ik dit altijd een Wrapper, maar tijdens het schrijven van deze post heb ik gegoogled op dit concept en kwam ik te weten dat Martin Fowler dit een <a href="https://martinfowler.com/eaaCatalog/gateway.html">Gateway</a> noemt. Dit is wat Martin Fowler over een Gateway zegt:</p>
+<blockquote class="blockquote">
+<p>An object that encapsulates access to an external system or resource.</p>
+</blockquote>
+<p>Een ander voordeel van een Gateway is dat je alleen de functionaliteiten van de package die je nodig hebt kan verpakken. Met de Gateway maak je de overbodige functionaliteiten&nbsp; onbereikbaar. Alleen wat heb je dan wel nodig? Dat kan je vastleggen in de interface van je Gateway.</p>
+<p>In de interface bepaal je dus wat je nodig hebt voor je applicatie. In het geval van deze app zijn er eigenlijk maar twee dingen nodig (en dit kan natuurlijk nog veranderen wanneer er meer features bij de app komen).</p>
+<ol type="1">
+<li>Je moet een nieuwe notificatie kunnen instellen.</li>
+<li>Je moet kunnen achterhalen of er al een notificatie is ingesteld.</li>
+</ol>
+<p>In Dart gebruik je de term <code>abstract</code> om een interface te maken. Wanneer je dan <code>inherit</code> van die abstracte klasse word je door de compiler gewaarschuwd dat je de methodes in de abstracte klasse moet implementeren. Hieronder staat de code van de abstracte klasse <code>INotificationsApi</code>.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode numberSource dart number-lines code-with-copy"><code class="sourceCode dart"><span id="cb1-1"><a href="#cb1-1"></a><span class="kw">abstract</span> <span class="kw">class</span> INotificationsApi {</span>
+<span id="cb1-2"><a href="#cb1-2"></a>    <span class="at">const</span> INotificationsApi();</span>
+<span id="cb1-3"><a href="#cb1-3"></a></span>
+<span id="cb1-4"><a href="#cb1-4"></a>    <span class="co">// Returns if a Notification of the API is pending</span></span>
+<span id="cb1-5"><a href="#cb1-5"></a>    <span class="dt">Future</span><span class="op">&lt;</span><span class="dt">bool</span><span class="op">&gt;</span> <span class="kw">get</span> isNotificationPending;</span>
+<span id="cb1-6"><a href="#cb1-6"></a></span>
+<span id="cb1-7"><a href="#cb1-7"></a>    <span class="co">/// Set a new notification</span></span>
+<span id="cb1-8"><a href="#cb1-8"></a>    <span class="dt">Future</span><span class="op">&lt;</span><span class="dt">void</span><span class="op">&gt;</span> setNotification(</span>
+<span id="cb1-9"><a href="#cb1-9"></a>    <span class="dt">String</span> message<span class="op">,</span></span>
+<span id="cb1-10"><a href="#cb1-10"></a>    DateTime notificationDate<span class="op">,</span></span>
+<span id="cb1-11"><a href="#cb1-11"></a>    );</span>
+<span id="cb1-12"><a href="#cb1-12"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Nadat de interface gemaakt is, is het tijd voor de implementaties.</p>
+</section>
+<section id="de-implementaties" class="level2">
+<h2 class="anchored" data-anchor-id="de-implementaties">De Implementaties</h2>
+<p>Hoewel de flutter_local_notifications package ook al per besturingssysteem (OS, Operating System, in dit geval iOS of Android) verschillende implementaties heeft, is het in dit geval toch handig om dat zelf ook te maken. Voor ieder type OS moet je namelijk zelf de initiële configuratie doorgeven. Dit kan je heel goed doen met een <a href="https://refactoring.guru/design-patterns/factory-method">Factory</a>.</p>
+<p>De Factory maakt de juiste klasse op basis van het OS (zie code hieronder).</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode numberSource dart number-lines code-with-copy"><code class="sourceCode dart"><span id="cb2-1"><a href="#cb2-1"></a><span class="kw">import</span> <span class="st">'package:flutter_local_notifications/flutter_local_notifications.dart'</span>;</span>
+<span id="cb2-2"><a href="#cb2-2"></a><span class="kw">import</span> <span class="st">'package:notification_api/notification_api.dart'</span>;</span>
+<span id="cb2-3"><a href="#cb2-3"></a></span>
+<span id="cb2-4"><a href="#cb2-4"></a><span class="kw">import</span> <span class="st">'android_local_notification_api.dart'</span>;</span>
+<span id="cb2-5"><a href="#cb2-5"></a><span class="kw">import</span> <span class="st">'ios_local_notification_api.dart'</span>;</span>
+<span id="cb2-6"><a href="#cb2-6"></a></span>
+<span id="cb2-7"><a href="#cb2-7"></a></span>
+<span id="cb2-8"><a href="#cb2-8"></a><span class="kw">abstract</span> <span class="kw">class</span> LocalNotificationApi <span class="kw">extends</span> INotificationsApi {</span>
+<span id="cb2-9"><a href="#cb2-9"></a></span>
+<span id="cb2-10"><a href="#cb2-10"></a>    <span class="kw">factory</span> LocalNotificationApi(<span class="dt">String</span> platform<span class="op">,</span> <span class="dt">String</span> notificationTitle<span class="op">,</span></span>
+<span id="cb2-11"><a href="#cb2-11"></a>        FlutterLocalNotificationsPlugin notificationsPlugin) {</span>
+<span id="cb2-12"><a href="#cb2-12"></a></span>
+<span id="cb2-13"><a href="#cb2-13"></a>            <span class="cf">switch</span> (platform) {</span>
+<span id="cb2-14"><a href="#cb2-14"></a>                <span class="cf">case</span> <span class="st">'android'</span><span class="op">:</span></span>
+<span id="cb2-15"><a href="#cb2-15"></a>                    <span class="kw">return</span> AndroidLocalNotificationApi(</span>
+<span id="cb2-16"><a href="#cb2-16"></a>                        notificationsPlugin<span class="op">,</span> notificationTitle);</span>
+<span id="cb2-17"><a href="#cb2-17"></a>                <span class="cf">case</span> <span class="st">'iOS'</span><span class="op">:</span></span>
+<span id="cb2-18"><a href="#cb2-18"></a>                    <span class="kw">return</span> IosLocalNotificationApi(notificationsPlugin<span class="op">,</span> notificationTitle);</span>
+<span id="cb2-19"><a href="#cb2-19"></a>                <span class="cf">default</span><span class="op">:</span></span>
+<span id="cb2-20"><a href="#cb2-20"></a>                    <span class="cf">throw</span> <span class="kw">UnsupportedError</span>(<span class="st">'No NotificationApi implemented for this platform.'</span>);</span>
+<span id="cb2-21"><a href="#cb2-21"></a></span>
+<span id="cb2-22"><a href="#cb2-22"></a>            }</span>
+<span id="cb2-23"><a href="#cb2-23"></a>    }</span>
+<span id="cb2-24"><a href="#cb2-24"></a></span>
+<span id="cb2-25"><a href="#cb2-25"></a>    <span class="dt">Future</span><span class="op">&lt;</span><span class="dt">void</span><span class="op">&gt;</span> configureLocalTimeZone();</span>
+<span id="cb2-26"><a href="#cb2-26"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Vervolgens zorg je voor beide implementaties. Je kunt in de implementaties allerlei methodes en attributen toevoegen, zolang je maar de <code>abstract</code> klasse overschrijft en dus de methodes die gedefinieerd zijn in die klasse implementeert (zie code hieronder voor het Android voorbeeld).</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode numberSource dart number-lines code-with-copy"><code class="sourceCode dart"><span id="cb3-1"><a href="#cb3-1"></a><span class="kw">import</span> <span class="st">'package:flutter/foundation.dart'</span>;</span>
+<span id="cb3-2"><a href="#cb3-2"></a><span class="kw">import</span> <span class="st">'package:flutter_local_notifications/flutter_local_notifications.dart'</span>;</span>
+<span id="cb3-3"><a href="#cb3-3"></a><span class="kw">import</span> <span class="st">'package:flutter_native_timezone/flutter_native_timezone.dart'</span>;</span>
+<span id="cb3-4"><a href="#cb3-4"></a><span class="kw">import</span> <span class="st">'package:local_notification_api/src/local_notification_api.dart'</span>;</span>
+<span id="cb3-5"><a href="#cb3-5"></a><span class="kw">import</span> <span class="st">'package:notification_api/notification_api.dart'</span> <span class="kw">as</span> api;</span>
+<span id="cb3-6"><a href="#cb3-6"></a><span class="kw">import</span> <span class="st">'package:timezone/data/latest_all.dart'</span> <span class="kw">as</span> tz;</span>
+<span id="cb3-7"><a href="#cb3-7"></a><span class="kw">import</span> <span class="st">'package:timezone/timezone.dart'</span> <span class="kw">as</span> tz;</span>
+<span id="cb3-8"><a href="#cb3-8"></a></span>
+<span id="cb3-9"><a href="#cb3-9"></a><span class="kw">class</span> AndroidLocalNotificationApi <span class="kw">implements</span> LocalNotificationApi {</span>
+<span id="cb3-10"><a href="#cb3-10"></a>    <span class="at">final</span> FlutterLocalNotificationsPlugin notificationsPlugin;</span>
+<span id="cb3-11"><a href="#cb3-11"></a>    <span class="at">final</span> <span class="dt">String</span> notificationsTitle;</span>
+<span id="cb3-12"><a href="#cb3-12"></a>    <span class="at">final</span> <span class="dt">Future</span><span class="op">&lt;</span><span class="dt">String</span><span class="op">&gt;</span> localTimeZone;</span>
+<span id="cb3-13"><a href="#cb3-13"></a></span>
+<span id="cb3-14"><a href="#cb3-14"></a></span>
+<span id="cb3-15"><a href="#cb3-15"></a></span>
+<span id="cb3-16"><a href="#cb3-16"></a>    AndroidLocalNotificationApi(<span class="kw">this</span><span class="op">.</span>notificationsPlugin<span class="op">,</span> <span class="kw">this</span><span class="op">.</span>notificationsTitle)</span>
+<span id="cb3-17"><a href="#cb3-17"></a>    <span class="op">:</span> localTimeZone <span class="op">=</span> FlutterNativeTimezone<span class="op">.</span>getLocalTimezone() {</span>
+<span id="cb3-18"><a href="#cb3-18"></a></span>
+<span id="cb3-19"><a href="#cb3-19"></a>    <span class="co">// initialise the plugin. app_icon needs to be a added as a drawable resource to the Android head project</span></span>
+<span id="cb3-20"><a href="#cb3-20"></a>    <span class="at">const</span> AndroidInitializationSettings initializationSettingsAndroid  <span class="op">=</span> AndroidInitializationSettings(<span class="st">'app_icon'</span>);</span>
+<span id="cb3-21"><a href="#cb3-21"></a></span>
+<span id="cb3-22"><a href="#cb3-22"></a>    <span class="at">const</span> InitializationSettings initializationSettings <span class="op">=</span> InitializationSettings(</span>
+<span id="cb3-23"><a href="#cb3-23"></a>    android<span class="op">:</span> initializationSettingsAndroid<span class="op">,</span></span>
+<span id="cb3-24"><a href="#cb3-24"></a>    );</span>
+<span id="cb3-25"><a href="#cb3-25"></a></span>
+<span id="cb3-26"><a href="#cb3-26"></a>    notificationsPlugin<span class="op">.</span>initialize(initializationSettings<span class="op">,</span>);</span>
+<span id="cb3-27"><a href="#cb3-27"></a></span>
+<span id="cb3-28"><a href="#cb3-28"></a>    _requestPermission();</span>
+<span id="cb3-29"><a href="#cb3-29"></a>    configureLocalTimeZone();</span>
+<span id="cb3-30"><a href="#cb3-30"></a></span>
+<span id="cb3-31"><a href="#cb3-31"></a>    }</span>
+<span id="cb3-32"><a href="#cb3-32"></a></span>
+<span id="cb3-33"><a href="#cb3-33"></a>    <span class="kw">@override</span></span>
+<span id="cb3-34"><a href="#cb3-34"></a>    <span class="dt">Future</span><span class="op">&lt;</span><span class="dt">bool</span><span class="op">&gt;</span> <span class="kw">get</span> isNotificationPending <span class="at">async</span> {</span>
+<span id="cb3-35"><a href="#cb3-35"></a>        <span class="at">final</span> pendingNotifications <span class="op">=</span> <span class="at">await</span> getPendingNotifications();</span>
+<span id="cb3-36"><a href="#cb3-36"></a></span>
+<span id="cb3-37"><a href="#cb3-37"></a>        <span class="kw">return</span> pendingNotifications</span>
+<span id="cb3-38"><a href="#cb3-38"></a>        <span class="op">.</span>where((notification) <span class="op">=&gt;</span> notification<span class="op">?.</span>title <span class="op">==</span> notificationsTitle)</span>
+<span id="cb3-39"><a href="#cb3-39"></a>        <span class="op">.</span>isNotEmpty;</span>
+<span id="cb3-40"><a href="#cb3-40"></a>    }</span>
+<span id="cb3-41"><a href="#cb3-41"></a></span>
+<span id="cb3-42"><a href="#cb3-42"></a>    <span class="dt">Future</span><span class="op">&lt;</span><span class="dt">bool</span><span class="op">?&gt;</span> _requestPermission() <span class="at">async</span> {</span>
+<span id="cb3-43"><a href="#cb3-43"></a>        <span class="kw">return</span> notificationsPlugin</span>
+<span id="cb3-44"><a href="#cb3-44"></a>        <span class="op">.</span>resolvePlatformSpecificImplementation<span class="op">&lt;</span></span>
+<span id="cb3-45"><a href="#cb3-45"></a>        AndroidFlutterLocalNotificationsPlugin<span class="op">&gt;</span>()</span>
+<span id="cb3-46"><a href="#cb3-46"></a>        <span class="op">?.</span>requestPermission();</span>
+<span id="cb3-47"><a href="#cb3-47"></a>    }</span>
+<span id="cb3-48"><a href="#cb3-48"></a></span>
+<span id="cb3-49"><a href="#cb3-49"></a></span>
+<span id="cb3-50"><a href="#cb3-50"></a></span>
+<span id="cb3-51"><a href="#cb3-51"></a>    <span class="dt">Future</span><span class="op">&lt;</span><span class="dt">List</span><span class="op">&lt;</span>api<span class="op">.</span>PendingNotifications<span class="op">?&gt;&gt;</span> getPendingNotifications() <span class="at">async</span> {</span>
+<span id="cb3-52"><a href="#cb3-52"></a>    <span class="at">final</span> <span class="dt">List</span><span class="op">&lt;</span>PendingNotificationRequest<span class="op">&gt;</span> pendingNotificationRequests <span class="op">=</span> <span class="at">await</span> notificationsPlugin<span class="op">.</span>pendingNotificationRequests();</span>
+<span id="cb3-53"><a href="#cb3-53"></a></span>
+<span id="cb3-54"><a href="#cb3-54"></a>    <span class="kw">return</span> pendingNotificationRequests<span class="op">.</span>map(</span>
+<span id="cb3-55"><a href="#cb3-55"></a>        (notification) <span class="op">=&gt;</span> api<span class="op">.</span>PendingNotifications(</span>
+<span id="cb3-56"><a href="#cb3-56"></a>            id<span class="op">:</span> notification<span class="op">.</span>id<span class="op">,</span></span>
+<span id="cb3-57"><a href="#cb3-57"></a>            title<span class="op">:</span> notification<span class="op">.</span>title<span class="op">,</span></span>
+<span id="cb3-58"><a href="#cb3-58"></a>            body<span class="op">:</span> notification<span class="op">.</span>body<span class="op">,</span></span>
+<span id="cb3-59"><a href="#cb3-59"></a>    ))<span class="op">.</span>toList();</span>
+<span id="cb3-60"><a href="#cb3-60"></a>    }</span>
+<span id="cb3-61"><a href="#cb3-61"></a></span>
+<span id="cb3-62"><a href="#cb3-62"></a></span>
+<span id="cb3-63"><a href="#cb3-63"></a></span>
+<span id="cb3-64"><a href="#cb3-64"></a>    <span class="kw">@override</span></span>
+<span id="cb3-65"><a href="#cb3-65"></a>    <span class="dt">Future</span><span class="op">&lt;</span><span class="dt">void</span><span class="op">&gt;</span> setNotification(</span>
+<span id="cb3-66"><a href="#cb3-66"></a>        <span class="dt">String</span> message<span class="op">,</span></span>
+<span id="cb3-67"><a href="#cb3-67"></a>        DateTime notificationDate<span class="op">,</span></span>
+<span id="cb3-68"><a href="#cb3-68"></a>    ) <span class="at">async</span> {</span>
+<span id="cb3-69"><a href="#cb3-69"></a>        <span class="at">const</span> AndroidNotificationDetails androidPlatformChannelSpecifics <span class="op">=</span></span>
+<span id="cb3-70"><a href="#cb3-70"></a>        AndroidNotificationDetails(</span>
+<span id="cb3-71"><a href="#cb3-71"></a>        <span class="st">'daily_practices_channel'</span><span class="op">,</span> <span class="st">'daily_practices_channel'</span><span class="op">,</span></span>
+<span id="cb3-72"><a href="#cb3-72"></a>        channelDescription<span class="op">:</span></span>
+<span id="cb3-73"><a href="#cb3-73"></a>        <span class="st">'daily practices give a notification once a day'</span><span class="op">,</span></span>
+<span id="cb3-74"><a href="#cb3-74"></a>        importance<span class="op">:</span> Importance<span class="op">.</span>max<span class="op">,</span></span>
+<span id="cb3-75"><a href="#cb3-75"></a>        priority<span class="op">:</span> Priority<span class="op">.</span>high<span class="op">,</span></span>
+<span id="cb3-76"><a href="#cb3-76"></a>        ticker<span class="op">:</span> <span class="st">'ticker'</span>);</span>
+<span id="cb3-77"><a href="#cb3-77"></a></span>
+<span id="cb3-78"><a href="#cb3-78"></a>        <span class="at">final</span> timeTZ <span class="op">=</span> tz<span class="op">.</span>TZDateTime<span class="op">.</span>from(notificationDate<span class="op">,</span> tz<span class="op">.</span>getLocation(<span class="at">await</span> localTimeZone));</span>
+<span id="cb3-79"><a href="#cb3-79"></a></span>
+<span id="cb3-80"><a href="#cb3-80"></a>        <span class="kw">return</span> <span class="at">await</span> notificationsPlugin<span class="op">.</span>zonedSchedule(</span>
+<span id="cb3-81"><a href="#cb3-81"></a>        UniqueKey()<span class="op">.</span>hashCode<span class="op">,</span></span>
+<span id="cb3-82"><a href="#cb3-82"></a>        notificationsTitle<span class="op">,</span></span>
+<span id="cb3-83"><a href="#cb3-83"></a>        message<span class="op">,</span></span>
+<span id="cb3-84"><a href="#cb3-84"></a>        timeTZ<span class="op">,</span></span>
+<span id="cb3-85"><a href="#cb3-85"></a>        <span class="at">const</span> NotificationDetails(</span>
+<span id="cb3-86"><a href="#cb3-86"></a>            android<span class="op">:</span> androidPlatformChannelSpecifics<span class="op">,</span></span>
+<span id="cb3-87"><a href="#cb3-87"></a>        )<span class="op">,</span></span>
+<span id="cb3-88"><a href="#cb3-88"></a>        androidAllowWhileIdle<span class="op">:</span> <span class="cn">true</span><span class="op">,</span></span>
+<span id="cb3-89"><a href="#cb3-89"></a>        uiLocalNotificationDateInterpretation<span class="op">:</span></span>
+<span id="cb3-90"><a href="#cb3-90"></a>        UILocalNotificationDateInterpretation<span class="op">.</span>absoluteTime<span class="op">,</span></span>
+<span id="cb3-91"><a href="#cb3-91"></a>        matchDateTimeComponents<span class="op">:</span> DateTimeComponents<span class="op">.</span>time<span class="op">,</span></span>
+<span id="cb3-92"><a href="#cb3-92"></a>        );</span>
+<span id="cb3-93"><a href="#cb3-93"></a></span>
+<span id="cb3-94"><a href="#cb3-94"></a>    }</span>
+<span id="cb3-95"><a href="#cb3-95"></a></span>
+<span id="cb3-96"><a href="#cb3-96"></a>    <span class="kw">@override</span></span>
+<span id="cb3-97"><a href="#cb3-97"></a>    configureLocalTimeZone() <span class="at">async</span> {</span>
+<span id="cb3-98"><a href="#cb3-98"></a>        tz<span class="op">.</span>initializeTimeZones();</span>
+<span id="cb3-99"><a href="#cb3-99"></a>        tz<span class="op">.</span>setLocalLocation(tz<span class="op">.</span>getLocation(<span class="at">await</span> localTimeZone));</span>
+<span id="cb3-100"><a href="#cb3-100"></a>    }</span>
+<span id="cb3-101"><a href="#cb3-101"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Dat was het alweer voor deze post. Wil je meer informatie over de code? Maak dan een issue aan in de <a href="https://github.com/Mees-Molenaar/blog-daily-practices-app">Github Repo</a>. <a href="https://github.com/Mees-Molenaar/blog-daily-practices-app/releases/tag/deel-6">Hier</a> is de code te downloaden tot dit punt. En in de volgende gaan we de hardcoded implementatie vervangen met <a href="https://bloclibrary.dev/#/">Bloc</a>.</p>
+<p>Ontzettend bedankt voor het lezen :).</p>
+<p>Mees</p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>
