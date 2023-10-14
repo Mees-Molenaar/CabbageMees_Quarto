@@ -18,6 +18,16 @@ website:
         href: https://github.com/Mees-Molenaar
       - icon: twitter
         href: https://twitter.com/CabbageMees
+  comments:
+    giscus:
+      repo: Mees-Molenaar/CabbageMees_Quarto
+      repo-id: R_kgDOIkUPOw
+      category: Blog Posts
+      category-id: DIC_kwDOIkUPO84CaIbg
+      mapping: pathname
+      loading: lazy
+      input-position: top
+      reactions-enabled: true
 format:
   html:
     theme: pulse
