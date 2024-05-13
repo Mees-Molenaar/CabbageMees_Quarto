@@ -7,9 +7,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Mees Molenaar">
-<meta name="dcterms.date" content="2022-07-27">
+<meta name="dcterms.date" content="2024-05-13">
 
-<title>CabbageMees - Een Flutter App - Deel 2 - Voorbereiden App Structuur</title>
+<title>CabbageMees - Een Rust CLI maken om Custom GPTs te bouwen van een GitHub repository</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -21,6 +21,40 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -81,17 +115,17 @@ gtag('config', 'G-9GMDP6RW3B', { 'anonymize_ip': true});
 
 
 <link rel="stylesheet" href="../../styles.css">
-<meta property="og:title" content="CabbageMees - Een Flutter App - Deel 2 - Voorbereiden App Structuur">
-<meta property="og:description" content="Hoe gaat de code-structuur van de app er uit zien?">
-<meta property="og:image" content="https://cabbagemees.nl/posts/2022-07-27-Flutter-app-deel-2-app-architectuur/images/DALL·E 2022-08-26 17.15.46 - Vintage, detailed sketch of a mobile application blue print with full descriptions.png">
+<meta property="og:title" content="CabbageMees - Een Rust CLI maken om Custom GPTs te bouwen van een GitHub repository">
+<meta property="og:description" content="Gebruik de Clap crate om CLI te maken in Rust. En leer wat over RAG en Custom GPTs">
+<meta property="og:image" content="https://cabbagemees.nl/posts/2024-05-13-Custom-GPT-Rust-CLI/images/clawing-machine.png">
 <meta property="og:site_name" content="CabbageMees">
-<meta property="og:image:height" content="1024">
-<meta property="og:image:width" content="1024">
-<meta name="twitter:title" content="CabbageMees - Een Flutter App - Deel 2 - Voorbereiden App Structuur">
-<meta name="twitter:description" content="Hoe gaat de code-structuur van de app er uit zien?">
-<meta name="twitter:image" content="https://cabbagemees.nl/posts/2022-07-27-Flutter-app-deel-2-app-architectuur/images/DALL·E 2022-08-26 17.15.46 - Vintage, detailed sketch of a mobile application blue print with full descriptions.png">
-<meta name="twitter:image-height" content="1024">
-<meta name="twitter:image-width" content="1024">
+<meta property="og:image:height" content="1322">
+<meta property="og:image:width" content="1320">
+<meta name="twitter:title" content="CabbageMees - Een Rust CLI maken om Custom GPTs te bouwen van een GitHub repository">
+<meta name="twitter:description" content="Gebruik de Clap crate om CLI te maken in Rust. En leer wat over RAG en Custom GPTs">
+<meta name="twitter:image" content="https://cabbagemees.nl/posts/2024-05-13-Custom-GPT-Rust-CLI/images/clawing-machine.png">
+<meta name="twitter:image-height" content="1322">
+<meta name="twitter:image-width" content="1320">
 <meta name="twitter:card" content="summary_large_image">
 </head>
 
@@ -140,12 +174,13 @@ gtag('config', 'G-9GMDP6RW3B', { 'anonymize_ip': true});
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title">Een Flutter App - Deel 2 - Voorbereiden App Structuur</h1>
-            <p class="subtitle lead">Hoe gaat de code-structuur van de app er uit zien?</p>
+      <h1 class="title">Een Rust CLI maken om Custom GPTs te bouwen van een GitHub repository</h1>
+            <p class="subtitle lead">Gebruik de Clap crate om CLI te maken in Rust. En leer wat over RAG en Custom GPTs</p>
                                 <div class="quarto-categories">
-                <div class="quarto-category">Flutter</div>
-                <div class="quarto-category">Android</div>
-                <div class="quarto-category">DevOps</div>
+                <div class="quarto-category">Rust</div>
+                <div class="quarto-category">CLI</div>
+                <div class="quarto-category">Custom GPT</div>
+                <div class="quarto-category">Clap</div>
               </div>
                   </div>
   </div>
@@ -163,7 +198,7 @@ gtag('config', 'G-9GMDP6RW3B', { 'anonymize_ip': true});
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">July 27, 2022</p>
+        <p class="date">May 13, 2024</p>
       </div>
     </div>
     
@@ -179,7 +214,16 @@ gtag('config', 'G-9GMDP6RW3B', { 'anonymize_ip': true});
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#stappenplan-app-maken" id="toc-stappenplan-app-maken" class="nav-link active" data-scroll-target="#stappenplan-app-maken">Stappenplan App maken</a></li>
+  <li><a href="#intro" id="toc-intro" class="nav-link active" data-scroll-target="#intro">Intro</a></li>
+  <li><a href="#een-cli-in-rust" id="toc-een-cli-in-rust" class="nav-link" data-scroll-target="#een-cli-in-rust">Een CLI in Rust</a></li>
+  <li><a href="#het-bouwen-van-een-github-repository-scraper-in-rust" id="toc-het-bouwen-van-een-github-repository-scraper-in-rust" class="nav-link" data-scroll-target="#het-bouwen-van-een-github-repository-scraper-in-rust">Het bouwen van een Github Repository Scraper in Rust</a></li>
+  <li><a href="#introductie-tot-custom-gpts" id="toc-introductie-tot-custom-gpts" class="nav-link" data-scroll-target="#introductie-tot-custom-gpts">Introductie tot Custom GPT’s</a></li>
+  <li><a href="#hoe-gebruikt-chatgpt-de-extra-kennis" id="toc-hoe-gebruikt-chatgpt-de-extra-kennis" class="nav-link" data-scroll-target="#hoe-gebruikt-chatgpt-de-extra-kennis">Hoe gebruikt ChatGPT de extra kennis?</a>
+  <ul class="collapse">
+  <li><a href="#embedding-intermezzo" id="toc-embedding-intermezzo" class="nav-link" data-scroll-target="#embedding-intermezzo">Embedding intermezzo</a></li>
+  <li><a href="#naive-retrieval" id="toc-naive-retrieval" class="nav-link" data-scroll-target="#naive-retrieval">Naive Retrieval</a></li>
+  </ul></li>
+  <li><a href="#conclusie" id="toc-conclusie" class="nav-link" data-scroll-target="#conclusie">Conclusie</a></li>
   </ul>
 </nav>
     </div>
@@ -190,39 +234,124 @@ gtag('config', 'G-9GMDP6RW3B', { 'anonymize_ip': true});
 
 
 
-<p>Hallo allemaal!</p>
-<p>Leuk dat jullie hier weer zijn om dit project te volgen. In deze post neem ik jullie mee in de planning voor de codestructuur van de app die ik aan het maken ben. Omdat dit mijn eerste eigen Flutter project is, neem ik veel informatie over van andere bronnen. Hierdoor leer je op een andere manier (dan je automatische piloot) kijken naar het opzetten van projecten. En wanneer dit bevalt kan je dat uiteraard inbouwen in je automatische werkwijze voor je volgende projecten!</p>
-<section id="stappenplan-app-maken" class="level1">
-<h1>Stappenplan App maken</h1>
-<p>In de vorige post van dit project<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> heb ik de vereisten vastgesteld. In die fase beschreef ik wat de app moet hebben om de klant haar problemen op te lossen. Maar op technisch vlak is dan nog niets bepaald. Deze fase gaat over het technische vlak, namelijk wat zijn de technische stappen die nodig zijn om de app op te leveren. Voor dit project heb ik grofweg de App Development Workflow van Code with Andrea<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> aangehouden.</p>
-<p>Over de eerste twee stappen, Design en Database/Backend, kan ik kort zijn. Het Design zal een simpele lijstweergave zijn (de standaard ingebouwd in Flutter). En voor versie 1 (V1) hebben we gezegd: hardcoded practices (dus geen database) en er is ook geen backend nodig. Dat waren de eerste twee stappen al, maar de volgende stap is een stuk uitdagender!</p>
-<p>De derde stap is namelijk het bepalen van de app architectuur. Nu is dit dus mijn eerste Flutter project en heb ik nog geen goed idee over wat de handigste app structuur voor een Flutter project is. Gelukkig werk ik ondertussen wel aan een andere Flutter app waarin we Flutter Blocs gebruiken. En in de voorbeelden van Flutter Blocs kwam ik een structuur tegen die mij aansprak<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a>. Hieronder heb ik diezelfde structuur vertaald naar de app die ik aan het maken ben.</p>
-<p><img src="images/flutter_deel_2_app_architectuur.PNG" class="img-fluid"></p>
+<section id="intro" class="level2">
+<h2 class="anchored" data-anchor-id="intro">Intro</h2>
+<p>In deze blogpost ga ik uitleggen hoe je een command line interface (CLI) kunt maken met Rust. Rust heeft de laatste tijd mijn interesse gewekt en ik wil deze kennis uitbreiden door praktische projecten aan te pakken. Een van deze projecten is het ontwikkelen van een tool die een kennisbank van een GitHub-repository kan genereren voor gebruik in een <a href="https://openai.com/index/introducing-gpts/">Custom GPT</a>. Hoewel <a href="https://openai.com">OpenAI</a> geen uitleg geeft over hoe de Custom GPT kennisbank werkt, vermoed ik dat het een mechanisme bevat vergelijkbaar met Retriever-Augmented Generation (RAG), wat ik ook zal toelichten.</p>
+</section>
+<section id="een-cli-in-rust" class="level2">
+<h2 class="anchored" data-anchor-id="een-cli-in-rust">Een CLI in Rust</h2>
+<p>Zoals ik in een <a href="https://cabbagemees.nl/posts/2023-11-29-Minecraft-Bot-Rust-Deel-1/">vorige post</a> al benadrukte, biedt Rust talrijke voordelen voor het ontwikkelen van software en dit geldt ook voor het maken van een CLI. Een specifiek voordeel voor het bouwen van CLI’s in Rust zijn de fantastische ‘crates’ die beschikbaar zijn voor het bouwen van een CLI. Voor dit project wordt gebruikgemaakt van de <a href="https://crates.io/crates/clap">Clap-crate</a>.</p>
+<p>Clap biedt twee stijlen om je CLI te definiëren: via de <code>derive</code> en <code>builder</code>. In de documentatie van Clap wordt aangeraden om <code>derive</code> te gebruiken vanwege de eenvoudige lees- en schrijfbaarheid. In deze post zullen we ook <code>derive</code> gebruiken, maar <code>builder</code> kan interessant zijn als je meer flexibiliteit nodig hebt.</p>
+</section>
+<section id="het-bouwen-van-een-github-repository-scraper-in-rust" class="level2">
+<h2 class="anchored" data-anchor-id="het-bouwen-van-een-github-repository-scraper-in-rust">Het bouwen van een Github Repository Scraper in Rust</h2>
+<p>Het eerste wat je maakt voor de CLI is een <code>struct</code> met <code>Parser</code> in de <code>derive</code>, waarin je de CLI-argumenten definieert die je aan je CLI kunnen worden meegegeven. Een voorbeeld is het argument <code>github_url</code> om aan te geven welke GitHub-repository je wilt scrapen. Clap biedt veel configuratie mogelijkheden, zoals:</p>
+<ul>
+<li>Optionele argumenten</li>
+<li>Korte argumenten</li>
+<li>Enum-waarden met standaardwaardes</li>
+</ul>
+<p>De huidige configuratie van de <a href="https://github.com/Mees-Molenaar/repo_harvest">Repo Harvest CLI</a> bevat een voorbeeld van een aantal van die mogelijkheden (zie hieronder).</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode numberSource rust number-lines code-with-copy"><code class="sourceCode rust"><span id="cb1-1"><a href="#cb1-1"></a><span class="at">#[</span>derive<span class="at">(</span>Parser<span class="op">,</span> <span class="bu">Debug</span><span class="at">)]</span></span>
+<span id="cb1-2"><a href="#cb1-2"></a><span class="kw">struct</span> Cli <span class="op">{</span></span>
+<span id="cb1-3"><a href="#cb1-3"></a>    <span class="co">/// The Github URL of the repository you want to fetch</span></span>
+<span id="cb1-4"><a href="#cb1-4"></a>    github_url<span class="op">:</span> <span class="dt">String</span><span class="op">,</span></span>
+<span id="cb1-5"><a href="#cb1-5"></a>    <span class="co">/// Exclude pattern</span></span>
+<span id="cb1-6"><a href="#cb1-6"></a>    <span class="at">#[</span>clap<span class="at">(</span>short <span class="op">=</span> <span class="ch">'e'</span><span class="op">,</span> long<span class="at">)]</span></span>
+<span id="cb1-7"><a href="#cb1-7"></a>    exclude<span class="op">:</span> <span class="dt">Option</span><span class="op">&lt;</span><span class="dt">String</span><span class="op">&gt;,</span></span>
+<span id="cb1-8"><a href="#cb1-8"></a>    <span class="co">/// Include pattern</span></span>
+<span id="cb1-9"><a href="#cb1-9"></a>    <span class="at">#[</span>clap<span class="at">(</span>short <span class="op">=</span> <span class="ch">'p'</span><span class="op">,</span> long<span class="at">)]</span></span>
+<span id="cb1-10"><a href="#cb1-10"></a>    include<span class="op">:</span> <span class="dt">Option</span><span class="op">&lt;</span><span class="dt">String</span><span class="op">&gt;,</span></span>
+<span id="cb1-11"><a href="#cb1-11"></a>    <span class="co">/// Output format</span></span>
+<span id="cb1-12"><a href="#cb1-12"></a>    <span class="co">/// Can be one of, json, markdown</span></span>
+<span id="cb1-13"><a href="#cb1-13"></a>    <span class="at">#[</span>clap<span class="at">(</span></span>
+<span id="cb1-14"><a href="#cb1-14"></a>        short <span class="op">=</span> <span class="ch">'f'</span><span class="op">,</span></span>
+<span id="cb1-15"><a href="#cb1-15"></a>        long<span class="op">,</span></span>
+<span id="cb1-16"><a href="#cb1-16"></a>        value_enum<span class="op">,</span></span>
+<span id="cb1-17"><a href="#cb1-17"></a>        rename_all <span class="op">=</span> <span class="st">"kebab-case"</span><span class="op">,</span></span>
+<span id="cb1-18"><a href="#cb1-18"></a>        default_value <span class="op">=</span> <span class="st">"json"</span></span>
+<span id="cb1-19"><a href="#cb1-19"></a>    <span class="at">)]</span></span>
+<span id="cb1-20"><a href="#cb1-20"></a>    format<span class="op">:</span> OutputFormat<span class="op">,</span></span>
+<span id="cb1-21"><a href="#cb1-21"></a>    <span class="co">/// Include hidden files</span></span>
+<span id="cb1-22"><a href="#cb1-22"></a>    <span class="co">/// By default, hidden files are not included</span></span>
+<span id="cb1-23"><a href="#cb1-23"></a>    <span class="co">/// If you want to include hidden files, set this flag to true</span></span>
+<span id="cb1-24"><a href="#cb1-24"></a>    <span class="at">#[</span>clap<span class="at">(</span>short <span class="op">=</span> <span class="ch">'i'</span><span class="op">,</span> long<span class="op">,</span> default_value <span class="op">=</span> <span class="st">"false"</span><span class="at">)]</span></span>
+<span id="cb1-25"><a href="#cb1-25"></a>    hidden<span class="op">:</span> <span class="dt">Option</span><span class="op">&lt;</span><span class="dt">bool</span><span class="op">&gt;,</span></span>
+<span id="cb1-26"><a href="#cb1-26"></a>    <span class="co">/// The output file</span></span>
+<span id="cb1-27"><a href="#cb1-27"></a>    <span class="at">#[</span>clap<span class="at">(</span>short<span class="op">,</span> long<span class="op">,</span> default_value <span class="op">=</span> <span class="st">"output"</span><span class="at">)]</span></span>
+<span id="cb1-28"><a href="#cb1-28"></a>    output_file<span class="op">:</span> <span class="dt">String</span><span class="op">,</span></span>
+<span id="cb1-29"><a href="#cb1-29"></a><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Na het definiëren van de argument in de <code>struct</code>, is het implementeren van de <code>main()</code> functie. Hierin kan je door de gebruiker ingevulde argumenten gebruiken om de code-flow van de CLI te sturen.</p>
+<p>Je kunt de argumenten op de volgende manier gebruiken:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode numberSource rust number-lines code-with-copy"><code class="sourceCode rust"><span id="cb2-1"><a href="#cb2-1"></a><span class="kw">fn</span> main() <span class="op">{</span></span>
+<span id="cb2-2"><a href="#cb2-2"></a>    <span class="kw">let</span> cli <span class="op">=</span> <span class="pp">Cli::</span>parse()<span class="op">;</span></span>
+<span id="cb2-3"><a href="#cb2-3"></a></span>
+<span id="cb2-4"><a href="#cb2-4"></a>    <span class="pp">println!</span>(<span class="st">"{:?}"</span><span class="op">,</span> <span class="op">&amp;</span>args<span class="op">.</span>github_url)<span class="op">;</span></span>
+<span id="cb2-5"><a href="#cb2-5"></a></span>
+<span id="cb2-6"><a href="#cb2-6"></a>    <span class="cf">match</span> cli<span class="op">.</span>github_url <span class="op">{</span></span>
+<span id="cb2-7"><a href="#cb2-7"></a>        <span class="cn">Some</span>(url) <span class="op">=&gt;</span> <span class="op">{</span></span>
+<span id="cb2-8"><a href="#cb2-8"></a>            <span class="pp">println!</span>(<span class="st">"Scraping repository at: {}"</span><span class="op">,</span> url)<span class="op">;</span></span>
+<span id="cb2-9"><a href="#cb2-9"></a>        <span class="op">},</span></span>
+<span id="cb2-10"><a href="#cb2-10"></a>        <span class="cn">None</span> <span class="op">=&gt;</span> <span class="pp">println!</span>(<span class="st">"No GitHub URL provided."</span>)<span class="op">,</span></span>
+<span id="cb2-11"><a href="#cb2-11"></a>    <span class="op">}</span></span>
+<span id="cb2-12"><a href="#cb2-12"></a><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>En wat je dan verder in de <code>main()</code> functie doet mag je zelf bepalen ;). Maar voor een voorbeeld kan je <a href="https://github.com/Mees-Molenaar/repo_harvest/blob/8cab97d6748b7f0a8ed0c49af73bb5857795e668/src/main.rs#L179">hier</a> kijken hoe ik de scraper geïmplementeerd heb.</p>
+</section>
+<section id="introductie-tot-custom-gpts" class="level2">
+<h2 class="anchored" data-anchor-id="introductie-tot-custom-gpts">Introductie tot Custom GPT’s</h2>
+<p>Sinds november 2023 heb je de mogelijkheid om <a href="https://openai.com/index/introducing-gpts">Custom GPT’s</a> te maken (met ChatGPT Plus). Hierin kan je instructies, extra kennis en acties geven. Een voordeel hiervan is dat je niet steeds je prompt hoeft te herhalen. Bijvoorbeeld: ik vraag ChatGPT vaak Rust gerelateerde vragen en dan begin ik met een prompt zoals deze: “Hey ChatGPT, jij bent een senior Rust programmeur en ik een junior. Wanneer ik je code stuur, geef jij de verbeterde code terug met aanwijzingen waarom het beter is.” Met een Custom GTP kan je deze prompt eenmalig invoeren en vervolgens direct beginnen met het indienen van mijn code, wat tijd bespaart en de interactie efficiënter maakt.</p>
+<p>Daarnaast kan je extra kennis toevoegen en daar wil ik de repo harvester voor gebruiken. Het idee is dat de algemene Rust skills van ChatGPT best aardig zijn, maar soms wil je specifieke vragen stellen over een bepaalde crate. Met de repo harvester kan je de code van een crate ophalen en dat toevoegen aan je Custom GPT. Hierdoor kan je specifieke vragen stellen over de repository. Je kunt de Custom GPT dan gebruiken om te analyseren hoe je huidige code zich verhoudt tot die in de crate en om suggesties te vragen hoe je je code kan verbeteren om meer te lijken op de best practices die in de crate worden gebruikt.</p>
+</section>
+<section id="hoe-gebruikt-chatgpt-de-extra-kennis" class="level2">
+<h2 class="anchored" data-anchor-id="hoe-gebruikt-chatgpt-de-extra-kennis">Hoe gebruikt ChatGPT de extra kennis?</h2>
+<p>De specifieke details over hoe ChatGPT de extra kennis gebruikt is niet beschikbaar, maar je kunt wel een gok doen. Er is een methode die vaak voor dit doeleinde wordt gebruikt, namelijk Retrieval-Augmented Generation (RAG). In het kort, RAG gebruikt jouw vraag om relevante documenten uit de kennisbank te zoeken. Vervolgens voegt hij jouw vraag en de stukken uit de kennisbank samen en dat geheel wordt opgestuurd naar ChatGPT (of een andere Large Language Model (LLM)). Met deze techniek kan je dus specifieke kennis mee geven aan ChatGPT. Maar hoe worden de relevante documenten precies geselecteerd?</p>
+<p>Er zijn verschillende technieken om RAG toe te passen maar vandaag ligt de focus op Naive Retrieval. Naive retrieval werkt door al de documenten om te zetten naar een numerieke representatie en dat op te slaan in een vector. In deze representatie zit gecomprimeerde informatie over de gehele inhoud van het document, wat haast als magie lijkt. Om dit verder toe te lichten is het makkelijker om bij losse woorden te blijven.</p>
+<section id="embedding-intermezzo" class="level3">
+<h3 class="anchored" data-anchor-id="embedding-intermezzo">Embedding intermezzo</h3>
+<p>Woorden dragen betekenis, en deze betekenissen kunnen ook numeriek uitgedrukt worden. Bijvoorbeeld, je gebruikt de dimensie Geslacht (de X-as) en je stelt dat mannelijk 1 is en vrouwelijk -1 is. Dan krijg opa de waarde 1, oma de waarde -1 en kleinkind de waarde 0, want dat is een neutraal woord (zie figuur hieronder voor het visuele voorbeeld).</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/word-embedding-1.png" class="img-fluid figure-img"></p>
+<figcaption>word embedding one axis</figcaption>
+</figure>
+</div>
+<p>Maar hier ontstaat een probleem: hoe kan je nu onderscheiden tussen een <em>meisje</em> en <em>oma</em> of een <em>jongen</em> en <em>opa</em>? Om deze nuances te kunnen vangen, kan je een extra dimensie toevoegen. Door een Y-as te introduceren die ‘leeftijd’ representeert, waarbij ‘oud’ als +1 wordt gedefinieerd en ‘jong’ als -1 (zie voorbeeld hieronder).</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/word-embedding-2.png" class="img-fluid figure-img"></p>
+<figcaption>word embedding two axis</figcaption>
+</figure>
+</div>
+<p>Nu kan je de woorden onderscheiden door een numerieke representatie. <em>Oma</em> wordt [-1, 1] en <em>baby</em> [0, -1]. En zoals je je kunt voorstellen kan je meer en meer dimensies (assen) toevoegen om meer informatie op te slaan. Want als je nu <em>puppie</em> zou toevoegen zou die dezelfde representatie als <em>baby</em> hebben, terwijl het niet hetzelfde is. Dus dan zou je de ‘dier’ dimensie kunnen toevoegen. In LLM termen staan de numerieke representaties bekend als woord-embeddings.</p>
+<p>Om het makkelijk te houden hebben we woord-embeddings gebruikt, maar je kunt dit ook voor hele documenten doen (dit heet toepasselijk, document-embedding). Een voorbeeld van een dimensie, ook wel ‘feature’ genoemd, is het Onderwerp / Genre. Maar omdat een document meer informatie bevat, kunnen de features veel complexer zijn dan bij individuele woorden.</p>
+<p>Hier zit ook weer een stukje magie, want als maker van een LLM specificeer je de features niet. De features worden door een LLM geleerd door te trainen op grote hoeveelheden tekst, waarbij ze leren om documenten die qua inhoud hetzelfde zijn of op elkaar lijken dicht bij elkaar in de embedding space (zoals het woord-embedding voorbeeld hierboven) te plaatsen. Wanneer de LLM dit geleerd heeft, kan je de LLM gebruiken om je knowledge base te embedden in de numerieke representatie.</p>
 <blockquote class="blockquote">
-<p>Opmerking: Onderstaande alinea’s zijn technisch, maar daar ontkom je niet aan bij het bepalen van de app architectuur :).</p>
+<p>Een LLM bestaat uit meerdere onderdelen en de embedding laag is daar 1 van. Om dus een embedding te krijgen gebruik je alleen de embedding laag en niet het hele LLM. De functie van de LLM is namelijk het voorspellen van het volgende woord.</p>
 </blockquote>
-<p>De Data Layer is, zoals de naam van de layer ook omschrijft, de connectie naar je onbewerkte data. Deze wil je het liefste zo generiek mogelijk houden en is vaak een simpele API om CRUD (Create, Read, Update, Delete) operaties uit te voeren. In de app Data Layer zitten twee componenten, de Daily Practices API en Hardcoded Daily Practices API. De eerstgenoemde is de generieke interface (een soort van blauwdruk van je verschillende implementaties). Als V1 heb ik vastgesteld dat de Daily Practices hardcoded en niet aanpasbaar zijn. Daarom hebben deze APIs voor V1 alleen een leesoperatie nodig. De specifieke implementatie hiervan wordt gedaan in de Hardcoded Daily Practices API.</p>
-<p>De volgende laag is de Domain Layer. Hierin koppel je de data APIs in een repository. Je voegt hieraan zogeheten business rules toe om bijvoorbeeld data te filteren of in een bepaalde structuur door te geven aan je Blocs in de feature layer.</p>
-<p>De repository layer geeft de data dus door aan je Blocs in de Feature Layer. Hierdoor fungeert je Bloc als brug tussen de data en de (User Interface) UI in je app. De Bloc bevat je business (b) logic (loc). Afhankelijk van acties van de gebruiker vraagt de Bloc data op uit (mogelijk verschillende) repositories. Hierdoor verandert de state van je Bloc. Deze verandering wordt opgepikt door de UI en daardoor past de UI van de app zich aan. Het grootste voordeel van deze structuur is dat de business logic en UI gescheiden zijn. Dit reduceert coupling en daardoor zijn de afzonderlijke onderdelen van je app in isolatie te testen en te gebruiken!</p>
-<p>Nadat de app architectuur is bepaald, kan je samen met de vereisten een project board maken. In eerste instantie gebruikte ik Trello maar later dacht ik dat het handiger zou zijn om alles op 1 plek te hebben. Daarom ben ik overgestapt naar Github Projects<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a>. Ik heb geprobeerd om het zo volledig mogelijk te maken, maar het zal vast zijn dat ik zaken ben vergeten. Dus dat vul ik in wanneer ik dat tegenkom. Het project board heb ik opgedeeld in verschillende onderwerpen (Test, UI, Flutter en CI/CD). En daaronder heb ik dan de verschillende taken bedacht en aangemaakt. Toen dat gedaan was kon ik beginnen aan de volgende stap, de CI/CD pipeline.</p>
-<p>Door te beginnen met de CI/CD pipeline kan je zo vroeg mogelijk beginnen met testen. Omdat alles op Github staat gebruiken we in dit geval Github Actions voor onze (in eerste instantie niet CD) CI pipeline. De specifieke implementatie van de Github Actions zal ik in een volgende post vertellen.</p>
-<p>De laatste stap is het uitvoeren van de taken op je project board! Ondertussen ben ik al begonnen. Doordat ik bij mijn vorige projecten een andere werkwijze aanhield, was even wennen. Maar eenmaal in het ritme gekomen ging alles voortvarend! Ik heb veel geleerd en veel van de taken zijn voltooid. Op dit moment ben ik vastgelopen op het notificatie deel maar wanneer dat werkt is V1 zo goed als af! Hopelijk lukt dat binnenkort!</p>
-<p>Tot de volgende keer :)</p>
+</section>
+<section id="naive-retrieval" class="level3">
+<h3 class="anchored" data-anchor-id="naive-retrieval">Naive Retrieval</h3>
+<p>Met de getrainde LLM hebben we een manier om de documenten om te zetten naar de numerieke representatie. En deze gebruik je in naive retrieval dan als volgt:</p>
+<ol type="1">
+<li>De gebruiker typt een vraag of stuk tekst naar de LLM</li>
+<li>De input van de gebruiker wordt vertaald naar de numerieke representatie , of embedding, zoals eerder uitgelegd.</li>
+<li>Met deze numerieke waarde zoek je naar de numerieke waardes van de documenten in je kennisbank die daar het meeste op lijken (bijvoorbeeld de top 5, je hebt verschillende algoritmen om dat te berekenen, bijvoorbeeld Cosine Similarity (LINK))</li>
+<li>De inhoud van de top 5 documenten voeg je toe aan de input van de gebruiker aan de LLM. Dus de LLM kan die specifieke informatie dan gebruiken.</li>
+<li>De gebruiker krijgt een antwoord op basis van documenten.</li>
+</ol>
+<p>Naast naive retrieval zijn er nog complexere en mogelijk effectievere retrieval technieken. Voor een overzicht van deze technieken, kun je de artikelen <a href="https://towardsdatascience.com/advanced-retriever-techniques-to-improve-your-rags-1fac2b86dd61">hier</a> en <a href="https://arxiv.org/html/2312.10997v1">hier</a> gebruiken.</p>
+</section>
+</section>
+<section id="conclusie" class="level2">
+<h2 class="anchored" data-anchor-id="conclusie">Conclusie</h2>
+<p>Van het maken van een CLI in Rust tot het begrijpen van de basisprincipes van embeddings en RAG. Nu heb je de kennis om een specifieke Custom GPT met eigen kennisbank te ontwikkelen. Waarom probeer je niet zelf een toepassing te bedenken, misschien zelfs met een simpele CLI? Je hebt nu de handvatten om te beginnen.</p>
+<p>Success en tot de volgende keer!</p>
 <p>Mees</p>
 
 
 </section>
 
-
-<div id="quarto-appendix" class="default"><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
-
-<ol>
-<li id="fn1"><p><a href="https://cabbagemees.nl/flutter/android/devops/2022/06/27/Flutter-app-deel-1-voorbereiding.html">Android App in Flutter Deel 1 - Voorbereiding</a><a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn2"><p><a href="https://github.com/bizz84/flutter-tips-and-tricks/blob/main/tips/0022-app-development-workflow-in-six-steps/index.md">Code With Andrea App Development Worklfow</a><a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn3"><p><a href="https://bloclibrary.dev/#/fluttertodostutorial">Bloclibrary - Flutter Todos Tutorial</a><a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn4"><p><a href="https://github.com/users/Mees-Molenaar/projects/1">Github Project Board - Flutter App</a><a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-</ol>
-</section></div></main> <!-- /main -->
+</main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
