@@ -1,0 +1,653 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.450">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Mees Molenaar">
+<meta name="dcterms.date" content="2024-06-03">
+
+<title>CabbageMees - Een Flutter App - Deel 7 - State Toevoegen met Bloc</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../images/logo.png" rel="icon" type="image/png">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-9GMDP6RW3B"></script>
+
+<script type="text/javascript">
+
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-9GMDP6RW3B', { 'anonymize_ip': true});
+</script>
+
+
+<link rel="stylesheet" href="../../styles.css">
+<meta property="og:title" content="CabbageMees - Een Flutter App - Deel 7 - State Toevoegen met Bloc">
+<meta property="og:description" content="State Management in Flutter met de Bloc Library">
+<meta property="og:image" content="https://cabbagemees.nl/posts/2024-06-03-Flutter-app-deel-7-Bloc/images/mallable-bloc.png">
+<meta property="og:site-name" content="CabbageMees">
+<meta property="og:image:height" content="1632">
+<meta property="og:image:width" content="2832">
+<meta name="twitter:title" content="CabbageMees - Een Flutter App - Deel 7 - State Toevoegen met Bloc">
+<meta name="twitter:description" content="State Management in Flutter met de Bloc Library">
+<meta name="twitter:image" content="https://cabbagemees.nl/posts/2024-06-03-Flutter-app-deel-7-Bloc/images/mallable-bloc.png">
+<meta name="twitter:image-height" content="1632">
+<meta name="twitter:image-width" content="2832">
+<meta name="twitter:card" content="summary_large_image">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a href="../../index.html" class="navbar-brand navbar-brand-logo">
+    <img src="../../images/logo.png" alt="" class="navbar-logo">
+    </a>
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">CabbageMees</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html" rel="" target="">
+ <span class="menu-text">Over Mij</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/Mees-Molenaar" rel="" target=""><i class="bi bi-github" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://twitter.com/CabbageMees" rel="" target=""><i class="bi bi-twitter" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+</ul>
+            <div class="quarto-navbar-tools">
+</div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">Een Flutter App - Deel 7 - State Toevoegen met Bloc</h1>
+            <p class="subtitle lead">State Management in Flutter met de Bloc Library</p>
+                                <div class="quarto-categories">
+                <div class="quarto-category">Flutter</div>
+                <div class="quarto-category">Bloc</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>Mees Molenaar </p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">June 3, 2024</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#introductie" id="toc-introductie" class="nav-link active" data-scroll-target="#introductie">Introductie</a></li>
+  <li><a href="#de-basis-van-bloc" id="toc-de-basis-van-bloc" class="nav-link" data-scroll-target="#de-basis-van-bloc">De Basis van Bloc</a></li>
+  <li><a href="#bloc-implementeren-in-de-daily-practices-app" id="toc-bloc-implementeren-in-de-daily-practices-app" class="nav-link" data-scroll-target="#bloc-implementeren-in-de-daily-practices-app">Bloc Implementeren In De Daily Practices App</a>
+  <ul class="collapse">
+  <li><a href="#data" id="toc-data" class="nav-link" data-scroll-target="#data">Data</a></li>
+  <li><a href="#repository" id="toc-repository" class="nav-link" data-scroll-target="#repository">Repository</a></li>
+  <li><a href="#bloc" id="toc-bloc" class="nav-link" data-scroll-target="#bloc">Bloc</a></li>
+  </ul></li>
+  <li><a href="#conclusie" id="toc-conclusie" class="nav-link" data-scroll-target="#conclusie">Conclusie</a></li>
+  <li><a href="#bronnen" id="toc-bronnen" class="nav-link" data-scroll-target="#bronnen">Bronnen</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+<section id="introductie" class="level2">
+<h2 class="anchored" data-anchor-id="introductie">Introductie</h2>
+<p>​​In een app is het cruciaal dat gebruikers de informatie kunnen aanpassen aan hun behoeften. In de huidige implementatie van de Daily Practices App is dit echter nog niet mogelijk. Daarom gaan we in deze post “state” toevoegen aan de app om dit te realiseren.</p>
+<p>In de laatste <a href="https://cabbagemees.nl/posts/2023-09-18-Flutter-app-deel-6-Notificaties/">Flutter App Post</a> heb ik de dagelijkse notificatie geïmplementeerd. <a href="https://cabbagemees.nl/posts/2023-01-08-Flutter-app-deel-5-start-app/">In de post daarvoor</a> heb ik de simpelste versie van de app (MVP) gemaakt, maar deze versie is niet netjes omdat de practices<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> tussen de rest van de code staan. Daar komt in deze post verandering in. Zoals uitgelegd in de <a href="https://cabbagemees.nl/posts/2022-07-27-Flutter-app-deel-2-app-architectuur/">app structuur post</a>, wilde ik in deze app de <a href="https://bloclibrary.dev">bloc</a> library gebruiken om de user-interface, de business-logica en de data van elkaar te scheiden. Ik vind dat de Bloc library meer is dan alleen een code library, want in de documentatie staat ook veel uitleg over een handige structuur om aan te houden. Het doel hiervan is om straks makkelijk van een hardcoded practices implementatie naar een dynamische implementatie te gaan, zonder dat je veel code hoeft aan te passen omdat deze onderdelen van elkaar gescheiden zijn. Maar hoe werkt Bloc?</p>
+</section>
+<section id="de-basis-van-bloc" class="level2">
+<h2 class="anchored" data-anchor-id="de-basis-van-bloc">De Basis van Bloc</h2>
+<p>De <strong>B</strong>usiness <strong>Lo</strong>gic <strong>C</strong>omponent (Bloc) is een manier om “state” toe te voegen aan aan app. “State” is een manier om interactiviteit toe te voegen aan je apps. Dus zonder “state” zou je app statisch zijn (saai). Maar het beheren van “state” maakt de app ook complexer om te onderhouden. Daarom is Bloc bedacht, om het beheren van “state” te vereenvoudigen en los te koppelen.</p>
+<p>Een Bloc is een class wat evenementen (events; voorbeelden zijn een klik op een knop of het starten van een app) als input neemt en op basis van het event een state als output geeft. Bijvoorbeeld: voordat je de app start is je scherm leeg. De Bloc krijgt het event “AppStart” binnen en op basis daarvan wordt eerst de state “Loading” teruggestuurd, waardoor je een laad schermpje te zien krijgt. Na het laden wordt de state “Finished”, waardoor je het start scherm te zien krijgt.</p>
+<p>In de Bloc class wordt dus niet vastgelegd wat er in het scherm te zien is. De Bloc krijgt een event binnen, dan voert de Bloc een stuk code uit (vaak om data op te halen van een Repository) en als laatste stuurt de Bloc een state terug (waarin de opgehaalde data zit).</p>
+<table class="table">
+<thead>
+<tr class="header">
+<th style="text-align: center;"><img src="images/bloc-overview.png" class="img-fluid" alt="Bloc Overview"></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">Bloc Overview. Credits to https://bloclibrary.dev</td>
+</tr>
+</tbody>
+</table>
+<p>De user-interface code hoeft dan ook niet te weten hoe de Bloc werkt. Die code hoeft alleen een event te versturen en dan de state omzetten naar een user-interface. Daardoor is de code erg modulair en makkelijk te onderhouden.</p>
+</section>
+<section id="bloc-implementeren-in-de-daily-practices-app" class="level2">
+<h2 class="anchored" data-anchor-id="bloc-implementeren-in-de-daily-practices-app">Bloc Implementeren In De Daily Practices App</h2>
+<section id="data" class="level3">
+<h3 class="anchored" data-anchor-id="data">Data</h3>
+<p>In de data-laag haal je de onbewerkte (raw) data op. Vaak zijn dat simpele API’s die Create, Read, Updaten en Delete (CRUD) functionaliteit implementeren. Denk hierbij aan verbindingen met web API’s of de API van een database. Het voordeel van het scheiden van de data-laag is dat het makkelijk is om van bron te veranderen of juist een bron toe te voegen.</p>
+<p>Voor iedere laag heb ik aparte packages gemaakt. Voor de data-laag zijn dat de <code>practices_api</code> en <code>hardcoded_practices_api</code>. De <code>practices_api</code> bevat de interface van hoe de API eruit moet komen te zien. Het is een blauwdruk van een specifieke implementatie en een specifieke implementatie zit in de <code>hardcoded_practices_api</code>. Met deze blauwdruk is het makkelijk om een andere implementatie te maken (iets wat ik later wil doen).</p>
+<p>In dit geval is de API nog heel simpel en heeft het alleen de functionaliteit om een lijst van practices op te vragen met de <code>getPractices</code> method.</p>
+<p><a href="https://github.com/Mees-Molenaar/blog-daily-practices-app/blob/07f2a64af87a08ad3c49b44ae0332f5d0ca6b158/packages/hardcoded_practices_api/lib/src/hardcoded_practices_api.dart#L119">Hier is de implementatie van de hardcoded practices api</a></p>
+</section>
+<section id="repository" class="level3">
+<h3 class="anchored" data-anchor-id="repository">Repository</h3>
+<p>De repository-laag is een laagje over de data-laag. Hierdoor kan je bijvoorbeeld meerdere data-lagen samen voegen. Daarnaast is de repository ook de plek waar je de onbewerkte data uit de data-laag, transformeert naar de data die je applicatie nodig heeft. De repository-laag is de laag waarmee de Bloc-laag communiceert.</p>
+<p>In deze app zit de repository in de <code>practices_repository</code> package. Eerlijk gezegd voelt de repository nu nog wat overbodig, want het enige wat het doet is een method met dezelfde naam aanroepen die in een API is gedefinieerd, namelijk <code>getPractices()</code>. Het voordeel van een repository komt vooral later wanneer je verschillende data bronnen wilt samenvoegen en transformeren.</p>
+<p><a href="https://github.com/Mees-Molenaar/blog-daily-practices-app/blob/07f2a64af87a08ad3c49b44ae0332f5d0ca6b158/packages/practices_repository/lib/src/practices_repository.dart#L1">Hier is de implementatie van de repository</a></p>
+</section>
+<section id="bloc" class="level3">
+<h3 class="anchored" data-anchor-id="bloc">Bloc</h3>
+<p>De Bloc-laag, zoals hierboven uitgelegd, ontvangt events en geeft states terug. De Bloc communiceert met de user-interface (door middel van de events en states). Dit kan je implementeren met de <code>BlocBuilder</code> en <code>BlocProvider</code>.</p>
+<p>Als eerste maak je een Bloc. Afhankelijk van hoe de mappen structuur van je app eruit ziet, maak je een bloc map (in deze app heb ik per scherm een map in <code>features</code>, voor nu alleen <code>home</code> daarin maak ik dan de <code>home</code> bloc).</p>
+<p>Vervolgens heb je drie elementen nodig voor je Bloc. 1. Het daadwerkelijke <code>Bloc</code> 2. De events dat een <code>Bloc</code> als input kan krijgen 3. De states die een <code>Bloc</code> kan terug geven</p>
+<p>Hieronder is de code van de simpele <code>HomeBloc</code>. Deze Bloc accepteert een enkele event, <code>HomeLoad</code>. En heeft vier mogelijke states:</p>
+<ol type="1">
+<li><code>HomeInitial</code>:voordat er iets is gebeurd.</li>
+<li><code>HomeLoading</code>: wanneer het Home scherm aan het laden is.</li>
+<li><code>HomeLoaded</code>: wanneer het laden klaar en succesvol is.</li>
+<li><code>HomeError</code>: wanneer er een fout is opgetreden tijdens het laden.</li>
+<li>In mijn ervaring zien de Bloc states er vaak op deze manier uit (initial, loading, loaded en error). Als laatste nog het Bloc zelf. Hierin definieer je welke functie er moet worden uitgevoerd op basis van het event. In die functie <code>emit()</code> je dan de state die je terug wilt sturen.</li>
+</ol>
+<div class="sourceCode" id="cb1"><pre class="sourceCode numberSource dart number-lines code-with-copy"><code class="sourceCode dart"><span id="cb1-1"><a href="#cb1-1"></a><span class="kw">import</span> <span class="st">'package:bloc/bloc.dart'</span>;</span>
+<span id="cb1-2"><a href="#cb1-2"></a><span class="kw">import</span> <span class="st">'package:equatable/equatable.dart'</span>;</span>
+<span id="cb1-3"><a href="#cb1-3"></a><span class="kw">import</span> <span class="st">'package:meta/meta.dart'</span>;</span>
+<span id="cb1-4"><a href="#cb1-4"></a><span class="kw">import</span> <span class="st">'package:practices_repository/practices_repository.dart'</span>;</span>
+<span id="cb1-5"><a href="#cb1-5"></a><span class="kw">import</span> <span class="st">'package:logging/logging.dart'</span>;</span>
+<span id="cb1-6"><a href="#cb1-6"></a></span>
+<span id="cb1-7"><a href="#cb1-7"></a><span class="kw">part</span> <span class="st">'home_event.dart'</span>;</span>
+<span id="cb1-8"><a href="#cb1-8"></a><span class="kw">part</span> <span class="st">'home_state.dart'</span>;</span>
+<span id="cb1-9"><a href="#cb1-9"></a></span>
+<span id="cb1-10"><a href="#cb1-10"></a><span class="at">final</span> log <span class="op">=</span> Logger(<span class="st">'HomeBlocLogger'</span>);</span>
+<span id="cb1-11"><a href="#cb1-11"></a></span>
+<span id="cb1-12"><a href="#cb1-12"></a><span class="kw">class</span> HomeBloc <span class="kw">extends</span> Bloc<span class="op">&lt;</span>HomeEvent<span class="op">,</span> HomeState<span class="op">&gt;</span> {</span>
+<span id="cb1-13"><a href="#cb1-13"></a>  <span class="at">final</span> PracticesRepository _practicesRepository;</span>
+<span id="cb1-14"><a href="#cb1-14"></a></span>
+<span id="cb1-15"><a href="#cb1-15"></a>  HomeBloc({required PracticesRepository practicesRepository})</span>
+<span id="cb1-16"><a href="#cb1-16"></a>      <span class="op">:</span> _practicesRepository <span class="op">=</span> practicesRepository<span class="op">,</span></span>
+<span id="cb1-17"><a href="#cb1-17"></a>        <span class="co">// Start with the HomeInitial state</span></span>
+<span id="cb1-18"><a href="#cb1-18"></a>        <span class="kw">super</span>(<span class="at">const</span> HomeInitial(practices<span class="op">:</span> [])) {</span>
+<span id="cb1-19"><a href="#cb1-19"></a>    <span class="co">// This piece of code tells to call the _onInitial method when a HomeLoad event is dispatched.</span></span>
+<span id="cb1-20"><a href="#cb1-20"></a>    <span class="kw">on</span><span class="op">&lt;</span>HomeLoad<span class="op">&gt;</span>(_onInitial);</span>
+<span id="cb1-21"><a href="#cb1-21"></a>  }</span>
+<span id="cb1-22"><a href="#cb1-22"></a></span>
+<span id="cb1-23"><a href="#cb1-23"></a>  <span class="dt">void</span> _onInitial(HomeLoad event<span class="op">,</span> Emitter<span class="op">&lt;</span>HomeState<span class="op">&gt;</span> emit) {</span>
+<span id="cb1-24"><a href="#cb1-24"></a>    <span class="at">final</span> practicesStream <span class="op">=</span> _practicesRepository<span class="op">.</span>getPractices();</span>
+<span id="cb1-25"><a href="#cb1-25"></a></span>
+<span id="cb1-26"><a href="#cb1-26"></a>    practicesStream<span class="op">.</span>listen((practices) {</span>
+<span id="cb1-27"><a href="#cb1-27"></a>      <span class="co">// Emit the HomeLoaded state with the practices</span></span>
+<span id="cb1-28"><a href="#cb1-28"></a>      emit(HomeLoaded(practices<span class="op">:</span> practices));</span>
+<span id="cb1-29"><a href="#cb1-29"></a>    })<span class="op">.</span>onError((error) {</span>
+<span id="cb1-30"><a href="#cb1-30"></a>      log<span class="op">.</span>severe(<span class="st">'Error while loading practices: $error'</span>);</span>
+<span id="cb1-31"><a href="#cb1-31"></a></span>
+<span id="cb1-32"><a href="#cb1-32"></a>      <span class="co">// Emit the HomeError state</span></span>
+<span id="cb1-33"><a href="#cb1-33"></a>      emit(<span class="at">const</span> HomeError(practices<span class="op">:</span> []));</span>
+<span id="cb1-34"><a href="#cb1-34"></a>    });</span>
+<span id="cb1-35"><a href="#cb1-35"></a>  }</span>
+<span id="cb1-36"><a href="#cb1-36"></a></span>
+<span id="cb1-37"><a href="#cb1-37"></a>  <span class="kw">@override</span></span>
+<span id="cb1-38"><a href="#cb1-38"></a>  <span class="dt">void</span> onEvent(HomeEvent event) {</span>
+<span id="cb1-39"><a href="#cb1-39"></a>    <span class="kw">super</span><span class="op">.</span>onEvent(event);</span>
+<span id="cb1-40"><a href="#cb1-40"></a>    log<span class="op">.</span>fine(<span class="st">'Event: $event'</span>);</span>
+<span id="cb1-41"><a href="#cb1-41"></a>  }</span>
+<span id="cb1-42"><a href="#cb1-42"></a></span>
+<span id="cb1-43"><a href="#cb1-43"></a>  <span class="kw">@override</span></span>
+<span id="cb1-44"><a href="#cb1-44"></a>  <span class="dt">void</span> onChange(Change<span class="op">&lt;</span>HomeState<span class="op">&gt;</span> change) {</span>
+<span id="cb1-45"><a href="#cb1-45"></a>    <span class="kw">super</span><span class="op">.</span>onChange(change);</span>
+<span id="cb1-46"><a href="#cb1-46"></a>    log<span class="op">.</span>fine(<span class="st">'Change: $change'</span>);</span>
+<span id="cb1-47"><a href="#cb1-47"></a>  }</span>
+<span id="cb1-48"><a href="#cb1-48"></a></span>
+<span id="cb1-49"><a href="#cb1-49"></a>  <span class="kw">@override</span></span>
+<span id="cb1-50"><a href="#cb1-50"></a>  <span class="dt">void</span> onTransition(Transition<span class="op">&lt;</span>HomeEvent<span class="op">,</span> HomeState<span class="op">&gt;</span> transition) {</span>
+<span id="cb1-51"><a href="#cb1-51"></a>    <span class="kw">super</span><span class="op">.</span>onTransition(transition);</span>
+<span id="cb1-52"><a href="#cb1-52"></a>    log<span class="op">.</span>fine(<span class="st">'Change: $transition'</span>);</span>
+<span id="cb1-53"><a href="#cb1-53"></a>  }</span>
+<span id="cb1-54"><a href="#cb1-54"></a></span>
+<span id="cb1-55"><a href="#cb1-55"></a>  <span class="kw">@override</span></span>
+<span id="cb1-56"><a href="#cb1-56"></a>  <span class="dt">void</span> onError(<span class="dt">Object</span> error<span class="op">,</span> StackTrace stackTrace) {</span>
+<span id="cb1-57"><a href="#cb1-57"></a>    <span class="kw">super</span><span class="op">.</span>onError(error<span class="op">,</span> stackTrace);</span>
+<span id="cb1-58"><a href="#cb1-58"></a>    log<span class="op">.</span>severe(<span class="st">'Error: $error'</span>);</span>
+<span id="cb1-59"><a href="#cb1-59"></a>  }</span>
+<span id="cb1-60"><a href="#cb1-60"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Om de Bloc te laten communiceren met de user-interface gebruik je de <code>BlocBuilder</code> en <code>BlocProvider</code>.</p>
+<p><a href="https://bloclibrary.dev/flutter-bloc-concepts/#blocbuilder">De <code>BlocBuilder</code></a> zorgt ervoor dat een <a href="https://docs.flutter.dev/ui">Widget</a> herbouwd wordt nadat de Bloc een state maakt.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode numberSource dart number-lines code-with-copy"><code class="sourceCode dart"><span id="cb2-1"><a href="#cb2-1"></a><span class="kw">class</span> PracticesView <span class="kw">extends</span> StatelessWidget {</span>
+<span id="cb2-2"><a href="#cb2-2"></a>  <span class="at">const</span> PracticesView({<span class="kw">super</span><span class="op">.</span>key});</span>
+<span id="cb2-3"><a href="#cb2-3"></a></span>
+<span id="cb2-4"><a href="#cb2-4"></a>  <span class="kw">@override</span></span>
+<span id="cb2-5"><a href="#cb2-5"></a>  Widget build(BuildContext context) {</span>
+<span id="cb2-6"><a href="#cb2-6"></a>    <span class="kw">return</span> Scaffold(</span>
+<span id="cb2-7"><a href="#cb2-7"></a>      appBar<span class="op">:</span> AppBar(</span>
+<span id="cb2-8"><a href="#cb2-8"></a>        title<span class="op">:</span> <span class="at">const</span> Text(<span class="st">'Daily Practices'</span>)<span class="op">,</span></span>
+<span id="cb2-9"><a href="#cb2-9"></a>      )<span class="op">,</span></span>
+<span id="cb2-10"><a href="#cb2-10"></a>      <span class="co">// When the HomeState changes, BlocBuilder will call build again</span></span>
+<span id="cb2-11"><a href="#cb2-11"></a>      <span class="co">// It will get the state and based on the state it renders something on the screen</span></span>
+<span id="cb2-12"><a href="#cb2-12"></a>      body<span class="op">:</span> BlocBuilder<span class="op">&lt;</span>HomeBloc<span class="op">,</span> HomeState<span class="op">&gt;</span>(</span>
+<span id="cb2-13"><a href="#cb2-13"></a>        builder<span class="op">:</span> (context<span class="op">,</span> state) {</span>
+<span id="cb2-14"><a href="#cb2-14"></a>          <span class="cf">if</span> (state <span class="kw">is</span> HomeInitial) {</span>
+<span id="cb2-15"><a href="#cb2-15"></a>            <span class="kw">return</span> <span class="at">const</span> Center(</span>
+<span id="cb2-16"><a href="#cb2-16"></a>              child<span class="op">:</span> Text(<span class="st">'Initial'</span>)<span class="op">,</span></span>
+<span id="cb2-17"><a href="#cb2-17"></a>            );</span>
+<span id="cb2-18"><a href="#cb2-18"></a>          } <span class="cf">else</span> <span class="cf">if</span> (state <span class="kw">is</span> HomeLoaded) {</span>
+<span id="cb2-19"><a href="#cb2-19"></a>            <span class="kw">return</span> _buildListView(state<span class="op">.</span>practices);</span>
+<span id="cb2-20"><a href="#cb2-20"></a>          } <span class="cf">else</span> {</span>
+<span id="cb2-21"><a href="#cb2-21"></a>            <span class="kw">return</span> <span class="at">const</span> Center(</span>
+<span id="cb2-22"><a href="#cb2-22"></a>              child<span class="op">:</span> Text(<span class="st">'Error while loading practices'</span>)<span class="op">,</span></span>
+<span id="cb2-23"><a href="#cb2-23"></a>            );</span>
+<span id="cb2-24"><a href="#cb2-24"></a>          }</span>
+<span id="cb2-25"><a href="#cb2-25"></a>        }<span class="op">,</span></span>
+<span id="cb2-26"><a href="#cb2-26"></a>      )<span class="op">,</span></span>
+<span id="cb2-27"><a href="#cb2-27"></a>    );</span>
+<span id="cb2-28"><a href="#cb2-28"></a>  }</span>
+<span id="cb2-29"><a href="#cb2-29"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><a href="https://bloclibrary.dev/flutter-bloc-concepts/#blocprovider">De <code>BlocProvider</code></a> is een manier om een Bloc toe te voegen aan de kind-Widgets in de Widget tree. De <code>BlocProvider</code> gebruikt <a href="https://en.wikipedia.org/wiki/Dependency_injection">dependency injection</a>. Hierdoor kan een andere Widget makkelijk een Bloc gebruiken.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode numberSource dart number-lines code-with-copy"><code class="sourceCode dart"><span id="cb3-1"><a href="#cb3-1"></a><span class="kw">class</span> PracticesPage <span class="kw">extends</span> StatelessWidget {</span>
+<span id="cb3-2"><a href="#cb3-2"></a>  <span class="at">final</span> PracticesRepository practicesRepository;</span>
+<span id="cb3-3"><a href="#cb3-3"></a></span>
+<span id="cb3-4"><a href="#cb3-4"></a>  <span class="at">const</span> PracticesPage({<span class="kw">super</span><span class="op">.</span>key<span class="op">,</span> required <span class="kw">this</span><span class="op">.</span>practicesRepository});</span>
+<span id="cb3-5"><a href="#cb3-5"></a></span>
+<span id="cb3-6"><a href="#cb3-6"></a>  <span class="kw">@override</span></span>
+<span id="cb3-7"><a href="#cb3-7"></a>  Widget build(BuildContext context) {</span>
+<span id="cb3-8"><a href="#cb3-8"></a>    <span class="co">// Create a BlocProvider and start with the HomeLoad event </span></span>
+<span id="cb3-9"><a href="#cb3-9"></a>    <span class="kw">return</span> BlocProvider(</span>
+<span id="cb3-10"><a href="#cb3-10"></a>      create<span class="op">:</span> (context) <span class="op">=&gt;</span></span>
+<span id="cb3-11"><a href="#cb3-11"></a>          HomeBloc(practicesRepository<span class="op">:</span> practicesRepository)<span class="op">..</span>add(HomeLoad())<span class="op">,</span></span>
+<span id="cb3-12"><a href="#cb3-12"></a>      child<span class="op">:</span> <span class="at">const</span> PracticesView()<span class="op">,</span></span>
+<span id="cb3-13"><a href="#cb3-13"></a>    );</span>
+<span id="cb3-14"><a href="#cb3-14"></a>  }</span>
+<span id="cb3-15"><a href="#cb3-15"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+</section>
+<section id="conclusie" class="level2">
+<h2 class="anchored" data-anchor-id="conclusie">Conclusie</h2>
+<p>Dit was de introductie van Bloc en hoe je dat kunt gebruiken in je Flutter apps. Nu is deze app ook klaar om de practices dynamisch te maken, want de enige wijziging die nodig is, is de data-laag. Heb jij al eens Bloc in je app gebruikt, dan hoor ik graag jou ervaringen in de reacties :).</p>
+<p>Tot de volgende keer!</p>
+<p>Mees</p>
+</section>
+<section id="bronnen" class="level2">
+<h2 class="anchored" data-anchor-id="bronnen">Bronnen</h2>
+<ul>
+<li><a href="https://www.youtube.com/watch?v=knMvKPKBzGE">Bloc Library Basics &amp; Beyond - Felix Angelov Flutter Europe</a></li>
+<li><a href="https://bloclibrary.dev/#/architecture">Bloc Architecture</a></li>
+<li><a href="https://www.dhiwise.com/post/flutter-bloc-tutorial-understanding-state-management">Complete Flutter BLoC Tutorial Understanding State Management in Flutter</a></li>
+<li><a href="https://www.blup.in/blog/understanding-flutter-bloc-for-state-management-a-comprehensive-guide">Conclusion for Guide on Usage of Flutter BLoC</a></li>
+<li><a href="https://verygood.ventures/blog/why-we-use-flutter-bloc">Why We Use Flutter_bloc for State Management</a></li>
+</ul>
+
+
+</section>
+
+
+<div id="quarto-appendix" class="default"><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
+
+<ol>
+<li id="fn1"><p>Een practice is een dagelijkse taak en de practices die nu in de app zitten komen uit het boek Choose Yourself! van James Altucher<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section></div></main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<script src="https://giscus.app/client.js" data-repo="Mees-Molenaar/CabbageMees_Quarto" data-repo-id="R_kgDOIkUPOw" data-category="Blog Posts" data-category-id="DIC_kwDOIkUPO84CaIbg" data-mapping="pathname" data-reactions-enabled="1" data-emit-metadata="0" data-input-position="top" data-theme="light" data-lang="en" crossorigin="anonymous" data-loading="lazy" async="">
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>
