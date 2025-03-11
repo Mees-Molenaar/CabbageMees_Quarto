@@ -10,17 +10,16 @@ Leuk dat je kijkt op deze blog van een rare vogel (een Koolmees bijvoorbeeld). I
 
 Het doel blijft om uiteindelijk de Life Science & Technology te combineren met programmeren en AI. Je ziet me de laatste ontwikkelingen (zoals ChatGPT en DALLE, hiermee maak ik de plaatjes van de blogposts) wat voor een vette dingen je met AI kunt doen. Ik denk dat er in dit gebied nog vele mooie vernieuwingen gaan komen!
 
-### Wat doe ik nu (13MAY24)
+### Wat doe ik nu (11MAR25)
 
-Werk: Machine Learning Engineer bij Xomnia
+Werk: Machine Learning / Software Engineer bij Vislink
 
 #### Project
 
-- Recepten App
-- Minecraft Discord Bot
-  - Thinking about creating a Vector DB for the bot so I can deploy it on a Raspberry Pi
-- Rust CLI Repo Harvest
+- Video Transcription App
+- Handwritten Text Recogniton App
+- Rust HTTP Server From Scratch
 
 #### Boeken
 
-- Frank Herbert - Dune
+- Eugene B Sledge - With The Old Breed

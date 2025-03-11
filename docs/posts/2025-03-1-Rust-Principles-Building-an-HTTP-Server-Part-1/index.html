@@ -6,8 +6,10 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="author" content="Mees Molenaar">
+<meta name="dcterms.date" content="2025-03-11">
 
-<title>CabbageMees - Over Mij</title>
+<title>CabbageMees - Rust Principles Bouwen van een HTTP Server - Deel 1 - Rust Omgeving Voorbereiden</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -23,23 +25,23 @@ ul.task-list li input[type="checkbox"] {
 </style>
 
 
-<script src="site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="site_libs/quarto-nav/headroom.min.js"></script>
-<script src="site_libs/clipboard/clipboard.min.js"></script>
-<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="site_libs/quarto-search/fuse.min.js"></script>
-<script src="site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="./">
-<link href="./images/logo.png" rel="icon" type="image/png">
-<script src="site_libs/quarto-html/quarto.js"></script>
-<script src="site_libs/quarto-html/popper.min.js"></script>
-<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="site_libs/quarto-html/anchor.min.js"></script>
-<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../images/logo.png" rel="icon" type="image/png">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -71,26 +73,28 @@ gtag('config', 'G-9GMDP6RW3B', { 'anonymize_ip': true});
 </script>
 
 
-<link rel="stylesheet" href="styles.css">
-<meta property="og:title" content="CabbageMees - Over Mij">
-<meta property="og:description" content="">
+<link rel="stylesheet" href="../../styles.css">
+<meta property="og:title" content="CabbageMees - Rust Principles Bouwen van een HTTP Server - Deel 1 - Rust Omgeving Voorbereiden">
+<meta property="og:description" content="Installeer Rust en configuur Neovim">
+<meta property="og:image" content="https://cabbagemees.nl/posts/2025-03-1-Rust-Principles-Building-an-HTTP-Server-Part-1/images/wireframe.webp">
 <meta property="og:site-name" content="CabbageMees">
-<meta name="twitter:title" content="CabbageMees - Over Mij">
-<meta name="twitter:description" content="">
-<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="CabbageMees - Rust Principles Bouwen van een HTTP Server - Deel 1 - Rust Omgeving Voorbereiden">
+<meta name="twitter:description" content="Installeer Rust en configuur Neovim">
+<meta name="twitter:image" content="https://cabbagemees.nl/posts/2025-03-1-Rust-Principles-Building-an-HTTP-Server-Part-1/images/wireframe.webp">
+<meta name="twitter:card" content="summary_large_image">
 </head>
 
-<body class="nav-fixed fullcontent">
+<body class="nav-fixed">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
     <nav class="navbar navbar-expand-lg navbar-dark ">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container">
-    <a href="./index.html" class="navbar-brand navbar-brand-logo">
-    <img src="./images/logo.png" alt="" class="navbar-logo">
+    <a href="../../index.html" class="navbar-brand navbar-brand-logo">
+    <img src="../../images/logo.png" alt="" class="navbar-logo">
     </a>
-    <a class="navbar-brand" href="./index.html">
+    <a class="navbar-brand" href="../../index.html">
     <span class="navbar-title">CabbageMees</span>
     </a>
   </div>
@@ -101,7 +105,7 @@ gtag('config', 'G-9GMDP6RW3B', { 'anonymize_ip': true});
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
-    <a class="nav-link active" href="./about.html" rel="" target="" aria-current="page">
+    <a class="nav-link" href="../../about.html" rel="" target="">
  <span class="menu-text">Over Mij</span></a>
   </li>  
   <li class="nav-item compact">
@@ -122,52 +126,125 @@ gtag('config', 'G-9GMDP6RW3B', { 'anonymize_ip': true});
     </nav>
 </header>
 <!-- content -->
-<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">Rust Principles Bouwen van een HTTP Server - Deel 1 - Rust Omgeving Voorbereiden</h1>
+            <p class="subtitle lead">Installeer Rust en configuur Neovim</p>
+                                <div class="quarto-categories">
+                <div class="quarto-category">Rust</div>
+                <div class="quarto-category">HTTP Server</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>Mees Molenaar </p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">March 11, 2025</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#blog-series-doelen" id="toc-blog-series-doelen" class="nav-link active" data-scroll-target="#blog-series-doelen">Blog Series Doelen</a></li>
+  <li><a href="#rust-installeren" id="toc-rust-installeren" class="nav-link" data-scroll-target="#rust-installeren">Rust Installeren</a></li>
+  <li><a href="#de-code-editor-gereed-maken" id="toc-de-code-editor-gereed-maken" class="nav-link" data-scroll-target="#de-code-editor-gereed-maken">De Code Editor Gereed Maken</a></li>
+  <li><a href="#het-project-maken" id="toc-het-project-maken" class="nav-link" data-scroll-target="#het-project-maken">Het Project Maken</a></li>
+  <li><a href="#tot-slot" id="toc-tot-slot" class="nav-link" data-scroll-target="#tot-slot">Tot Slot</a></li>
+  </ul>
+</nav>
+    </div>
 <!-- main -->
-<main class="content" id="quarto-document-content">
-
-<header id="title-block-header" class="quarto-title-block default">
-<div class="quarto-title">
-<h1 class="title">Over Mij</h1>
-</div>
+<main class="content quarto-banner-title-block" id="quarto-document-content">
 
 
 
-<div class="quarto-title-meta">
 
-    
-  
-    
-  </div>
-  
-
-</header>
-
-<p>Hallo,</p>
-<p>Leuk dat je kijkt op deze blog van een rare vogel (een Koolmees bijvoorbeeld). In dit blog neem ik je mee in de wonderlijke wereld van programmeren en Artificiele Intelligentie (AI). De laatste tijd ligt de focus meer op programmeren dan AI, wat ook te zien is aan de laatste posts over mobiele apps met Flutter en nu ook Rust.</p>
-<p>Het doel blijft om uiteindelijk de Life Science &amp; Technology te combineren met programmeren en AI. Je ziet me de laatste ontwikkelingen (zoals ChatGPT en DALLE, hiermee maak ik de plaatjes van de blogposts) wat voor een vette dingen je met AI kunt doen. Ik denk dat er in dit gebied nog vele mooie vernieuwingen gaan komen!</p>
-<section id="wat-doe-ik-nu-11mar25" class="level3">
-<h3 class="anchored" data-anchor-id="wat-doe-ik-nu-11mar25">Wat doe ik nu (11MAR25)</h3>
-<p>Werk: Machine Learning / Software Engineer bij Vislink</p>
-<section id="project" class="level4">
-<h4 class="anchored" data-anchor-id="project">Project</h4>
-<ul>
-<li>Video Transcription App</li>
-<li>Handwritten Text Recogniton App</li>
-<li>Rust HTTP Server From Scratch</li>
-</ul>
+<section id="blog-series-doelen" class="level2">
+<h2 class="anchored" data-anchor-id="blog-series-doelen">Blog Series Doelen</h2>
+<p>​Het doel van deze blog serie is om beter te worden in Rust. Rust is op dit moment een van mijn favoriete programmeertalen. Hoewel ik de meeste programma’s wel zou kunnen schrijven in Rust, zijn er nog een aantal programmeerprincipes die ik niet goed genoeg ken. In deze serie neem ik je daarom mee op mijn weg om beter te worden in Rust.</p>
+<p>Daarnaast wil ik ook HTTP servers beter leren begrijpen. Ik wil HTTP servers beter leren begrijpen, omdat het iets is wat we dagelijks gebruiken. Neem bijvoorbeeld buienrader, wanneer je in de Netwerk tab van je <a href="https://developer.mozilla.org/en-US/docs/Learn_web_development/Howto/Tools_and_setup/What_are_browser_developer_tools">programming tools</a> kijkt, zie je een request naar <code>forecast.buienradar.nl</code>, wat waarschijnlijk de HTTP server is die de weersvoorspelling terugstuurt naar de browser.</p>
+<p>Ik gebruik ze eigenlijk ook vaak wanneer ik een API maak (zoals <a href="https://fastapi.tiangolo.com">Fastapi</a> in Python of <a href="https://github.com/tokio-rs/axum">Axum</a> in Rust). Omdat ik HTTP servers zo vaak gebruik, wil ik nu weleens weten wat er eigenlijk achter de schermen gebeurt.</p>
+<p>Ik denk dat deze twee doelen goed samengaan, omdat je een HTTP server redelijk klein kan beginnen maar je die uit kan bouwen naar een geavanceerd project. Daardoor kan je veel Rust-principes uitproberen, en het is niet een project dat nooit in het echt gebruikt zal worden. Zoals ik eerder vertelde worden HTTP servers juist veel gebruikt.</p>
+<p>In deze eerste post van de serie houden we het makkelijk. We gaan namelijk Rust installeren, onze code editor instellen en als laatste het project aanmaken.</p>
+<blockquote class="blockquote">
+<p>Ik gebruik een Mac, als je een ander OS gebruikt kunnen de stappen hieronder iets wijzigen</p>
+</blockquote>
 </section>
-<section id="boeken" class="level4">
-<h4 class="anchored" data-anchor-id="boeken">Boeken</h4>
-<ul>
-<li>Eugene B Sledge - With The Old Breed</li>
-</ul>
-
-
+<section id="rust-installeren" class="level2">
+<h2 class="anchored" data-anchor-id="rust-installeren">Rust Installeren</h2>
+<p>Rust installeren is een eitje, omdat Rust gemakkelijke developer tools heeft gemaakt. Een van deze tools is <code>rustup</code>, en die tool wordt gebruikt om Rust te installeren en te updaten.</p>
+<p>Omdat het installatieproces van <code>rustup</code> mogelijk kan wijzigen, refereer ik daarvoor naar <a href="https://www.rust-lang.org/tools/install">de officiele Rust website</a>.</p>
+<p>Na het installeren van <code>rustup</code> kunnen we door naar de volgende stap: de editor.</p>
+<blockquote class="blockquote">
+<p>Mocht je meer informatie over <code>rustup</code> willen, dan verwijs ik je naar dit boek: https://rust-lang.github.io/rustup/</p>
+</blockquote>
 </section>
+<section id="de-code-editor-gereed-maken" class="level2">
+<h2 class="anchored" data-anchor-id="de-code-editor-gereed-maken">De Code Editor Gereed Maken</h2>
+<blockquote class="blockquote">
+<p>Sinds een aantal maanden gebruik ik <a href="https://neovim.io">Neovim</a> als code editor. Dus de volgende stappen zijn specifiek voor Neovim. Wanneer je een andere editor gebruikt, ga dan opzoek naar hoe je die kunt instellen. Ik kan me niet voorstellen dat daar geen andere blogs / manuals voor zijn.</p>
+</blockquote>
+<p>Toen ik Neovim heb opgezet, heb ik <a href="https://github.com/nvim-lua/kickstart.nvim">kickstart.nvim</a> gebruikt. Tot dusver ben ik zeer positief over deze configuratie. Neovim gebruikt LSP’s (Language Server Protocol’s) om zaken zoals Auto Completion te regelen. En kickstart.nvim gebruikt de <a href="https://github.com/williamboman/mason.nvim">mason.nvim</a> plugin om LSP’s te beheren. Kickstart.nvim heeft het toevoegen van de Rust LSP (<a href="https://github.com/rust-lang/rust-analyzer">rust_analyzer</a>) gemakkelijk gemaakt door die met comments toe te voegen. Dus om de LSP toe te voegen, hoef je alleen de comments (de twee streeps <code>--</code>) weg te halen op deze regel:</p>
+<p><code>-- rust_analyzer = {},</code></p>
+<p>wordt</p>
+<p><code>rust_analyzer = {},</code></p>
+<p>Wanneer je dat hebt gedaan hoef je alleen Neovim te herstarten. Wanneer je vanaf nu een Rust-bestand opent, wordt de LSP aan het bestand gekoppeld. Zo heb je direct alle voordelen van de rust_analyzer LSP.</p>
+</section>
+<section id="het-project-maken" class="level2">
+<h2 class="anchored" data-anchor-id="het-project-maken">Het Project Maken</h2>
+<p>Als laatste gaan we het project opzetten. Met het installeren van <code>rustup</code> is ook <code>cargo</code> geïnstalleerd. <a href="https://doc.rust-lang.org/cargo/index.html">Cargo</a> is Rust’s build tool en package manager. Een van de features van <code>cargo</code> is het maken van een nieuw project. Het maken van een nieuw project doe je met <code>cargo new</code>:</p>
+<p><code>cargo new rust_principles_http_server</code></p>
+<p>Dit maakt een nieuwe map met de naam <code>rust_principles_http_server</code>. In deze map maakt <code>cargo</code> drie dingen aan:</p>
+<pre><code>.
+├── Cargo.toml
+└── src
+    └── main.rs</code></pre>
+<p>Ik wil nog niet te diep op de verschillende componenten ingaan (wie weet komt dat in een volgende blog post), maar in het kort:</p>
+<ul>
+<li><code>Cargo.toml</code> is een manifest dat alle metadata bevat die Cargo nodig heeft om het project te compileren.</li>
+<li>In de <code>src</code> folder komt alle source code voor het project.</li>
+<li><code>main.rs</code> is het beginpunt van het project, dit is waar het uitvoeren van de code begint.</li>
+</ul>
+<p>Als laatste gaan we dit project uitvoeren om te controleren of alles tot dusver nog werkt. Navigeer naar het project in in dit voorbeeld, <code>rust_principles_http_server</code>. Om het project te compileren heb je dit <code>cargo commando</code>: <code>cargo build</code></p>
+<p>Vervolgens kan je het project draaien door <code>cargo run</code> uit te voeren (dit compileert je code ook, dus je hoeft <code>cargo build</code> niet uit te voeren voor <code>cargo run</code>). Wanneer alles goed is gegaan, zie je de tekst <code>Hello, world!</code> verschijnen in je terminal.</p>
+<blockquote class="blockquote">
+<p>Ook Cargo <a href="https://doc.rust-lang.org/cargo/index.html">heeft zijn eigen boek</a>. En in de toekomst zullen we meer van <code>cargo</code> gaan zien en hoe zich dat verhoudt tot de source code en <code>Cargo.toml</code>.</p>
+</blockquote>
+</section>
+<section id="tot-slot" class="level2">
+<h2 class="anchored" data-anchor-id="tot-slot">Tot Slot</h2>
+<p>Dit was het voor nu. In deze post hebben we Rust geïnstalleerd, Neovim geconfigureerd en het Rust project gemaakt (hier is de <a href="https://github.com/Mees-Molenaar/rust_principles_http_server">Github repository</a> met de code.</p>
+<p>Voor de volgende keer staan twee dingen op de planning:</p>
+<ol type="1">
+<li>Ownership, Borrowing and Lifetimes.</li>
+<li>Begin van de HTTP server</li>
+</ol>
+<p>Tot de volgende!</p>
+<p>Mees</p>
+
+
 </section>
 
 </main> <!-- /main -->
