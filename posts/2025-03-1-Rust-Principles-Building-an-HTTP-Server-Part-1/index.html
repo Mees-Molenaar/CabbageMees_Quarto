@@ -7,9 +7,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Mees Molenaar">
-<meta name="dcterms.date" content="2022-06-27">
+<meta name="dcterms.date" content="2025-03-11">
 
-<title>Een Flutter App - Deel 1 - Voorbereiding – CabbageMees</title>
+<title>Rust Principles Bouwen van een HTTP Server - Deel 1 - Rust Omgeving Voorbereiden – CabbageMees</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -81,17 +81,13 @@ gtag('config', 'G-9GMDP6RW3B', { 'anonymize_ip': true});
 
 
 <link rel="stylesheet" href="../../styles.css">
-<meta property="og:title" content="Een Flutter App - Deel 1 - Voorbereiding – CabbageMees">
-<meta property="og:description" content="Een Android applicatie maken met Flutter">
-<meta property="og:image" content="https://cabbagemees.nl/posts/2022-06-27-Flutter-app-deel-1-voorbereiding/images/DALL·E 2022-08-26 17.15.12 - Two miniature carpenters building a mobile phone application, cartoon.png">
+<meta property="og:title" content="Rust Principles Bouwen van een HTTP Server - Deel 1 - Rust Omgeving Voorbereiden – CabbageMees">
+<meta property="og:description" content="Installeer Rust en configuur Neovim">
+<meta property="og:image" content="https://cabbagemees.nl/posts/2025-03-1-Rust-Principles-Building-an-HTTP-Server-Part-1/images/wireframe.webp">
 <meta property="og:site_name" content="CabbageMees">
-<meta property="og:image:height" content="1024">
-<meta property="og:image:width" content="1024">
-<meta name="twitter:title" content="Een Flutter App - Deel 1 - Voorbereiding – CabbageMees">
-<meta name="twitter:description" content="Een Android applicatie maken met Flutter">
-<meta name="twitter:image" content="https://cabbagemees.nl/posts/2022-06-27-Flutter-app-deel-1-voorbereiding/images/DALL·E 2022-08-26 17.15.12 - Two miniature carpenters building a mobile phone application, cartoon.png">
-<meta name="twitter:image-height" content="1024">
-<meta name="twitter:image-width" content="1024">
+<meta name="twitter:title" content="Rust Principles Bouwen van een HTTP Server - Deel 1 - Rust Omgeving Voorbereiden – CabbageMees">
+<meta name="twitter:description" content="Installeer Rust en configuur Neovim">
+<meta name="twitter:image" content="https://cabbagemees.nl/posts/2025-03-1-Rust-Principles-Building-an-HTTP-Server-Part-1/images/wireframe.webp">
 <meta name="twitter:card" content="summary_large_image">
 </head>
 
@@ -140,12 +136,11 @@ gtag('config', 'G-9GMDP6RW3B', { 'anonymize_ip': true});
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title">Een Flutter App - Deel 1 - Voorbereiding</h1>
-            <p class="subtitle lead">Een Android applicatie maken met Flutter</p>
+      <h1 class="title">Rust Principles Bouwen van een HTTP Server - Deel 1 - Rust Omgeving Voorbereiden</h1>
+            <p class="subtitle lead">Installeer Rust en configuur Neovim</p>
                                 <div class="quarto-categories">
-                <div class="quarto-category">Flutter</div>
-                <div class="quarto-category">Android</div>
-                <div class="quarto-category">DevOps</div>
+                <div class="quarto-category">Rust</div>
+                <div class="quarto-category">HTTP Server</div>
               </div>
                   </div>
   </div>
@@ -163,7 +158,7 @@ gtag('config', 'G-9GMDP6RW3B', { 'anonymize_ip': true});
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">June 27, 2022</p>
+        <p class="date">March 11, 2025</p>
       </div>
     </div>
     
@@ -179,8 +174,11 @@ gtag('config', 'G-9GMDP6RW3B', { 'anonymize_ip': true});
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#de-mvp" id="toc-de-mvp" class="nav-link active" data-scroll-target="#de-mvp">De MVP</a></li>
-  <li><a href="#de-devops-principes-in-dit-project" id="toc-de-devops-principes-in-dit-project" class="nav-link" data-scroll-target="#de-devops-principes-in-dit-project">De DevOps principes in dit project</a></li>
+  <li><a href="#blog-series-doelen" id="toc-blog-series-doelen" class="nav-link active" data-scroll-target="#blog-series-doelen">Blog Series Doelen</a></li>
+  <li><a href="#rust-installeren" id="toc-rust-installeren" class="nav-link" data-scroll-target="#rust-installeren">Rust Installeren</a></li>
+  <li><a href="#de-code-editor-gereed-maken" id="toc-de-code-editor-gereed-maken" class="nav-link" data-scroll-target="#de-code-editor-gereed-maken">De Code Editor Gereed Maken</a></li>
+  <li><a href="#het-project-maken" id="toc-het-project-maken" class="nav-link" data-scroll-target="#het-project-maken">Het Project Maken</a></li>
+  <li><a href="#tot-slot" id="toc-tot-slot" class="nav-link" data-scroll-target="#tot-slot">Tot Slot</a></li>
   </ul>
 </nav>
     </div>
@@ -191,72 +189,58 @@ gtag('config', 'G-9GMDP6RW3B', { 'anonymize_ip': true});
 
 
 
-<p>In deze post neem ik jullie mee met de voorbereidingen van het maken van een Android app. Nu zie ik de vraagtekens in je hersenspinsels verschijnen, want je hebt gelijk: een Android app kan van alles zijn. Daarom is de eerste stap bij het maken van een stuk software, zoals een app, belangrijk om te bepalen wat de gebruiker (of klant) wilt. Specifieker nog: welk probleem wil de gebruiker verholpen zien worden?</p>
-<p>In een team op de werkvloer wordt deze vraag vaak in kaart gebracht door de product owner. Als product owner werk je naar een bepaald doel (bijvoorbeeld 10% meer omzet) van het bedrijf en dit doe je door je software te maken naar de wensen van je (potentiële) gebruikers. Vervolgens zet je deze wensen om in software features (of user stories) en splits je deze op in kleine taken. Daarna buigt het development team zich erover om de technische kant vorm te geven en weer te verdelen in taken. Deze taken worden op een sprint (vaak een periode van 1 - 4 weken) gezet om af te ronden. Door dit proces blijf je altijd werken aan taken die er toe doen voor de klant.</p>
-<p><code>Aanvulling: Tegenwoordig is er wel eens kritiek op bovenstaande aanpak en zou het beter kunnen zijn om het development team zelf de wensen van klanten in kaart te laten brengen. Hierdoor kan het development team rechtstreeks de klant helpen in plaats van te communiceren met een tussenpersoon.</code></p>
-<p>Het makkelijke aan een eigen project is dat je zelf de klant bent. In dit geval heb ik een probleem en deze wil ik oplossen. Daardoor is het relatief eenvoudig om het probleem vast te stellen, namelijk: er is geen makkelijk te gebruiken Android app om een lijst van taken aan te maken en van deze lijst iedere ochtend 1 willekeurige taak als notificatie binnen te krijgen. (misschien bestaat zo een app wél al, maar ik wil ook graag leren hoe je aan app maakt! :)). Nu dit probleem duidelijk is kan de product owner (wederom ikzelf, ik heb nog niemand aan kunnen nemen door de krapte op de arbeidsmarkt) aan de user stories beginnen.</p>
-<p>Wanneer je begint aan het maken van de user stories is het belangrijk om niet te gedetailleerd te zijn. Het is vaak handiger om een ruwe prototype te maken (ook wel een minimal viable product (MVP) genoemd). Hiermee kan je snel vaststellen of je de capaciteiten in het team hebt om het product te maken. Maar misschien nog belangrijker, je kunt snel feedback vragen aan de gebruiker zodat je kan testen of de user stories daadwerkelijk het probleem van de gebruiker oplossen. Of dat er misschien onduidelijkheden waren waardoor de user stories niet 100% aansloten maar dat je nu nog op tijd bent om de software aan te passen. Voor mij is dat ook het doel, om met een MVP bovenstaand probleem op te lossen.</p>
-<section id="de-mvp" class="level2">
-<h2 class="anchored" data-anchor-id="de-mvp">De MVP</h2>
-<p>Wanneer je begint aan het maken van de user stories is het belangrijk om niet te gedetailleerd te zijn. Het is vaak handiger om een ruwe prototype te maken (ook wel een minimal viable product (MVP) genoemd). Hiermee kan je snel vaststellen of je de capaciteiten in het team hebt om het product te maken. Maar misschien nog belangrijker, je kunt snel feedback vragen aan de gebruiker zodat je kan testen of de user stories daadwerkelijk het probleem van de gebruiker oplossen. Of dat er misschien onduidelijkheden waren waardoor de user stories niet 100% aansloten maar dat je nu nog op tijd bent om de software aan te passen. Voor mij is dat ook het doel, om met een MVP bovenstaand probleem op te lossen.</p>
-<table class="caption-top table">
-<colgroup>
-<col style="width: 50%">
-<col style="width: 50%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>MVP</th>
-<th>Volgende Versie</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>Lijst met hardcoded practices</td>
-<td>Lijst dynamisch kunnen aanpassen en opslaan in een database</td>
-</tr>
-<tr class="even">
-<td>1 willekeurige practice van bovenstaande lijst pakken</td>
-<td>Tijd van de notificatie en hoeveel notificaties aanpasbaar maken</td>
-</tr>
-<tr class="odd">
-<td>Bovenstaande practice als notificatie geven</td>
-<td>Willekeur als optie kunnen aanvinken</td>
-</tr>
-<tr class="even">
-<td>Niet 2x dezelfde notificatie achter elkaar</td>
-<td>Practice voor de dag weergeven wanneer je de app opent</td>
-</tr>
-<tr class="odd">
-<td>Alles met unit en functionele tests</td>
-<td></td>
-</tr>
-<tr class="even">
-<td>CI/CD pipeline</td>
-<td></td>
-</tr>
-<tr class="odd">
-<td>Versie controle (Git)</td>
-<td></td>
-</tr>
-</tbody>
-</table>
-<p>Deze vereisten worden dan door het technische team in taken verdeeld om dit technisch op te lossen. Het is dan fijn wanneer de taken zo klein mogelijk zijn, zodat je iedere dag werkende (en geteste) code kan toevoegen aan je project en je niet hoeft te werken in branches. Belangrijk hierbij is dat de taken zichtbaar zijn, zodat je (bijvoorbeeld) de volgende vragen kunt beantwoorden: Waar wordt aan gewerkt? Loopt er een taak vast? Dit zorgt er mede voor dat je de obstakels kunt oplossen of verbeteren, waardoor je in het vervolg soortgelijke taken sneller kan afronden en daarmee ook sneller de gebruiker (die vaak ongeduldig zijn) kan helpen!</p>
+<section id="blog-series-doelen" class="level2">
+<h2 class="anchored" data-anchor-id="blog-series-doelen">Blog Series Doelen</h2>
+<p>​Het doel van deze blog serie is om beter te worden in Rust. Rust is op dit moment een van mijn favoriete programmeertalen. Hoewel ik de meeste programma’s wel zou kunnen schrijven in Rust, zijn er nog een aantal programmeerprincipes die ik niet goed genoeg ken. In deze serie neem ik je daarom mee op mijn weg om beter te worden in Rust.</p>
+<p>Daarnaast wil ik ook HTTP servers beter leren begrijpen. Ik wil HTTP servers beter leren begrijpen, omdat het iets is wat we dagelijks gebruiken. Neem bijvoorbeeld buienrader, wanneer je in de Netwerk tab van je <a href="https://developer.mozilla.org/en-US/docs/Learn_web_development/Howto/Tools_and_setup/What_are_browser_developer_tools">programming tools</a> kijkt, zie je een request naar <code>forecast.buienradar.nl</code>, wat waarschijnlijk de HTTP server is die de weersvoorspelling terugstuurt naar de browser.</p>
+<p>Ik gebruik ze eigenlijk ook vaak wanneer ik een API maak (zoals <a href="https://fastapi.tiangolo.com">Fastapi</a> in Python of <a href="https://github.com/tokio-rs/axum">Axum</a> in Rust). Omdat ik HTTP servers zo vaak gebruik, wil ik nu weleens weten wat er eigenlijk achter de schermen gebeurt.</p>
+<p>Ik denk dat deze twee doelen goed samengaan, omdat je een HTTP server redelijk klein kan beginnen maar je die uit kan bouwen naar een geavanceerd project. Daardoor kan je veel Rust-principes uitproberen, en het is niet een project dat nooit in het echt gebruikt zal worden. Zoals ik eerder vertelde worden HTTP servers juist veel gebruikt.</p>
+<p>In deze eerste post van de serie houden we het makkelijk. We gaan namelijk Rust installeren, onze code editor instellen en als laatste het project aanmaken.</p>
+<blockquote class="blockquote">
+<p>Ik gebruik een Mac, als je een ander OS gebruikt kunnen de stappen hieronder iets wijzigen</p>
+</blockquote>
 </section>
-<section id="de-devops-principes-in-dit-project" class="level2">
-<h2 class="anchored" data-anchor-id="de-devops-principes-in-dit-project">De DevOps principes in dit project</h2>
-<p>Zoals in de vorige post uitgelegd wil ik mij met ieder project ook bezig houden met de DevOps principes (om daar beter in te worden). Nu voel ik mij niet geschikt om DevOps samen te vatten, maar toch probeer ik het: “DevOps is een werkwijze welke het doel heeft om zo snel en goed mogelijk problemen op te lossen van een gebruiker (met software)”. Een voorbeeld daarvan is de taken zichtbaar maken (zoals hierboven beschreven). Maar er zijn ook vele andere manieren om het DevOps doel te bereiken (daar zijn verschillende boeken over bijvoorbeeld Accelerate van Nicole Forsgen en The DevOps Handbook van Gene Kim). De manieren in dit project om op de DevOps manier te werken wil ik hier graag herhalen:</p>
-<ul>
-<li>Vergaar en implementeer klant feedback: maak een MVP dat de klant zo snel mogelijk kan beoordelen en jij daardoor kan aanpassen.</li>
-<li>Alles in versie controle (ook configuratie bestanden!)</li>
-<li>CI/CD pipeline. Dat betekent in het kort: na iedere code incheck dat er automatisch testen worden uitgevoerd en wanneer deze testen succesvol zijn uitgevoerd dat deze nieuwe code automatisch in de live software komt.</li>
-<li>Werk in kleine batches/taken opdelen. Het liefste in taken die maximaal in 1 dag af te ronden zijn. Hierdoor hoef je niet in branches te werken.</li>
-<li>Maak je werk zichtbaar! Zelf gebruik ik nu een Trello board (dit ga ik misschien nog veranderen) waarin ik taken kan slepen van todo naar in progress en dan naar done.</li>
-</ul>
-<p>Er zijn nog veel meer principes, maar voor dit project focus ik mij op bovenstaande punten.</p>
-<p>Voordat ik deze post afrond wil ik nog melden dat dit de eerste keer is dat ik een android app maak. Dat betekent dat ik op de afgelopen tijd vooral bezig was met het leren van <a href="https://developer.android.com/courses/android-basics-kotlin/course">Kotlin voor Android apps</a>. Hiermee ben ik nu klaar. Daarnaast ben ik ook bezig geweest met <a href="https://flutter.dev/">Flutter</a>. Met Flutter kan je gemakkelijk multi-platform apps maken, wat het een interessante tool maakt. Daarom wil ik deze eerste app met Flutter schrijven om daar beter in te worden.</p>
-<p>Tot de volgende keer!</p>
-<p>Geniet van vandaag :)</p>
+<section id="rust-installeren" class="level2">
+<h2 class="anchored" data-anchor-id="rust-installeren">Rust Installeren</h2>
+<p>Rust installeren is een eitje, omdat Rust gemakkelijke developer tools heeft gemaakt. Een van deze tools is <code>rustup</code>, en die tool wordt gebruikt om Rust te installeren en te updaten.</p>
+<p>Omdat het installatieproces van <code>rustup</code> mogelijk kan wijzigen, refereer ik daarvoor naar <a href="https://www.rust-lang.org/tools/install">de officiele Rust website</a>.</p>
+<p>Na het installeren van <code>rustup</code> kunnen we door naar de volgende stap: de editor.</p>
+<blockquote class="blockquote">
+<p>Mocht je meer informatie over <code>rustup</code> willen, dan verwijs ik je naar dit boek: https://rust-lang.github.io/rustup/</p>
+</blockquote>
+</section>
+<section id="de-code-editor-gereed-maken" class="level2">
+<h2 class="anchored" data-anchor-id="de-code-editor-gereed-maken">De Code Editor Gereed Maken</h2>
+<blockquote class="blockquote">
+<p>Sinds een aantal maanden gebruik ik <a href="https://neovim.io">Neovim</a> als code editor. Dus de volgende stappen zijn specifiek voor Neovim. Wanneer je een andere editor gebruikt, ga dan opzoek naar hoe je die kunt instellen. Ik kan me niet voorstellen dat daar geen andere blogs / manuals voor zijn.</p>
+</blockquote>
+<p>Toen ik Neovim heb opgezet, heb ik <a href="https://github.com/nvim-lua/kickstart.nvim">kickstart.nvim</a> gebruikt. Tot dusver ben ik zeer positief over deze configuratie. Neovim gebruikt LSP’s (Language Server Protocol’s) om zaken zoals Auto Completion te regelen. En kickstart.nvim gebruikt de <a href="https://github.com/williamboman/mason.nvim">mason.nvim</a> plugin om LSP’s te beheren. Kickstart.nvim heeft het toevoegen van de Rust LSP (<a href="https://github.com/rust-lang/rust-analyzer">rust_analyzer</a>) gemakkelijk gemaakt door die met comments toe te voegen. Dus om de LSP toe te voegen, hoef je alleen de comments (de twee streeps <code>--</code>) weg te halen op deze regel:</p>
+<p><code>-- rust_analyzer = {},</code></p>
+<p>wordt</p>
+<p><code>rust_analyzer = {},</code></p>
+<p>Wanneer je dat hebt gedaan hoef je alleen Neovim te herstarten. Wanneer je vanaf nu een Rust-bestand opent, wordt de LSP aan het bestand gekoppeld. Zo heb je direct alle voordelen van de rust_analyzer LSP.</p>
+</section>
+<section id="het-project-maken" class="level2">
+<h2 class="anchored" data-anchor-id="het-project-maken">Het Project Maken</h2>
+<p>Als laatste gaan we het project opzetten. Met het installeren van <code>rustup</code> is ook <code>cargo</code> geïnstalleerd. <a href="https://doc.rust-lang.org/cargo/index.html">Cargo</a> is Rust’s build tool en package manager. Een van de features van <code>cargo</code> is het maken van een nieuw project. Het maken van een nieuw project doe je met <code>cargo new</code>:</p>
+<p><code>cargo new rust_principles_http_server</code></p>
+<p>Dit maakt een nieuwe map met de naam <code>rust_principles_http_server</code>. In deze map maakt <code>cargo</code> drie dingen aan:</p>
+<pre><code>.
+├── Cargo.toml
+└── src
+    └── main.rs</code></pre>
+<p>Ik wil nog niet te diep op de verschillende componenten ingaan (wie weet komt dat in een volgende blog post), maar in het kort: * <code>Cargo.toml</code> is een manifest dat alle metadata bevat die Cargo nodig heeft om het project te compileren. * In de <code>src</code> folder komt alle source code voor het project. * <code>main.rs</code> is het beginpunt van het project, dit is waar het uitvoeren van de code begint.</p>
+<p>Als laatste gaan we dit project uitvoeren om te controleren of alles tot dusver nog werkt. Navigeer naar het project in in dit voorbeeld, <code>rust_principles_http_server</code>. Om het project te compileren heb je dit <code>cargo commando</code>: <code>cargo build</code></p>
+<p>Vervolgens kan je het project draaien door <code>cargo run</code> uit te voeren (dit compileert je code ook, dus je hoeft <code>cargo build</code> niet uit te voeren voor <code>cargo run</code>). Wanneer alles goed is gegaan, zie je de tekst <code>Hello, world!</code> verschijnen in je terminal.</p>
+<blockquote class="blockquote">
+<p>Ook Cargo <a href="https://doc.rust-lang.org/cargo/index.html">heeft zijn eigen boek</a>. En in de toekomst zullen we meer van <code>cargo</code> gaan zien en hoe zich dat verhoudt tot de source code en <code>Cargo.toml</code>.</p>
+</blockquote>
+</section>
+<section id="tot-slot" class="level2">
+<h2 class="anchored" data-anchor-id="tot-slot">Tot Slot</h2>
+<p>Dit was het voor nu. In deze post hebben we Rust geïnstalleerd, Neovim geconfigureerd en het Rust project gemaakt (hier is de <a href="https://github.com/Mees-Molenaar/rust_principles_http_server">Github repository</a> met de code.</p>
+<p>Voor de volgende keer staan twee dingen op de planning: 1. Ownership, Borrowing and Lifetimes. 2. Begin van de HTTP server</p>
+<p>Tot de volgende!</p>
 <p>Mees</p>
 
 

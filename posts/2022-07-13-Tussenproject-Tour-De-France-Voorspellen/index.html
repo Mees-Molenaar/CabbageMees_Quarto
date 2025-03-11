@@ -2,14 +2,14 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.4.554">
+<meta name="generator" content="quarto-1.6.42">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Mees Molenaar">
 <meta name="dcterms.date" content="2022-07-13">
 
-<title>CabbageMees - Tussenproject - Tour de France Voorpspellen met Machine Learning</title>
+<title>Tussenproject - Tour de France Voorpspellen met Machine Learning – CabbageMees</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -35,7 +35,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -72,10 +72,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-2f5df379a58b258e96c21c0638c20c03.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-04cb739f77f1b684811e38ce6ef7607a.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -134,13 +134,13 @@ require(['plotly'], function(Plotly) {
 
 
 <link rel="stylesheet" href="../../styles.css">
-<meta property="og:title" content="CabbageMees - Tussenproject - Tour de France Voorpspellen met Machine Learning">
+<meta property="og:title" content="Tussenproject - Tour de France Voorpspellen met Machine Learning – CabbageMees">
 <meta property="og:description" content="Best presterende renners van de Tour de France voorspellen">
 <meta property="og:image" content="https://cabbagemees.nl/posts/2022-07-13-Tussenproject-Tour-De-France-Voorspellen/images/DALL·E 2022-08-26 17.15.37 - A 4k photo of cyberpunk cyborgs riding futuristic bicycles .png">
 <meta property="og:site_name" content="CabbageMees">
 <meta property="og:image:height" content="1024">
 <meta property="og:image:width" content="1024">
-<meta name="twitter:title" content="CabbageMees - Tussenproject - Tour de France Voorpspellen met Machine Learning">
+<meta name="twitter:title" content="Tussenproject - Tour de France Voorpspellen met Machine Learning – CabbageMees">
 <meta name="twitter:description" content="Best presterende renners van de Tour de France voorspellen">
 <meta name="twitter:image" content="https://cabbagemees.nl/posts/2022-07-13-Tussenproject-Tour-De-France-Voorspellen/images/DALL·E 2022-08-26 17.15.37 - A 4k photo of cyberpunk cyborgs riding futuristic bicycles .png">
 <meta name="twitter:image-height" content="1024">
@@ -163,7 +163,7 @@ require(['plotly'], function(Plotly) {
     </a>
   </div>
             <div id="quarto-search" class="" title="Search"></div>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
   <span class="navbar-toggler-icon"></span>
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
@@ -184,7 +184,7 @@ require(['plotly'], function(Plotly) {
   </li>  
 </ul>
           </div> <!-- /navcollapse -->
-          <div class="quarto-navbar-tools">
+            <div class="quarto-navbar-tools">
 </div>
       </div> <!-- /container-fluid -->
     </nav>
@@ -266,40 +266,86 @@ require(['plotly'], function(Plotly) {
 <span id="cb1-11"><a href="#cb1-11"></a><span class="co"># Get the title of the page</span></span>
 <span id="cb1-12"><a href="#cb1-12"></a><span class="bu">print</span>(soup.find(<span class="st">'title'</span>).string)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-error">
-<pre><code>FeatureNotFound: Couldn't find a tree builder with the features you requested: lxml. Do you need to install a parser library?</code></pre>
+<div class="ansi-escaped-output">
+<pre><span class="ansi-red-fg">---------------------------------------------------------------------------</span>
+<span class="ansi-red-fg">FeatureNotFound</span>                           Traceback (most recent call last)
+Cell <span class="ansi-green-fg">In[8], line 9</span>
+<span class="ansi-green-fg ansi-bold">      6</span> req = requests.get(race_url)
+<span class="ansi-green-fg ansi-bold">      8</span> # Make a BeautifulSoup object from the requests's text
+<span class="ansi-green-fg">----&gt; 9</span> soup = BeautifulSoup(req.text, "lxml")
+<span class="ansi-green-fg ansi-bold">     11</span> # Get the title of the page
+<span class="ansi-green-fg ansi-bold">     12</span> print(soup.find('title').string)
+
+File <span class="ansi-green-fg">~/blog/CabbageMees_Quarto/venv/lib/python3.9/site-packages/bs4/__init__.py:248</span>, in <span class="ansi-cyan-fg">BeautifulSoup.__init__</span><span class="ansi-blue-fg">(self, markup, features, builder, parse_only, from_encoding, exclude_encodings, element_classes, **kwargs)</span>
+<span class="ansi-green-fg ansi-bold">    246</span>     builder_class = builder_registry.lookup(*features)
+<span class="ansi-green-fg ansi-bold">    247</span>     if builder_class is None:
+<span class="ansi-green-fg">--&gt; 248</span>         raise FeatureNotFound(
+<span class="ansi-green-fg ansi-bold">    249</span>             "Couldn't find a tree builder with the features you "
+<span class="ansi-green-fg ansi-bold">    250</span>             "requested: %s. Do you need to install a parser library?"
+<span class="ansi-green-fg ansi-bold">    251</span>             % ",".join(features))
+<span class="ansi-green-fg ansi-bold">    253</span> # At this point either we have a TreeBuilder instance in
+<span class="ansi-green-fg ansi-bold">    254</span> # builder, or we have a builder_class that we can instantiate
+<span class="ansi-green-fg ansi-bold">    255</span> # with the remaining **kwargs.
+<span class="ansi-green-fg ansi-bold">    256</span> if builder is None:
+
+<span class="ansi-red-fg">FeatureNotFound</span>: Couldn't find a tree builder with the features you requested: lxml. Do you need to install a parser library?</pre>
+</div>
 </div>
 </div>
 <p>Vervolgens kan je ingebouwde methodes van het BS object gebruiken om door de HTML te zoeken. Zelf kijk ik eerst in de internet browser naar de elementen van de website waarvan ik de data wil. Afhankelijk van de browser die je gebruikt kan je elementen inspecteren. Ik let daarbij op het het HTML type (div, table, etc) en of het een class of id heeft. Met deze informatie kan je dan een specifiek element zoeken, zoals de top-20 van een uitslag (zie hieronder).</p>
 <div id="cell-8" class="cell" data-execution_count="9">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1"></a><span class="co"># Example: Getting the top-20 results of a race</span></span>
-<span id="cb3-2"><a href="#cb3-2"></a></span>
-<span id="cb3-3"><a href="#cb3-3"></a>race_url <span class="op">=</span> <span class="vs">r"https://www.procyclingstats.com/race/tour-de-france/2022/stage-4"</span></span>
-<span id="cb3-4"><a href="#cb3-4"></a></span>
-<span id="cb3-5"><a href="#cb3-5"></a><span class="co"># Perform a get request on the url</span></span>
-<span id="cb3-6"><a href="#cb3-6"></a>req <span class="op">=</span> requests.get(race_url)</span>
-<span id="cb3-7"><a href="#cb3-7"></a></span>
-<span id="cb3-8"><a href="#cb3-8"></a><span class="co"># Make a BeautifulSoup object from the requests's text</span></span>
-<span id="cb3-9"><a href="#cb3-9"></a>soup <span class="op">=</span> BeautifulSoup(req.text, <span class="st">"lxml"</span>)</span>
-<span id="cb3-10"><a href="#cb3-10"></a></span>
-<span id="cb3-11"><a href="#cb3-11"></a><span class="co"># I used the browser to find the element we are interested in</span></span>
-<span id="cb3-12"><a href="#cb3-12"></a>result_list <span class="op">=</span> soup.find(<span class="st">"table"</span>, class_<span class="op">=</span><span class="st">"results basic moblist10"</span>).find(<span class="st">"tbody"</span>)</span>
-<span id="cb3-13"><a href="#cb3-13"></a></span>
-<span id="cb3-14"><a href="#cb3-14"></a><span class="co"># Each result is in a table row (tr)</span></span>
-<span id="cb3-15"><a href="#cb3-15"></a>results <span class="op">=</span> result_list.find_all(<span class="st">"tr"</span>)</span>
-<span id="cb3-16"><a href="#cb3-16"></a></span>
-<span id="cb3-17"><a href="#cb3-17"></a>race_top_20 <span class="op">=</span> {}</span>
-<span id="cb3-18"><a href="#cb3-18"></a></span>
-<span id="cb3-19"><a href="#cb3-19"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">20</span>):</span>
-<span id="cb3-20"><a href="#cb3-20"></a>    result <span class="op">=</span> results[i]</span>
-<span id="cb3-21"><a href="#cb3-21"></a>    </span>
-<span id="cb3-22"><a href="#cb3-22"></a>    <span class="co"># Again, use your browser to find the element you are interested in</span></span>
-<span id="cb3-23"><a href="#cb3-23"></a>    rider <span class="op">=</span> result.find_all(<span class="st">"a"</span>)[<span class="dv">0</span>].text</span>
-<span id="cb3-24"><a href="#cb3-24"></a>    </span>
-<span id="cb3-25"><a href="#cb3-25"></a>    race_top_20[i <span class="op">+</span> <span class="dv">1</span>] <span class="op">=</span> rider </span>
-<span id="cb3-26"><a href="#cb3-26"></a>    </span>
-<span id="cb3-27"><a href="#cb3-27"></a>pprint.pprint(race_top_20)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1"></a><span class="co"># Example: Getting the top-20 results of a race</span></span>
+<span id="cb2-2"><a href="#cb2-2"></a></span>
+<span id="cb2-3"><a href="#cb2-3"></a>race_url <span class="op">=</span> <span class="vs">r"https://www.procyclingstats.com/race/tour-de-france/2022/stage-4"</span></span>
+<span id="cb2-4"><a href="#cb2-4"></a></span>
+<span id="cb2-5"><a href="#cb2-5"></a><span class="co"># Perform a get request on the url</span></span>
+<span id="cb2-6"><a href="#cb2-6"></a>req <span class="op">=</span> requests.get(race_url)</span>
+<span id="cb2-7"><a href="#cb2-7"></a></span>
+<span id="cb2-8"><a href="#cb2-8"></a><span class="co"># Make a BeautifulSoup object from the requests's text</span></span>
+<span id="cb2-9"><a href="#cb2-9"></a>soup <span class="op">=</span> BeautifulSoup(req.text, <span class="st">"lxml"</span>)</span>
+<span id="cb2-10"><a href="#cb2-10"></a></span>
+<span id="cb2-11"><a href="#cb2-11"></a><span class="co"># I used the browser to find the element we are interested in</span></span>
+<span id="cb2-12"><a href="#cb2-12"></a>result_list <span class="op">=</span> soup.find(<span class="st">"table"</span>, class_<span class="op">=</span><span class="st">"results basic moblist10"</span>).find(<span class="st">"tbody"</span>)</span>
+<span id="cb2-13"><a href="#cb2-13"></a></span>
+<span id="cb2-14"><a href="#cb2-14"></a><span class="co"># Each result is in a table row (tr)</span></span>
+<span id="cb2-15"><a href="#cb2-15"></a>results <span class="op">=</span> result_list.find_all(<span class="st">"tr"</span>)</span>
+<span id="cb2-16"><a href="#cb2-16"></a></span>
+<span id="cb2-17"><a href="#cb2-17"></a>race_top_20 <span class="op">=</span> {}</span>
+<span id="cb2-18"><a href="#cb2-18"></a></span>
+<span id="cb2-19"><a href="#cb2-19"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">20</span>):</span>
+<span id="cb2-20"><a href="#cb2-20"></a>    result <span class="op">=</span> results[i]</span>
+<span id="cb2-21"><a href="#cb2-21"></a>    </span>
+<span id="cb2-22"><a href="#cb2-22"></a>    <span class="co"># Again, use your browser to find the element you are interested in</span></span>
+<span id="cb2-23"><a href="#cb2-23"></a>    rider <span class="op">=</span> result.find_all(<span class="st">"a"</span>)[<span class="dv">0</span>].text</span>
+<span id="cb2-24"><a href="#cb2-24"></a>    </span>
+<span id="cb2-25"><a href="#cb2-25"></a>    race_top_20[i <span class="op">+</span> <span class="dv">1</span>] <span class="op">=</span> rider </span>
+<span id="cb2-26"><a href="#cb2-26"></a>    </span>
+<span id="cb2-27"><a href="#cb2-27"></a>pprint.pprint(race_top_20)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-error">
-<pre><code>FeatureNotFound: Couldn't find a tree builder with the features you requested: lxml. Do you need to install a parser library?</code></pre>
+<div class="ansi-escaped-output">
+<pre><span class="ansi-red-fg">---------------------------------------------------------------------------</span>
+<span class="ansi-red-fg">FeatureNotFound</span>                           Traceback (most recent call last)
+Cell <span class="ansi-green-fg">In[9], line 9</span>
+<span class="ansi-green-fg ansi-bold">      6</span> req = requests.get(race_url)
+<span class="ansi-green-fg ansi-bold">      8</span> # Make a BeautifulSoup object from the requests's text
+<span class="ansi-green-fg">----&gt; 9</span> soup = BeautifulSoup(req.text, "lxml")
+<span class="ansi-green-fg ansi-bold">     11</span> # I used the browser to find the element we are interested in
+<span class="ansi-green-fg ansi-bold">     12</span> result_list = soup.find("table", class_="results basic moblist10").find("tbody")
+
+File <span class="ansi-green-fg">~/blog/CabbageMees_Quarto/venv/lib/python3.9/site-packages/bs4/__init__.py:248</span>, in <span class="ansi-cyan-fg">BeautifulSoup.__init__</span><span class="ansi-blue-fg">(self, markup, features, builder, parse_only, from_encoding, exclude_encodings, element_classes, **kwargs)</span>
+<span class="ansi-green-fg ansi-bold">    246</span>     builder_class = builder_registry.lookup(*features)
+<span class="ansi-green-fg ansi-bold">    247</span>     if builder_class is None:
+<span class="ansi-green-fg">--&gt; 248</span>         raise FeatureNotFound(
+<span class="ansi-green-fg ansi-bold">    249</span>             "Couldn't find a tree builder with the features you "
+<span class="ansi-green-fg ansi-bold">    250</span>             "requested: %s. Do you need to install a parser library?"
+<span class="ansi-green-fg ansi-bold">    251</span>             % ",".join(features))
+<span class="ansi-green-fg ansi-bold">    253</span> # At this point either we have a TreeBuilder instance in
+<span class="ansi-green-fg ansi-bold">    254</span> # builder, or we have a builder_class that we can instantiate
+<span class="ansi-green-fg ansi-bold">    255</span> # with the remaining **kwargs.
+<span class="ansi-green-fg ansi-bold">    256</span> if builder is None:
+
+<span class="ansi-red-fg">FeatureNotFound</span>: Couldn't find a tree builder with the features you requested: lxml. Do you need to install a parser library?</pre>
+</div>
 </div>
 </div>
 </section>
@@ -344,7 +390,7 @@ if (outputEl) {{
 <p>data van: https://www.tno.nl/groei</p>
 </blockquote>
 <p>Twee jaar geleden (v1) had ik ook een ML model gemaakt maar dit keer wilde ik nieuwe features gebruiken. In V1 had ik het idee om de races op te delen in types (vlak, heuvelachtig met vlakke finish, heuvelachtig met finish bergop, gebergte met vlakke finish en gebergte met finish bergop; Voor de races waar dit niet voor bekend was had ik zelfs een model getraind om dat te voorspellen). Vervolgens had ik voor iedere types de plekken 1 t/m 4, 5 t/m 8 en 9 t/m 12 ingedeeld (zie Tabel hieronder). Voor iedere renner telde ik dan in het voorgaande jaar hoe vaak iemand deze uitslag in deze type had (zie voorbeeld van Chris Froome hieronder). Hoewel ik best tevreden was met deze features, namen ze niet mee hoe sterk het deelnemersveld was. Wanneer je veel wint maar je tegenstand niet heel sterk is, is deze overwinning minder relevant (weer een grove aanname) in de Tour, want in de Tour is het deelnemersveld vaak erg sterk. Daarom heb ik voor deze Tour de France nieuwe features bedacht.</p>
-<table class="table">
+<table class="caption-top table">
 <thead>
 <tr class="header">
 <th>Features</th>
@@ -439,7 +485,7 @@ if (outputEl) {{
 </tbody>
 </table>
 <p>Voor deze Tour nemen we bij iedere rit dus de sterkte van het deelnemersveld mee. Dat doen we door de gemiddelde PCS score van de top-20 uit te rekenen. Vervolgens verdelen we de ritten in 5 kwantielen (zeer weinig competitief, weinig competitief, competitief, erg competitief en zeer erg competitief). En daarbij had ik dan dit keer de resultaten als volgt verdeeld: 1 t/m 5, 6 t/m 10, 11 t/m 15 en 16 t/m 20 (zie tabel met voorbeeld van Wout van Aert hieronder).</p>
-<table class="table">
+<table class="caption-top table">
 <thead>
 <tr class="header">
 <th>Features</th>
@@ -572,7 +618,7 @@ if (outputEl) {{
 <section id="de-resultaten" class="level1">
 <h1>De resultaten</h1>
 <p>De resultaten van het model zien er op het eerste gezicht niet raar uit (zie hieronder). De volgens Wielerpoule duurste renners zitten qua voorspelling bovenin. Met voor mij als opvallendste naam Vlasov (voor mij geen bekende naam maar de laatste tijd volg ik het wielrennen nauwelijks). Om mijn team samen te stellen heb ik de voorspelde punten gedeeld door de kosten. En daar heb ik, naast de top 4, mijn team mee opgevuld. Eens zien of we mee gaan spelen voor de prijzen!</p>
-<table class="table">
+<table class="caption-top table">
 <thead>
 <tr class="header">
 <th></th>
@@ -769,18 +815,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
     return false;
   }
-  const clipboard = new window.ClipboardJS('.code-copy-button', {
-    text: function(trigger) {
-      const codeEl = trigger.previousElementSibling.cloneNode(true);
-      for (const childEl of codeEl.children) {
-        if (isCodeAnnotation(childEl)) {
-          childEl.remove();
-        }
-      }
-      return codeEl.innerText;
-    }
-  });
-  clipboard.on('success', function(e) {
+  const onCopySuccess = function(e) {
     // button target
     const button = e.trigger;
     // don't keep focus
@@ -812,7 +847,27 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }, 1000);
     // clear code selection
     e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
   });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
     var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
     var mailtoRegex = new RegExp(/^mailto:/);
       var filterRegex = new RegExp("https:\/\/cabbagemees\.nl");
@@ -820,7 +875,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
     }
     // Inspect non-navigation links and adorn them if external
- 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
     for (var i=0; i<links.length; i++) {
       const link = links[i];
       if (!isInternal(link.href)) {
@@ -917,7 +972,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       if (window.Quarto?.typesetMath) {
         window.Quarto.typesetMath(note);
       }
-      // TODO in 1.5, we should make sure this works without a callout special case
       if (note.classList.contains("callout")) {
         return note.outerHTML;
       } else {
