@@ -229,7 +229,12 @@ gtag('config', 'G-9GMDP6RW3B', { 'anonymize_ip': true});
 ├── Cargo.toml
 └── src
     └── main.rs</code></pre>
-<p>Ik wil nog niet te diep op de verschillende componenten ingaan (wie weet komt dat in een volgende blog post), maar in het kort: * <code>Cargo.toml</code> is een manifest dat alle metadata bevat die Cargo nodig heeft om het project te compileren. * In de <code>src</code> folder komt alle source code voor het project. * <code>main.rs</code> is het beginpunt van het project, dit is waar het uitvoeren van de code begint.</p>
+<p>Ik wil nog niet te diep op de verschillende componenten ingaan (wie weet komt dat in een volgende blog post), maar in het kort:</p>
+<ul>
+<li><code>Cargo.toml</code> is een manifest dat alle metadata bevat die Cargo nodig heeft om het project te compileren.</li>
+<li>In de <code>src</code> folder komt alle source code voor het project.</li>
+<li><code>main.rs</code> is het beginpunt van het project, dit is waar het uitvoeren van de code begint.</li>
+</ul>
 <p>Als laatste gaan we dit project uitvoeren om te controleren of alles tot dusver nog werkt. Navigeer naar het project in in dit voorbeeld, <code>rust_principles_http_server</code>. Om het project te compileren heb je dit <code>cargo commando</code>: <code>cargo build</code></p>
 <p>Vervolgens kan je het project draaien door <code>cargo run</code> uit te voeren (dit compileert je code ook, dus je hoeft <code>cargo build</code> niet uit te voeren voor <code>cargo run</code>). Wanneer alles goed is gegaan, zie je de tekst <code>Hello, world!</code> verschijnen in je terminal.</p>
 <blockquote class="blockquote">
@@ -239,7 +244,11 @@ gtag('config', 'G-9GMDP6RW3B', { 'anonymize_ip': true});
 <section id="tot-slot" class="level2">
 <h2 class="anchored" data-anchor-id="tot-slot">Tot Slot</h2>
 <p>Dit was het voor nu. In deze post hebben we Rust geïnstalleerd, Neovim geconfigureerd en het Rust project gemaakt (hier is de <a href="https://github.com/Mees-Molenaar/rust_principles_http_server">Github repository</a> met de code.</p>
-<p>Voor de volgende keer staan twee dingen op de planning: 1. Ownership, Borrowing and Lifetimes. 2. Begin van de HTTP server</p>
+<p>Voor de volgende keer staan twee dingen op de planning:</p>
+<ol type="1">
+<li>Ownership, Borrowing and Lifetimes.</li>
+<li>Begin van de HTTP server</li>
+</ol>
 <p>Tot de volgende!</p>
 <p>Mees</p>
 
