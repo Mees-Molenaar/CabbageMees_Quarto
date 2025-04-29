@@ -22,4 +22,4 @@ Werk: Machine Learning / Software Engineer bij Vislink
 
 #### Boeken
 
-- Eugene B Sledge - With The Old Breed
+- Steve Klabik - The Rust Programming Language, 2nd Edition
