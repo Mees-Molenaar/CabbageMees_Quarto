@@ -7,9 +7,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Mees Molenaar">
-<meta name="dcterms.date" content="2022-06-07">
+<meta name="dcterms.date" content="2025-04-29">
 
-<title>Een Nieuwe Stap – CabbageMees</title>
+<title>Rust Principles Bouwen van een HTTP Server - Deel 2 - Rust’s Borrow Checker – CabbageMees</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -21,6 +21,41 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -79,18 +114,21 @@ function gtag(){dataLayer.push(arguments);}
 gtag('js', new Date());
 gtag('config', 'G-9GMDP6RW3B', { 'anonymize_ip': true});
 </script>
+<script src="../../site_libs/quarto-diagram/mermaid.min.js"></script>
+<script src="../../site_libs/quarto-diagram/mermaid-init.js"></script>
+<link href="../../site_libs/quarto-diagram/mermaid.css" rel="stylesheet">
 
 
 <link rel="stylesheet" href="../../styles.css">
-<meta property="og:title" content="Een Nieuwe Stap – CabbageMees">
-<meta property="og:description" content="Een nieuwe stap in het blog avontuur">
-<meta property="og:image" content="https://cabbagemees.nl/posts/2022-06-07-Een-nieuwe-stap/images/DALL·E 2022-08-26 17.15.21 - A view of a beach and the sea with a rising sun, pixelart.png">
+<meta property="og:title" content="Rust Principles Bouwen van een HTTP Server - Deel 2 - Rust’s Borrow Checker – CabbageMees">
+<meta property="og:description" content="Waarom heeft Rust een Borrow Checker en hoe werkt die">
+<meta property="og:image" content="https://cabbagemees.nl/posts/2025-04-29-Rust-Principles-Building-an-HTTP-Server-Part-2/images/rust_game_over.png">
 <meta property="og:site_name" content="CabbageMees">
 <meta property="og:image:height" content="1024">
 <meta property="og:image:width" content="1024">
-<meta name="twitter:title" content="Een Nieuwe Stap – CabbageMees">
-<meta name="twitter:description" content="Een nieuwe stap in het blog avontuur">
-<meta name="twitter:image" content="https://cabbagemees.nl/posts/2022-06-07-Een-nieuwe-stap/images/DALL·E 2022-08-26 17.15.21 - A view of a beach and the sea with a rising sun, pixelart.png">
+<meta name="twitter:title" content="Rust Principles Bouwen van een HTTP Server - Deel 2 - Rust’s Borrow Checker – CabbageMees">
+<meta name="twitter:description" content="Waarom heeft Rust een Borrow Checker en hoe werkt die">
+<meta name="twitter:image" content="https://cabbagemees.nl/posts/2025-04-29-Rust-Principles-Building-an-HTTP-Server-Part-2/images/rust_game_over.png">
 <meta name="twitter:image-height" content="1024">
 <meta name="twitter:image-width" content="1024">
 <meta name="twitter:card" content="summary_large_image">
@@ -141,10 +179,12 @@ gtag('config', 'G-9GMDP6RW3B', { 'anonymize_ip': true});
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title">Een Nieuwe Stap</h1>
-            <p class="subtitle lead">Een nieuwe stap in het blog avontuur</p>
+      <h1 class="title">Rust Principles Bouwen van een HTTP Server - Deel 2 - Rust’s Borrow Checker</h1>
+            <p class="subtitle lead">Waarom heeft Rust een Borrow Checker en hoe werkt die</p>
                                 <div class="quarto-categories">
-                <div class="quarto-category">De reis</div>
+                <div class="quarto-category">Rust</div>
+                <div class="quarto-category">HTTP Server</div>
+                <div class="quarto-category">Borrow Checker</div>
               </div>
                   </div>
   </div>
@@ -162,7 +202,7 @@ gtag('config', 'G-9GMDP6RW3B', { 'anonymize_ip': true});
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">June 7, 2022</p>
+        <p class="date">April 29, 2025</p>
       </div>
     </div>
     
@@ -178,10 +218,13 @@ gtag('config', 'G-9GMDP6RW3B', { 'anonymize_ip': true});
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#een-tijdje-geleden" id="toc-een-tijdje-geleden" class="nav-link active" data-scroll-target="#een-tijdje-geleden">Een Tijdje Geleden</a></li>
-  <li><a href="#het-nieuwe-idee" id="toc-het-nieuwe-idee" class="nav-link" data-scroll-target="#het-nieuwe-idee">Het Nieuwe Idee</a></li>
-  <li><a href="#de-planning" id="toc-de-planning" class="nav-link" data-scroll-target="#de-planning">De Planning</a></li>
-  <li><a href="#proces" id="toc-proces" class="nav-link" data-scroll-target="#proces">Proces</a></li>
+  <li><a href="#waarde-van-de-borrow-checker" id="toc-waarde-van-de-borrow-checker" class="nav-link active" data-scroll-target="#waarde-van-de-borrow-checker">Waarde van de Borrow Checker</a></li>
+  <li><a href="#de-stack-en-de-heap" id="toc-de-stack-en-de-heap" class="nav-link" data-scroll-target="#de-stack-en-de-heap">De stack en de heap</a></li>
+  <li><a href="#rust-types-op-de-stack-en-de-heap" id="toc-rust-types-op-de-stack-en-de-heap" class="nav-link" data-scroll-target="#rust-types-op-de-stack-en-de-heap">Rust-types op de stack en de heap</a></li>
+  <li><a href="#werking-van-de-borrow-checker" id="toc-werking-van-de-borrow-checker" class="nav-link" data-scroll-target="#werking-van-de-borrow-checker">Werking van de Borrow Checker</a>
+  <ul class="collapse">
+  <li><a href="#ownership-move-en-references" id="toc-ownership-move-en-references" class="nav-link" data-scroll-target="#ownership-move-en-references">Ownership, Move en References</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -192,36 +235,236 @@ gtag('config', 'G-9GMDP6RW3B', { 'anonymize_ip': true});
 
 
 
-<section id="een-tijdje-geleden" class="level1">
-<h1>Een Tijdje Geleden</h1>
-<p>Het is alweer een tijdje geleden dat ik voor het laatste iets op de blog geschreven heb. Toen ik begon als Machine Learning (ML) Engineer was ik vooral daar mijn tijd aan kwijt, zodat ik mij zo goed mogelijk kon ontwikkelen en een mooi product kon maken. Ik denk dat ik mag zeggen dat beide zijn gelukt. Het gevolg daarvan is dat ik een volgende stap mag zetten naar een nieuwe werkgever waar ik ontzettend naar uit kijk! Voordat ik daar zou gaan beginnen hadden mijn vriendin en ik drie weken vakantie genomen, waarin we veel rust hebben gepakt. Ook heb ik kunnen nadenken over activiteiten naast werk, zoals deze blog. Hier had ik, toen ik begon, bepaalde ideeën over, maar deze zijn nu veranderd. In deze post wil ik dat toelichten en hopelijk lijkt het jullie interessant om met mij een nieuw avontuur te beleven.</p>
+<p>Veel van de fouten die voorkomen in computerprogramma’s hebben te maken met het beheren van geheugen. Tot dusver was er geen gemakkelijke tool die een groot deel daarvan kon verhelpen, maar nu wel! Een van de belangrijkste eigenschappen van Rust is de Borrow Checker. In deze post neem ik je mee in hoe de Borrow Checker werkt en hoe die zich verhoudt tot het beheren van geheugen.</p>
+<section id="waarde-van-de-borrow-checker" class="level2">
+<h2 class="anchored" data-anchor-id="waarde-van-de-borrow-checker">Waarde van de Borrow Checker</h2>
+<p>De Borrow Checker controleert tijdens het compileren van je programma, bijvoorbeeld dat een stukje geheugen niet meer gebruikt wordt nadat het is opgeruimd. Hierdoor voorkom je onder andere <a href="https://en.wikipedia.org/wiki/Segmentation_fault">segfaults</a>, omdat de Borrow Checker het compileren blokkeert en een foutmelding geeft als je iets probeert te doen wat niet veilig is. Hoewel deze meldingen van de Borrow Checker in het begin vervelend kunnen zijn om telkens tegen te komen, helpt het je op de lange termijn om betrouwbare en veilige code te schrijven zonder onverwachte geheugenfouten.</p>
+<p>Meer en meer bedrijven nemen daarom Rust op in hun codebases. En ook zeker de grote tech bedrijven zoals: <a href="https://www.youtube.com/watch?v=1VgptLwP588">Google</a>, <a href="https://www.youtube.com/watch?v=1VgptLwP588">Microsoft</a> en <a href="http://venge.net/graydon/talks/intro-talk-2.pdf">Mozilla (waar Rust ook begonnen is)</a>. Wat ik dan extra interessant vind is dat er initieel wordt overgestapt naar Rust voor de extra veiligheid die de Borrow Checker geeft, maar dan ook nog blijkt dat het <a href="https://youtu.be/QrrH2lcl9ew?t=487">zorgt voor meer productiviteitten ten opzichte van C++</a> en dat <a href="https://youtu.be/QrrH2lcl9ew?t=865">men meer vertrouwen heeft in de code kwaliteit van Rust code</a>.</p>
+<p>Voordat we verder ingaan op de werking van de Borrow Checker, wil ik jullie meenemen naar hoe geheugenbeheer (stack en heap) van verschillende types werkt in Rust. Dit maakt namelijk ook duidelijker waarom de Borrow Checker bepaalde controles uitvoert.</p>
 </section>
-<section id="het-nieuwe-idee" class="level1">
-<h1>Het Nieuwe Idee</h1>
-<p>Tijdens de vakantie heb ik een nieuw idee bedacht om het voor mezelf makkelijker te maken om meer te gaan bloggen, namelijk op projectbasis. Zelf programmeer ik namelijk ook in projecten en ik denk dat dit zal helpen met het schrijven van een blogpost. Daarbij komt ook dat het proces van een nieuw project niet vaak beschreven wordt (althans ik heb dit naast standaard tutorials niet veel gevonden). Wellicht is het voor anderen ook waardevol om via deze weg meer te leren over het maken van een nieuw project.</p>
+<section id="de-stack-en-de-heap" class="level2">
+<h2 class="anchored" data-anchor-id="de-stack-en-de-heap">De stack en de heap</h2>
+<p>De stack en de heap zijn abstracties die worden gebruikt om te beschrijven hoe geheugen wordt beheerd binnen een computerprogramma. De stack wordt vaak vergeleken met een stapel borden: nieuwe borden leg je op de stapel. Als je een bord nodig hebt, pak je die van de stapel. Dus het laatste bord dat je op de stapel legt, pak je als eerste er af. Dit heet Last-In, First-Out (LIFO).</p>
+<p>Wanneer een functie wordt aangeroepen in je code, wordt er een nieuw stack frame op de stack geplaatst. Dat frame bevat onder andere de parameters, lokale variabelen en de plek waar het programma straks verder moet gaan zodra de functie klaar is. Elke nieuwe functieaanroep “stapelt” dus boven op het vorige frame, en zodra de functie klaar is, wordt het bovenste frame weer van de stack verwijderd (zoals met de stapels borden hierboven, dus LIFO). Hieronder is een schematische weergave, met bijbehorende code, van de stack.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode numberSource rust number-lines code-with-copy"><code class="sourceCode rust"><span id="cb1-1"><a href="#cb1-1"></a><span class="kw">fn</span> bar(a<span class="op">:</span> <span class="dt">i32</span>) <span class="op">{</span></span>
+<span id="cb1-2"><a href="#cb1-2"></a>    <span class="kw">let</span> c <span class="op">=</span> a <span class="op">+</span> <span class="dv">1</span><span class="op">;</span></span>
+<span id="cb1-3"><a href="#cb1-3"></a>    <span class="pp">println!</span>(<span class="st">"bar: c = {}"</span><span class="op">,</span> c)<span class="op">;</span></span>
+<span id="cb1-4"><a href="#cb1-4"></a><span class="op">}</span></span>
+<span id="cb1-5"><a href="#cb1-5"></a></span>
+<span id="cb1-6"><a href="#cb1-6"></a><span class="kw">fn</span> foo(x<span class="op">:</span> <span class="dt">i32</span>) <span class="op">{</span></span>
+<span id="cb1-7"><a href="#cb1-7"></a>    <span class="kw">let</span> y <span class="op">=</span> x <span class="op">*</span> <span class="dv">2</span><span class="op">;</span></span>
+<span id="cb1-8"><a href="#cb1-8"></a>    bar(y)<span class="op">;</span></span>
+<span id="cb1-9"><a href="#cb1-9"></a><span class="op">}</span></span>
+<span id="cb1-10"><a href="#cb1-10"></a></span>
+<span id="cb1-11"><a href="#cb1-11"></a><span class="kw">fn</span> main() <span class="op">{</span></span>
+<span id="cb1-12"><a href="#cb1-12"></a>    <span class="kw">let</span> num <span class="op">=</span> <span class="dv">10</span><span class="op">;</span></span>
+<span id="cb1-13"><a href="#cb1-13"></a>    foo(num)<span class="op">;</span></span>
+<span id="cb1-14"><a href="#cb1-14"></a><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class="figure"><p></p>
+<div>
+<pre class="mermaid mermaid-js">flowchart
+  subgraph Stack
+    C["bar(a = 20)
+    c = 21"]
+    B["foo(x = 10)
+    y = 20"]
+    A["main()
+    num: 10"]
+  end
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+<p>De heap is rommeliger dan de stack. Wanneer je iets op de heap wilt plaatsen, moet je eerst zoeken naar een plek met voldoende ruimte. Vervolgens plaats je de data op die plek. Om die data later weer terug te halen moet je weten waar je het hebt geplaatst, dus moet je bijhouden waar je iets geplaatst hebt en daarom heb je een soort van adres nodig. Deze twee extra stappen, zoeken naar plek en de data op die plek weer opvragen, kosten meer tijd dan het plaatsen van data op de stack. Hieronder is een schematische weergave, met bijbehorende code, van de heap.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode numberSource rust number-lines code-with-copy"><code class="sourceCode rust"><span id="cb2-1"><a href="#cb2-1"></a><span class="kw">fn</span> main() <span class="op">{</span></span>
+<span id="cb2-2"><a href="#cb2-2"></a>    <span class="kw">let</span> a <span class="op">=</span> <span class="dv">5</span><span class="op">;</span>                  <span class="co">// Primitive, staat op de stack</span></span>
+<span id="cb2-3"><a href="#cb2-3"></a>    <span class="kw">let</span> b <span class="op">=</span> <span class="dt">Box</span><span class="pp">::</span>new(<span class="dv">10</span>)<span class="op">;</span>       <span class="co">// Heap-allocated integer</span></span>
+<span id="cb2-4"><a href="#cb2-4"></a>    <span class="kw">let</span> c <span class="op">=</span> <span class="pp">vec!</span>[<span class="dv">1</span><span class="op">,</span> <span class="dv">2</span><span class="op">,</span> <span class="dv">3</span>]<span class="op">;</span>      <span class="co">// Heap-allocated vector</span></span>
+<span id="cb2-5"><a href="#cb2-5"></a><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class="figure"><p></p>
+<div>
+<pre class="mermaid mermaid-js">graph LR
+  subgraph Stack
+    direction TB
+    subgraph "main()"
+      A[a: 5]
+      B[b: Box -&gt; 📦]
+      C[c: Vec -&gt; 📦📦📦]
+    end
+  end
+
+  subgraph Heap
+    direction TB
+    I[Data]
+    D[10]
+    K[DATA]
+    L[DATA]
+    E[1]
+    F[2]
+    G[3]
+    J[DATA]
+  end
+
+  B --&gt; D
+  C --&gt; E
+  C --&gt; F
+  C --&gt; G
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
 </section>
-<section id="de-planning" class="level1">
-<h1>De Planning</h1>
-<p>Voor nu heb ik een voorlopige planning gemaakt maar deze staat zeker niet vast (Ik schrijf nu namelijk op de Note Air 2, en het zou super handig zijn wanneer handgeschreven notities automatisch worden omgezet naar een Jupyter Notebook. Aan dit project ben ik meteen begonnen wat de planning na 2 dagen al overhoop gooide :)). Maar toch probeer ik mij aan deze planning te houden:</p>
-<ol type="1">
-<li><ul>
-<li>Automatisch handgeschreven tekst naar Jupyter Notebook</li>
-<li>Android app maken (Minimum Viable Product: MVP)</li>
-</ul></li>
-<li>Functioneel programmeren Python module schrijven (op basis van het boek Grocking Simplicity)</li>
-<li>Anki Add-on (MVP)</li>
-<li>Recepten Web-App (MVP)</li>
-</ol>
-<p>Daarna wordt het waarschijnlijk het verbeteren van de MVPs naar nieuwere versies. Maar zoals gezegd, bestaat er een kans op verschuivingen in de planning en tussenkomende projecten.</p>
+<section id="rust-types-op-de-stack-en-de-heap" class="level2">
+<h2 class="anchored" data-anchor-id="rust-types-op-de-stack-en-de-heap">Rust-types op de stack en de heap</h2>
+<p>Alle <a href="https://doc.rust-lang.org/rust-by-example/primitives.html">primitive types</a> in Rust gaan op de stack (integers, floating points, chars, arrays en tuples), maar ook Structs gaan op de stack. Mocht je deze waarden wel op de heap willen, dan kun je de <code>Box&lt;T&gt;</code> gebruiken. Niet-primitieve types zoals Vectors, HashMaps en Strings worden op de heap opgeslagen. De belangrijkste reden hiervoor is dat deze types in grootte kunnen variëren: ze kunnen tijdens de uitvoering van een programma groeien of krimpen.</p>
+<p>Maar hoe weet een computerprogramma waar die typen op de heap staan? Dat wordt gedaan door ernaar toe te wijzen met een pointer. En de pointer, die leeft weer op de stack. Hieronder is een schematische weergave van een simpel voorbeeld waar een integer (i32) en een pointer (&amp;String) op de stack staan. En de String “Hello, world!” op de heap staat.</p>
+<div class="cell" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class="figure"><p></p>
+<div>
+<pre class="mermaid mermaid-js">graph LR
+  subgraph Stack
+    direction TB
+    A[Primitive: i32 = 42]
+    B[Pointer: &amp;String]
+  end
+
+  subgraph Heap
+    direction TB
+    C["String: &amp;quot;Hello, world!&amp;quot;"]
+  end
+
+  B --&gt; C
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
 </section>
-<section id="proces" class="level1">
-<h1>Proces</h1>
-<p>Ook wil ik zoveel mogelijk via DevOps (hierover later meer!) principes gaan werken om zo te laten zien hoe je in de praktijk (wat ik nu weet) zou kunnen werken. Zelf heb ik namelijk ondervonden dat dit nauwelijks wordt uitgelegd. Ik geloof dat werken met DevOps principes veel voordelen heeft maar dat ik mij hier nog veel in kan verbeteren. Daarom ga ik dat in eigen projecten toepassen en hoor ik ook graag wat jullie zouden doen!</p>
-<p>Hopelijk geeft dit een duidelijk beeld en lijkt het jullie leuk om te volgen. Bedankt voor het lezen en hopelijk tot de volgende keer!</p>
-<p>Fijne dag!</p>
+<section id="werking-van-de-borrow-checker" class="level2">
+<h2 class="anchored" data-anchor-id="werking-van-de-borrow-checker">Werking van de Borrow Checker</h2>
+<p>Als we kijken naar Rust, is bovenstaande schematische weergave niet helemaal correct. In Rust gebruik je namelijk geen pointers, maar references.</p>
+<div class="cell" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class="figure"><p></p>
+<div>
+<pre class="mermaid mermaid-js">graph LR
+  subgraph Stack
+    direction TB
+    A[Primitive: i32 = 42]
+    B[Reference: &amp;String]
+  end
+
+  subgraph Heap
+    direction TB
+    C["String: &amp;quot;Hello, world!&amp;quot;"]
+  end
+
+  B --&gt; C
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+<p>Een reference is een soort “slimme” pointer die onder toezicht staat van de Borrow Checker. De slimmigheid is dat een referentie zich aan bepaalde regels moet houden. Deze regels zijn de magie van de Borrow Checker en dus ook van Rust, hierdoor garandeer je dat je op de juiste manier omgaat met data in het computergeheugen.</p>
+<p>De Borrow Checker doet dit door tijdens het compileren van je programma, bij te houden wie de Owner van de data is, of er Borrowers van de data zijn (dit zijn referenties) en of de Lifetime van de referenties klopt.</p>
+<section id="ownership-move-en-references" class="level3">
+<h3 class="anchored" data-anchor-id="ownership-move-en-references">Ownership, Move en References</h3>
+<p>Ownership in Rust betekent dat er maar een variabele tegelijk eigenaar mag zijn van een stuk data. Wanneer je een andere variabele bindt aan die data, dan verplaatst de ownership zich, dit heet een move. Als je vervolgens de oorspronkelijke variabele probeert te gebruiken, zal de Borrow Checker tijdens het compileren een foutmelding geven. Omdat je de ownership hebt overgedragen, mag de oorspronkelijke variabele de data niet meer gebruiken.</p>
+<p>Onderstaand code voorbeeld illustreert dat proces:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode numberSource rust number-lines code-with-copy"><code class="sourceCode rust"><span id="cb3-1"><a href="#cb3-1"></a><span class="kw">fn</span> main() <span class="op">{</span></span>
+<span id="cb3-2"><a href="#cb3-2"></a>    <span class="kw">let</span> x <span class="op">=</span> <span class="pp">vec!</span>[<span class="dv">1</span><span class="op">,</span> <span class="dv">2</span><span class="op">,</span> <span class="dv">3</span>]<span class="op">;</span></span>
+<span id="cb3-3"><a href="#cb3-3"></a></span>
+<span id="cb3-4"><a href="#cb3-4"></a>    <span class="kw">let</span> y <span class="op">=</span> x<span class="op">;</span></span>
+<span id="cb3-5"><a href="#cb3-5"></a></span>
+<span id="cb3-6"><a href="#cb3-6"></a>    <span class="pp">println!</span>(<span class="st">"{:?}"</span><span class="op">,</span> y)<span class="op">;</span></span>
+<span id="cb3-7"><a href="#cb3-7"></a>    <span class="pp">println!</span>(<span class="st">"{:?}"</span><span class="op">,</span> x)<span class="op">;</span></span>
+<span id="cb3-8"><a href="#cb3-8"></a><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Dat levert deze compiler error:</p>
+<pre><code>error[E0382]: borrow of moved value: `x`
+ --&gt; src/main.rs:7:22
+  |
+2 |     let x = vec![1, 2, 3];
+  |         - move occurs because `x` has type `Vec&lt;i32&gt;`, which does not implement the `Copy` trait
+3 |     
+4 |     let y = x;
+  |             - value moved here
+...
+7 |     println!("{:?}", x);
+  |                      ^ value borrowed here after move
+  |
+  = note: this error originates in the macro `$crate::format_args_nl` which comes from the expansion of the macro `println` (in Nightly builds, run with -Z macro-backtrace for more info)
+help: consider cloning the value if the performance cost is acceptable
+  |
+4 |     let y = x.clone();
+  |              ++++++++
+
+For more information about this error, try `rustc --explain E0382`.</code></pre>
+<p>Zoals je in de compiler error ziet, geeft het heel duidelijk aan dat bij <code>let y = x;</code> de waarde movet, waardoor je <code>x</code> daarna niet meer kunt gebruiken in <code>println!("{:?}", x);</code>. Het geeft zelfs aan dat je het kan clonen en zo kan oplossen.</p>
+<p>Een andere oplossing is door <code>y</code> geen eigenaar te laten worden van de waarde maar er een referentie naar te laten zijn: <code>let y = &amp;x;</code> Met een referentie, doe je geen move maar een borrow. En dat is wel toegestaan.</p>
+<p>In dit volgende voorbeeld doet de code iets soortgelijks, maar dan met Rust-primitive types.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode numberSource rust number-lines code-with-copy"><code class="sourceCode rust"><span id="cb5-1"><a href="#cb5-1"></a><span class="kw">fn</span> main() <span class="op">{</span></span>
+<span id="cb5-2"><a href="#cb5-2"></a>    <span class="kw">let</span> x <span class="op">=</span> <span class="dv">1</span><span class="op">;</span></span>
+<span id="cb5-3"><a href="#cb5-3"></a>    </span>
+<span id="cb5-4"><a href="#cb5-4"></a>    <span class="kw">let</span> y <span class="op">=</span> x<span class="op">;</span></span>
+<span id="cb5-5"><a href="#cb5-5"></a>    </span>
+<span id="cb5-6"><a href="#cb5-6"></a>    <span class="pp">println!</span>(<span class="st">"{:?}"</span><span class="op">,</span> y)<span class="op">;</span></span>
+<span id="cb5-7"><a href="#cb5-7"></a>    <span class="pp">println!</span>(<span class="st">"{:?}"</span><span class="op">,</span> x)<span class="op">;</span></span>
+<span id="cb5-8"><a href="#cb5-8"></a><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Het enige wat verandert is het type van <code>x</code>, maar dit werkt wel! Dat komt doordat primitive-types de Copy-trait implementeren. In plaats van dat er een Move plaatsvindt, wordt de waarde gekopieerd.</p>
+<blockquote class="blockquote">
+<p>Let op: afhankelijk van de data types in een Tuple of Array wordt de Copy-trait wel geïmplementeerd maar wanneer een van de types niet de Copy-trait implementeert, dan zal bovenstaande niet werken want de waarde kan niet worden gekopieerd.</p>
+</blockquote>
+<p>Deze verschillende werkingen van primitieve- en niet-primitieve-types zitten hem erin dat de primitieve-types op de Stack leven. Het is snel en efficiënt (in termen van tijd) om een waarde op de Stack te kopiëren. Daarentegen kost het kopiëren van niet-primitieve-types meer tijd, omdat ze op de Heap worden gekopieerd. Daarom kiest Rust er standaard voor om zulke waarden te moven in plaats van te kopiëren.</p>
+<p>Als laatste, wat gebeurt er als je de data wilt veranderen? Als je meerdere referenties hebt naar data dan wil je niet dat de onderliggende data van die referenties wordt gewijzigd. Dat is nog iets wat de Borrow Checker controleert. Zie het voorbeeld hieronder:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode numberSource rust number-lines code-with-copy"><code class="sourceCode rust"><span id="cb6-1"><a href="#cb6-1"></a><span class="kw">fn</span> main() <span class="op">{</span></span>
+<span id="cb6-2"><a href="#cb6-2"></a>    <span class="kw">let</span> <span class="kw">mut</span> x <span class="op">=</span> <span class="pp">vec!</span>[<span class="dv">1</span><span class="op">,</span> <span class="dv">2</span><span class="op">,</span> <span class="dv">3</span>]<span class="op">;</span></span>
+<span id="cb6-3"><a href="#cb6-3"></a>    <span class="kw">let</span> y <span class="op">=</span> <span class="op">&amp;</span>x<span class="op">;</span></span>
+<span id="cb6-4"><a href="#cb6-4"></a></span>
+<span id="cb6-5"><a href="#cb6-5"></a>    <span class="kw">let</span> z <span class="op">=</span> <span class="op">&amp;</span><span class="kw">mut</span> x<span class="op">;</span></span>
+<span id="cb6-6"><a href="#cb6-6"></a>    <span class="kw">let</span> z <span class="op">=</span> z<span class="op">.</span>push(<span class="dv">4</span>)<span class="op">;</span></span>
+<span id="cb6-7"><a href="#cb6-7"></a>    </span>
+<span id="cb6-8"><a href="#cb6-8"></a>    <span class="pp">println!</span>(<span class="st">"{:?}"</span><span class="op">,</span> y)<span class="op">;</span></span>
+<span id="cb6-9"><a href="#cb6-9"></a>    <span class="pp">println!</span>(<span class="st">"{:?}"</span><span class="op">,</span> z)<span class="op">;</span></span>
+<span id="cb6-10"><a href="#cb6-10"></a><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Hier is de compiler weer erg behulpzaam:</p>
+<pre><code>error[E0502]: cannot borrow `x` as mutable because it is also borrowed as immutable
+ --&gt; src/main.rs:5:13
+  |
+3 |     let y = &amp;x;
+  |             -- immutable borrow occurs here
+4 |
+5 |     let z = &amp;mut x;
+  |             ^^^^^^ mutable borrow occurs here
+...
+8 |     println!("{:?}", y);
+  |                      - immutable borrow later used here
+
+For more information about this error, try `rustc --explain E0502`.</code></pre>
+<p>Dit is een andere regel van de Borrow Checker: je kunt of één mutable reference hebben of meerdere immutable references, maar nooit allebei tegelijk. Dit zorgt ervoor dat onderliggende data van een referentie niet onverwacht kan wijzigen.</p>
+<p>Samenvattend: de Borrow Checker controleert het Ownership van data, volgt de Moves van het Ownership en bewaakt het gebruik van mutable en immutable Referenties (Borrowing).</p>
+<blockquote class="blockquote">
+<p>Kleine notitie: een ander belangrijke term in de Borrow Checker is Lifetimes. Die laat ik voor nu buiten beschouwing, ik licht ze toe zodra we ze daadwerkelijk tegenkomen</p>
+</blockquote>
+<p>Nu we de Borrow Checker beter begrijpen, gaan we in de volgende post aan de slag met het bouwen van de HTTP server.</p>
 <p>Mees</p>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->
